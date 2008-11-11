@@ -12,14 +12,14 @@ filter:    haml
     %meta{ :name => "author", :content => @page.author }
     
     / Blueprint CSS Framework
-    %link{ :rel => "stylesheet", :href => "/css/blueprint/screen.css", :type => "text/css", :media => "screen, projection" }
-    %link{ :rel => "stylesheet", :href => "/css/blueprint/print.css", :type => "text/css", :media => "print" }
+    %link{ :rel => "stylesheet", :href => "css/blueprint/screen.css", :type => "text/css", :media => "screen, projection" }
+    %link{ :rel => "stylesheet", :href => "css/blueprint/print.css", :type => "text/css", :media => "print" }
     
     / CodeRay syntax highlighting CSS
-    %link{ :rel => "stylesheet", :href => "/css/coderay.css", :type => "text/css"}
+    %link{ :rel => "stylesheet", :href => "css/coderay.css", :type => "text/css"}
     
     / Homepage CSS
-    %link{ :rel => "stylesheet", :href => "/css/site.css", :type => "text/css", :media => "screen, projection" }
+    %link{ :rel => "stylesheet", :href => "css/site.css", :type => "text/css", :media => "screen, projection" }
     
     / Feed Discovery
     %link{ :rel => "alternate", :type => "application/atom+xml", :title => "RSS feed", :href => "http://bitfission.com/feed/atom.xml" }
@@ -43,7 +43,7 @@ filter:    haml
       
       .column.span-2.sidebar
         %a{ :href => "http://feeds.feedburner.com/bitfission" }
-          %img{ :src => "/images/rss.png"}
+          %img{ :src => "images/rss.png"}
       .column.span-3.append-2.last.sidebar
         %ul
           %li= link_to "email",    "http://mailhide.recaptcha.net/d?k=01zfKie6B3RqCTDaRzr6rj9Q==&amp;c=sues3PgmCHchVBA3-99bUL5e9iUd2Vx9nRlM84OYOMw=", :attrs => { :onclick => "window.open('http://mailhide.recaptcha.net/d?k=01zfKie6B3RqCTDaRzr6rj9Q==&amp;c=sues3PgmCHchVBA3-99bUL5e9iUd2Vx9nRlM84OYOMw=', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;" } 
