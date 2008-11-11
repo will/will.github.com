@@ -1,0 +1,18 @@
+---
+extension: html
+filter: erb
+dirty: true
+layout: default
+id: blog
+---
+<div class="blogContent">
+    <div class="singleArticleHolder">
+        <p class="articleDate"><%= @page.created_at.strftime('%B %d, %Y') %></p>
+        <h2 class="articleTitle"><%= @page.title %></h2>
+        <%= @content %>
+    </div>
+    <div id="disqus_thread"></div>    
+    <script type="text/javascript" src="http://disqus.com/forums/bitfission/embed.js"></script>
+    <noscript><a href="http://bitfission.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+</div>
+
