@@ -1,4 +1,5 @@
 ---
+title: Bitfission
 extension: html
 filter:    erb
 ---
@@ -8,7 +9,7 @@ filter:    erb
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-   <title><%= @page.title %></title>
+   <title>Will Leinweber - <%= @page.title %></title>
    <meta name="author" content="<%= @page.author %>" />
 
    <!--- Blueprint CSS Framework -->
@@ -64,9 +65,13 @@ filter:    erb
       </div>
    </div>
 
-   <div class="column span-20 prepend-2 append-2 first last" id="footer">
-     <hr />
-     <p>This website was created with <a href="http://webby.rubyforge.org">Webby</a></p>
+   <hr />
+   <div class="column span-15 prepend-2 first " id="footer">
+     <p></a>Written by Will Leinweber</p>
+   </div>
+   
+   <div class="column span-5  append-2  last" id="footer">
+     <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png" />
    </div>
 
 </div>

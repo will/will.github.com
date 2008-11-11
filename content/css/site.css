@@ -32,7 +32,7 @@ blockquote        { color: <%= @page.color['blockquote'] %>; }
 pre {
   background: <%= @page.color['box-bg'] %>;
   border:     1px solid <%= @page.color['border'] %>;
-  overflow: scroll;
+  overflow: auto;
 }
 
 hr {
@@ -80,6 +80,11 @@ p.title a{
   list-style: none;
   margin: 0;
 }
+
 #header p.title { font-size: 3em; line-height: 1; margin-bottom: 0.5em; }
 
+.pagination a{
+  padding-right: 0.5em;
+  padding-bottom: 0.5em;
+}
 /* EOF */

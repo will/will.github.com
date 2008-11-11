@@ -1,0 +1,27 @@
+--- 
+title:      More on setting up Leopard
+created_at: 2008-01-15 01:30:11.614269 -05:00
+blog_post:  true
+layout: post
+filter:
+  - markdown
+  - erb
+---
+After posting about [setting up a new mac](http://blog.bitfission.com/articles/2008/01/12/rubygems-and-leopard), I 
+started to put all the other things I found myself missing on a new install. Aside from the standard adium, quicksilver, colloquy, and others there are a few things that are good enough to share.
+  
+Blurminal
+-------------
+I'm a long time user of [iTerm](http://iterm.sourceforge.net/) but I've decided to give leopard's new tabbed terminal a chance. The one big frustrating thing is it lacks iTerm's ability to switch between tabs with command+arrow keys. However, a big plus is Ciarin Walsh's [Blurminal](http://ciaranwal.sh/2007/11/16/blurminal). Instead of just having a percentage of transparency, it slightly blurs whatever is behind the terminal. Here's an example:
+
+macFusion
+--------------
+This is a [nice gui](http://www.sccs.swarthmore.edu/users/08/mgorbach/MacFusionWeb/) for the OS X implementation of fuse. This allows you to mount an ssh directory locally right from the menu bar which is really awesome. One annoyance: in tiger, when you mounted something, it would appear on the desktop and the sidebar of finder, which was nice. With leopard though, that's not happening. You can still go up to the menu bar and click on one of your mounts so it's not a huge problem.
+
+skitch
+--------
+Sktich is a little app that lets you take screenshots, edit them up, and upload them in one go. It's turning out to be really useful; the image in this post was taken with it. It's still in beta right now, and I'm not sure when it will be finished. One thing it needs is keyed sftp uploading. It has support for sftp, but with usernames and passwords only. They haven't said how much it's going to be once it's out of beta, but they're doing a good job of getting people hooked before that happens. First one is always free.
+
+blue phone elite
+------------------------
+The last one I'm going to talk about is [blue phone elite](http://mirasoftware.com/BPE2/). If you have a supported phone, this will let you use your mac as a handsfree (though I've not had great success with this), send and receive text messages through it, flash up caller id on the screen, pause iTunes when you're on a call and resume when the call is over, and a few other neat things. I have it set to run an applescript that syncs my phone when I come in range, which helps a lot because I'd otherwise never remember to sync. I was having some problems with the 2.0 release so I went back to using 1.x. It looks like they've had a few more releases, so I'll give 2.x a try again.

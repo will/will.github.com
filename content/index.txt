@@ -1,15 +1,10 @@
 ---
-title:      index
+title:      Bitfission
 created_at: 2008-09-15 01:30:11.609284 -05:00
 filter:     haml
 ---
-- posts = @pages.find(:limit => 1, :draft => nil, :sort_by => "created_at", :blog_post => true)
-- first = posts.pop
-%h2= first.title
-= first.render
-  
-  
-%ul
-  - posts.each do |post|
-    %li
-      %a{:href => post.url}=post.title
+
+- post = @pages.find(:limit => 1, :draft => nil, :sort_by => "created_at", :blog_post => true, :reverse => true).first
+
+%h2= post.title
+= post.render
