@@ -7,8 +7,8 @@ id: blog
 ---
 <div class="blogContent">
     <div class="singleArticleHolder">
-        <p class="articleDate"><%= @page.created_at.strftime('%B %d, %Y') %></p>
         <h2 class="articleTitle"><%= @page.title %></h2>
+        <p class="articleDate"><%= @page.created_at.strftime('%B %d, %Y') %></p>
         <%= @content %>
     </div>
     <div id="disqus_thread"></div>    
