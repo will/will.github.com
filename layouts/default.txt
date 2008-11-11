@@ -39,7 +39,7 @@ filter:    haml
         %hr
       
       .column.span-15.prepend-2.first
-        = @content
+        ~ @content
       
       .column.span-2.sidebar
         %a{ :href => "http://feeds.feedburner.com/bitfission" }
