@@ -36,7 +36,7 @@ filter:    erb
    
    <div class="column span-5 append-2 last">
      <p class="title domain">
-       <a href="/">Bitfission<small>.com</small></a>
+       <a href="/">bitfission<small>.com</small></a>
      </p>
    </div>
    
@@ -48,18 +48,20 @@ filter:    erb
       <%= @content %>
    </div>
 
-   <div class="column span-5 append-2 last">
-      <h4>Sidebar</h4>
-      <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras ornare mattis nunc. Mauris venenatis, pede sed aliquet vehicula, lectus tellus pulvinar neque, non cursus sem nisi vel augue. </p>
-
+   <div class="column span-5 append-2 last sidebar">
+      <a href="http://feeds.feedburner.com/bitfission"><img src="/images/rss.png" /></a>
+      <h4>Contact</h4>
       <div class="box">
-         <p class="last">Mauris a lectus. Aliquam erat volutpat. Phasellus ultrices mi a sapien. Nunc rutrum egestas lorem. Duis ac sem sagittis elit tincidunt gravida.</p>
+        will@bitfission.com
       </div>
 
-      <p class="quiet">Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras ornare mattis nunc. Mauris venenatis, pede sed aliquet vehicula, lectus tellus pulvinar neque, non cursus sem nisi vel augue.</p>
-
-      <h5>Incremental leading</h5>
-      <p class="incr">Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras ornare mattis nunc. Mauris venenatis, pede sed aliquet vehicula, lectus tellus pulvinar neque, non cursus sem nisi vel augue. sed aliquet vehicula, lectus tellus.</p>
+      <h4>Posts</h4>
+      <div class="box">
+        <ul>
+          <%- @pages.find(:limit => :all, :draft => nil, :sort_by => "created_at", :blog_post => true).each do |post| -%>
+            <li><%= "<a href=#{post.url}>#{post.title}</a>" %></li>
+          <%- end -%>
+      </div>
    </div>
 
    <div class="column span-20 prepend-2 append-2 first last" id="footer">

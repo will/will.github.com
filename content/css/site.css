@@ -72,6 +72,13 @@ p.title a{
   color: #111;
 }
 
+.sidebar a{
+  text-decoration: none;
+}
+.sidebar ul{
+  list-style: none;
+  margin: 0;
+}
 #header p.title { font-size: 3em; line-height: 1; margin-bottom: 0.5em; }
 
 /* EOF */
