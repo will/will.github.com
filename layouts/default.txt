@@ -46,10 +46,10 @@ filter:    haml
           %img{ :src => "/images/rss.png"}
       .column.span-3.append-2.last.sidebar
         %ul
-          %li email
-          %li tumblr
-          %li linked-in
-          %li one more
+          %li= link_to "email",    "http://mailhide.recaptcha.net/d?k=01zfKie6B3RqCTDaRzr6rj9Q==&amp;c=sues3PgmCHchVBA3-99bUL5e9iUd2Vx9nRlM84OYOMw=", :attrs => { :onclick => "window.open('http://mailhide.recaptcha.net/d?k=01zfKie6B3RqCTDaRzr6rj9Q==&amp;c=sues3PgmCHchVBA3-99bUL5e9iUd2Vx9nRlM84OYOMw=', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;" } 
+          %li= link_to "github",   "http://github.com/will"
+          %li= link_to "tumble",   "http://leinweber.us"
+          %li= link_to "linkedin", "http://www.linkedin.com/in/leinweber"
         
       .column.span-5.append-2.last.sidebar
         %h3 Posts
@@ -62,7 +62,7 @@ filter:    haml
         %hr
       
       .column.span-15.prepend-2.first#footer
-        &p Written by Will Leinweber
+        %p Written by Will Leinweber
       
       .column.span-5.append-2.last#footer
         %a{ :rel => "license", :href => "http://creativecommons.org/licenses/by-nc-sa/3.0/us/" }

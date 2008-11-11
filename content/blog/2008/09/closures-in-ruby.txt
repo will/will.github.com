@@ -12,14 +12,16 @@ Paul Cantrell wrote a <a href="http://innig.net/software/ruby/closures-in-ruby.r
 
 Here's the summary table that's about halfway through.
 <pre>
-                                                        "return" returns from closure
-                                       True closure?    or declaring context...?         Arity check?
-                                       ---------------  -----------------------------    -------------------
-    1. block (called with yield)       N                declaring                        no
-    2. block (&b => f(&b) => yield)    N                declaring                        no
-    3. block (&b => b.call)            Y except return  declaring                        warn on too few
-    4. Proc.new                        Y except return  declaring                        warn on too few
-    5. proc                                    <<< alias for lambda in 1.8, Proc.new in 1.9 >>>
-    6. lambda                          Y                closure                          yes, except arity 1
-    7. method                          Y                closure                          yes
+
+                                                    "return" returns
+                                                    from closure or
+                                   True closure?    declaring context?     Arity check?
+                                   ---------------  -------------------    -------------------
+1. block (called with yield)       N                declaring              no
+2. block (&b => f(&b) => yield)    N                declaring              no
+3. block (&b => b.call)            Y except return  declaring              warn on too few
+4. Proc.new                        Y except return  declaring              warn on too few
+5. proc                                <<< alias for lambda in 1.8, Proc.new in 1.9 >>>
+6. lambda                          Y                closure                yes, except arity 1
+7. method                          Y                closure                yes
 </pre>
