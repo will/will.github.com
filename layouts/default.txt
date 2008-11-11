@@ -59,7 +59,7 @@ filter:    erb
       <h4>Posts</h4>
       <div class="box">
         <ul>
-          <%- @pages.find(:limit => :all, :draft => nil, :sort_by => "created_at", :blog_post => true).each do |post| -%>
+          <%- @pages.find(:limit => :all, :draft => nil, :sort_by => "created_at", :blog_post => true, :reverse => true).each do |post| -%>
             <li><%= "<a href=#{post.url}>#{post.title}</a>" %></li>
           <%- end -%>
       </div>
