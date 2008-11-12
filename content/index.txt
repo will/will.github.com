@@ -8,3 +8,4 @@ filter:     haml
 
 %h2= post.title
 = post.render
+= link_to "comment &raquo;", post.url

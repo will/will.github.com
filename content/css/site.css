@@ -8,7 +8,7 @@ color:
   header:      "#111"
   link:        "#125AA7"
   link-hover:  "#000"
-  blockquote:  "#666"
+  blockquote:  "#66"
   box-bg:      "#eee"
   highlight:   "#B2CCFF"
   quiet:       "#666"
@@ -61,14 +61,22 @@ p.title {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-bottom: 0.75em;
 }
+
 p.title.name {
   font-size: 2.5em;
 }
+
 p.title.domain {
   margin-top: 1em;
   font-size: 1.5em;
 }
+
 p.title a{
+  text-decoration: none;
+  color: #111;
+}
+
+#footer a{
   text-decoration: none;
   color: #111;
 }
@@ -82,9 +90,50 @@ p.title a{
   margin: 0;
 }
 .sidebar h3{
+  margin-top: 1.5em;
   margin-bottom: -0.5em;
   margin-left: 0.5em;
 }
 #header p.title { font-size: 3em; line-height: 1; margin-bottom: 0.5em; }
+
+/* Disqus Hackery
+ * --------------------------------------------------------------------- */
+div#dsq-popup-profile {left: 0 !important;}
+ 
+.dsq-by {display:none;}
+#disqus_thread #dsq-content h3 {
+  font-weight: normal !important;
+  margin: 0 0 18px 0 !important;
+}
+#dsq-content #dsq-options-toggle { display: none; }
+#dsq-content #dsq-comments .dsq-comment-rate { display: none; }
+ 
+ 
+#disqus_thread #dsq-content #dsq-comments .dsq-comment { border: 0;}
+#disqus_thread #dsq-content #dsq-comments .dsq-comment .dsq-comment-footer {display: none;}
+ 
+/* Comment Attribution */
+#disqus_thread #dsq-content #dsq-comments .dsq-comment {position: relative;}
+#disqus_thread #dsq-content #dsq-comments .dsq-comment-header cite {float: left;}
+#disqus_thread #dsq-content #dsq-comments .dsq-comment-header .icon-adjust {display:none;}
+#disqus_thread #dsq-content #dsq-comments .dsq-comment-header .dsq-header-meta {clear: left; float: left; color: #999;}
+#disqus_thread #dsq-content #dsq-comments .dsq-header-avatar {height: 0;}
+
+#disqus_thread#dsq-content #dsq-comments a.dsq-header-time {
+  color:#999;
+  margin:0;
+}
+ 
+#disqus_thread #dsq-content #dsq-comments .dsq-comment-header {
+  height:36px;
+  line-height:18px;
+}
+ 
+ 
+#disqus_thread #dsq-content #dsq-comments .dsq-comment-body {
+  font-size: 12px;
+  line-height: 18px;
+  margin-top: 0;
+}
 
 /* EOF */
