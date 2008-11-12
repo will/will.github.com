@@ -12,5 +12,4 @@ Other people have written quality articles on webby. Rather than repeating every
 
 * "Mike Clark - Building Static Websites with Webby":http://clarkware.com/cgi/blosxom/2008/08/06
 * "Mangus Holm - Building a Website with Webby":http://judofyr.net/posts/building-a-website-with-webby.html
-* three
-* four
+* "github search: 'webby'":https://github.com/search?q=webby - some people have shared their source for their blogs. Reading code is always a great place to start.
