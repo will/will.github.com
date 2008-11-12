@@ -7,5 +7,5 @@ filter:     haml
 - post = @pages.find(:limit => 1, :draft => nil, :sort_by => "created_at", :blog_post => true, :reverse => true).first
 
 %h2= post.title
-= post.render
+= render(post)
 = link_to "comment &raquo;", post.url
