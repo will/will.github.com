@@ -11,10 +11,10 @@ id: blog
         <p class="articleDate"><%= @page.created_at.strftime('%B %d, %Y') %></p>
         <%= @content %>
     </div>
+    <%= other_posts %>
     <div id="disqus_thread"></div>    
     <script type="text/javascript" src="http://disqus.com/forums/bitfission/embed.js">
       var disqus_title = "<%= @page.title %>";
     </script>
     <noscript><a href="http://bitfission.disqus.com/?url=ref">View the discussion thread.</a></noscript>
 </div>
-

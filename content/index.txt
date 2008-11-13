@@ -4,8 +4,9 @@ created_at: 2008-09-15 01:30:11.609284 -05:00
 filter:     haml
 ---
 
-- post = @pages.find(:limit => 1, :draft => nil, :sort_by => "created_at", :blog_post => true, :reverse => true).first
+%h2= first_post.title
+= render(first_post)
 
-%h2= post.title
-= render(post)
-= link_to "comment &raquo;", post.url
+= link_to "comments &raquo;", first_post.url
+
+= other_posts(first_post)

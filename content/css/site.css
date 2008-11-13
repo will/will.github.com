@@ -94,8 +94,24 @@ p.title a{
   margin-bottom: -0.5em;
   margin-left: 0.5em;
 }
+
+.singleArticleHolder{
+  margin-bottom: 3em;
+
+}
+
 #header p.title { font-size: 3em; line-height: 1; margin-bottom: 0.5em; }
 
+.otherposts {
+  float: right;
+}
+
+.otherposts ul{
+  border-left: 2px solid <%= @page.color['highlight'] %>;
+  padding-left: 0.75em;
+  list-style: none;
+  font-family: Monaco, 'Courier New', 'Terminal', monospace;
+}
 /* Disqus Hackery
  * --------------------------------------------------------------------- */
 div#dsq-popup-profile {left: 0 !important;}
