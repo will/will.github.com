@@ -30,6 +30,9 @@ def other_posts(post=nil)
 end
 
 def link_to_post(post)
-  post = @pages.find( :limit =>1, :title => post).first unless post.class == Webby::Resources::Page
   link_to post.title, post.url
+end
+
+def find_post(title)
+  @pages.find( :limit => 1, :title => title).first
 end

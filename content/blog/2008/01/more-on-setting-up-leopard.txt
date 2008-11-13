@@ -4,15 +4,14 @@ created_at: 2008-01-15 01:30:11.614269 -05:00
 blog_post:  true
 layout: post
 filter:
-  - markdown
   - erb
+  - markdown
 ---
-After posting about [setting up a new mac](http://blog.bitfission.com/articles/2008/01/12/rubygems-and-leopard), I 
-started to put all the other things I found myself missing on a new install. Aside from the standard adium, quicksilver, colloquy, and others there are a few things that are good enough to share.
+After posting about <%= link_to "setting up a new mac", find_post("RubyGems and Leopard").url %>, I started to put all the other things I found myself missing on a new install. Aside from the standard adium, quicksilver, colloquy, and others there are a few things that are good enough to share.
   
 Blurminal
 -------------
-I'm a long time user of [iTerm](http://iterm.sourceforge.net/) but I've decided to give leopard's new tabbed terminal a chance. The one big frustrating thing is it lacks iTerm's ability to switch between tabs with command+arrow keys. However, a big plus is Ciarin Walsh's [Blurminal](http://ciaranwal.sh/2007/11/16/blurminal). Instead of just having a percentage of transparency, it slightly blurs whatever is behind the terminal. Here's an example:
+I'm a long time user of [iTerm](http://iterm.sourceforge.net/) but I've decided to give leopard's new tabbed terminal a chance. The one big frustrating thing is it lacks iTerm's ability to switch between tabs with command+arrow keys. However, a big plus is Ciarin Walsh's [Blurminal](http://ciaranwal.sh/2007/11/16/blurminal). Instead of just having a percentage of transparency, it slightly blurs whatever is behind the terminal.
 
 macFusion
 --------------
@@ -20,7 +19,7 @@ This is a [nice gui](http://www.sccs.swarthmore.edu/users/08/mgorbach/MacFusionW
 
 skitch
 --------
-Sktich is a little app that lets you take screenshots, edit them up, and upload them in one go. It's turning out to be really useful; the image in this post was taken with it. It's still in beta right now, and I'm not sure when it will be finished. One thing it needs is keyed sftp uploading. It has support for sftp, but with usernames and passwords only. They haven't said how much it's going to be once it's out of beta, but they're doing a good job of getting people hooked before that happens. First one is always free.
+Sktich is a little app that lets you take screenshots, edit them up, and upload them in one go. It's turning out to be really useful. It's still in beta right now, and I'm not sure when it will be finished. One thing it needs is keyed sftp uploading. It has support for sftp, but with usernames and passwords only. They haven't said how much it's going to be once it's out of beta, but they're doing a good job of getting people hooked before that happens. First one is always free.
 
 blue phone elite
 ------------------------
