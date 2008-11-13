@@ -1,21 +1,22 @@
-
 require 'rake/contrib/sshpublisher'
-
-task :staging do
-  SITE.remote_dir = "/var/www/beta_blog"
-end
-
-task :production do
-  raise
-  SITE.remote_dir = ""
-end
 
 namespace :deploy do
   SITE.user       = "maduyb@uiuc.us"
   SITE.host       = "uiuc.us"
-  SITE.remote_dir = "/var/www/beta_blog"
   SITE.rsync_args = %w( -av --delete )
 
+  task :staging => [:clobber, :build] do
+    SITE.remote_dir = "/var/www/beta_blog"
+    Rake::Task["deploy:rsync"].execute
+    puts "\nDeployed to BETA"
+  end
+
+  task :production => [:clobber, :build] do
+    SITE.remote_dir = "/var/www/bitfission"
+    Rake::Task["deploy:rsync"].execute
+    puts "\nDeployed to PRODUCTION!"
+  end
+  
   desc 'Deploy to the server using rsync'
   task :rsync do
     cmd = "rsync #{SITE.rsync_args.join(' ')} "
@@ -23,12 +24,12 @@ namespace :deploy do
     sh cmd
   end
 
-  desc 'Deploy to the server using ssh'
-  task :ssh do
-    Rake::SshDirPublisher.new(
-        "#{SITE.user}@#{SITE.host}", SITE.remote_dir, SITE.output_dir
-    ).upload
-  end
+  # desc 'Deploy to the server using ssh'
+  # task :ssh do
+  #   Rake::SshDirPublisher.new(
+  #       "#{SITE.user}@#{SITE.host}", SITE.remote_dir, SITE.output_dir
+  #   ).upload
+  # end
 
 end  # deploy
 

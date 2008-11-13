@@ -15,7 +15,7 @@ One method I've worked with was to have several sample files in the fixtures dir
 </p>
 
 <p>
-<a href=http://bitfission.com/images/pathway.gif><img src="http://bitfission.com/images/pathway.th.png" style="margin-right: 10em;"></a>
+<a href="/images/2008/04/pathway.gif"><img src="/images/2008/04/pathway.th.png" style="margin-right: 10em;"></a>
 </p>
 
 <p>

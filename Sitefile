@@ -1,7 +1,7 @@
 
 task :default => :build
 
-desc 'deploy the site to the webserver'
-task :deploy => [:build, 'deploy:rsync']
+desc 'deploy the site to the staging'
+task :deploy => ['deploy:staging']
 
 # EOF

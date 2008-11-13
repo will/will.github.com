@@ -22,7 +22,7 @@ filter:    haml
     %link{ :rel => "stylesheet", :href => "/css/site.css", :type => "text/css", :media => "screen, projection" }
     
     / Feed Discovery
-    %link{ :rel => "alternate", :type => "application/atom+xml", :title => "RSS feed", :href => "http://bitfission.com/feed/atom.xml" }
+    %link{ :rel => "alternate", :type => "application/atom+xml", :title => "RSS feed", :href => "http://feeds.feedburner.com/bitfission/" }
   %body
     .container
       .column.span-15.prepend-2.first
@@ -68,3 +68,4 @@ filter:    haml
       .column.span-5.append-2.last#footer
         %a{ :rel => "license", :href => "http://creativecommons.org/licenses/by-nc-sa/3.0/us/" }
           %img{ :alt => "Creative Commons License", :style => "border-width:0", :src => "http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png" }
+    = tracking_code
