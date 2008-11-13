@@ -112,6 +112,15 @@ a {
   list-style: none;
   font-family: Monaco, 'Courier New', 'Terminal', monospace;
 }
+
+.articleContent{ clear: both;}
+.articleTitle{ float: left; }
+.articleDate{
+  float: right;
+  color: #555;
+  padding: 1em;
+  padding-bottom 0;
+}
 /* Disqus Hackery
  * --------------------------------------------------------------------- */
 div#dsq-popup-profile {left: 0 !important;}
