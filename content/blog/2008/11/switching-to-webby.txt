@@ -6,7 +6,7 @@ layout: post
 filter:
   - textile
 --- 
-I made the transition to <a href="http://webby.rubyforge.org/">webby</a> for the blog. Last time I made I tried to upgrade typo, the migrations broke, everything blew up, tears and sorrow. I realized I didn't really need typo, or anything like that. 
+I made the transition to <a href="http://webby.rubyforge.org/">webby</a> for the blog. Last time I tried to upgrade typo, the migrations broke, everything blew up, tears and sorrow. I realized I didn't really need typo, or anything like that. 
 
 Webby is, at its core, a set of fancy rake tasks that will compile your site to html from ruby. It can also deploy over ssh or rsync to your site. If you're the only one writing for your blog, and you know how to code, webby is the way to go. There isn't really any need for a web UI to write posts, or any of the features (and overhead) you get from a blogging engine. And a huge plus: you can throw the whole thing in git.
 

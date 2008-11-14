@@ -7,6 +7,6 @@ filter:     haml
 %h2= first_post.title
 = render(first_post)
 
-= link_to "comments &raquo;", first_post.url
+.commentlink= link_to "comments &raquo;", first_post.url
 
 = other_posts(first_post)

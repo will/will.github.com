@@ -11,7 +11,7 @@ namespace :deploy do
     puts "\nDeployed to BETA"
   end
 
-  task :production => [:clobber, :build] do
+  task :production => [:build] do
     SITE.remote_dir = "/var/www/bitfission"
     Rake::Task["deploy:rsync"].execute
     puts "\nDeployed to PRODUCTION!"

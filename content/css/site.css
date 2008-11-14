@@ -113,6 +113,8 @@ a {
   font-family: Monaco, 'Courier New', 'Terminal', monospace;
 }
 
+.commentlink {float: left;}
+
 .articleContent{ clear: both;}
 .articleTitle{ float: left; }
 .articleDate{
