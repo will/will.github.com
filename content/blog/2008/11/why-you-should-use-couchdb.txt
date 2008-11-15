@@ -1,0 +1,57 @@
+--- 
+title:      Why You Should Use CouchDB
+created_at: 2008-11-15 12:00:00 -06:00
+blog_post:  true
+layout: post
+filter:
+  - textile
+--- 
+
+
+
+h3. It's a new approach to an old problem
+
+Your applications need to store and retrieve data. That's nothing new.  "CouchDB":http://incubator.apache.org/couchdb/, and other document databases like Amazon SimpleDB, +are+ new. Okay, I'll admit the concept of a document database is some "20 years old":http://en.wikipedia.org/wiki/IBM_Lotus_Notes, but it's safe to say that they've just started to gain popularity over the last year or so.
+
+CouchDB has several solid features that will Also, there's that line everyone quotes from The Pragmatic Programmer: _Learn at least one new database paradigm a year_, or something like that.
+
+What exactly makes it so great? Read on.
+
+h3. CouchDB is RESTful
+
+Both data and views are resources, and can be accessed using the CRUD operations we all know and love.  
+
+It should scale. You can use your existing http infrastructure like load balancers and clustering proxies. With the way they've dealt with data replication, you can do traditional master-slave replication, or you could have each server be a master and you can have them all replicate amongst themselves.
+
+
+h3. It's scalable
+
+It only adds new records, so even in a power failure you're not going to lose data.
+
+Map/reduce
+views you can get data back ordered, you can filter out records. Write a map and an optional reduce function and you're golden. This is 
+
+Highly concurrent
+rather than the path sql databases have taken where a single release is as fast as possible, 
+erlang scales to your hardware, it should scale 
+
+h3. Deep structures, no schemas
+
+Data has it's own natural shape, and I know I'm not the only one who is sick and tired of fighting that fact and stuffing that into 
+This is the biggest selling point for me. Fields in each document can take values you'd expect like strings, numbers, and boolean. 
+
+You don't need ORMs, you don't need to split your 
+
+a lot of the data we use today isn't relational, it's not rectangular
+
+You can even attach binary files to a document 
+
+h3. Downsides
+
+It's still alpha. That's not to say it's buggy and unusable - far from it - but things are likely to change before they hit 1.0.
+
+There is no security model. This turns out to not be _that_ big of a deal, but it's far from ideal. You can lock down the port it runs on to only talk to localhost, (which I think happens by default)
+
+<hr>
+Next up, I'll show you how to get started with Merb and CouchDB. In the meantime I welcome you to install CouchDB and start playing with it.
+
