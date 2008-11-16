@@ -1,6 +1,6 @@
 --- 
 title:      Why You Should Use CouchDB
-created_at: 2008-11-15 12:00:00 -06:00
+created_at: 2008-11-16 12:00:00 -06:00
 blog_post:  true
 layout: post
 filter:
@@ -31,7 +31,7 @@ It's written in Erlang, and benefits from the stability and concurrency of the l
 
 Another big plus is that it doesn't have a custom binary protocol. It uses regular HTTP. This means you can use existing http infrastructure tools such as load balancers and clustering proxies. Better still, it's RESTful, so you interact with it using the CRUD operations we've come to know and love.
 
-The way you query data from CouchDB is through views which are written using the map/reduce approach. These views themselves are indexed, so they're very fast as long as you keep the indices fresh. While it's not an option now, it's possible that in the future the mapping step could be distributed amongst several which could make it ridiculously fast. 
+The way you query data from CouchDB is through views which are written using the map/reduce approach. These views themselves are indexed, so they're very fast as long as you keep the indices fresh. While it's not an option now, it's possible that in the future the mapping step could be distributed amongst several nodes which could make it ridiculously fast. 
 
 h3. Deep Structures, No Schemas
 
@@ -41,11 +41,11 @@ ORMs like ActiveRecord and DataMapper have done a lot to to ease the pain and ab
 
 All of this isn't an issue with CouchDB, and that's the biggest selling point for me. The fields in your documents can be hashes, they can be arrays, they can be arrays of hashes. Anything that can be serialized to JSON. It's about documents &mdash; not records. 
 
-As a quick example, rather than having to create an assets table for uploads, you can store all the metadata in a single field. That field can live right on the object that is responsible for it, where it belongs. Or you could store all the comments for a blog post inline with the post itself. There's a good article on how to do "inline vs. separate storage":http://www.cmlenz.net/archives/2007/10/couchdb-joins that's worth a read and goes over when that's a good idea.
+As a quick example, rather than having to create an assets table for uploads, you can store all the metadata in a single field. That field can live right on the object that is responsible for it, where it belongs. Or you could store all the comments for a blog post inline with the post itself. There's a good article comparing "inline vs. separate storage":http://www.cmlenz.net/archives/2007/10/couchdb-joins that is worth a read.
 
 h3. Downsides
 
-Nothing is without its problems, and CouchDB is no exception. For one, it's still alpha. That's not to say it's buggy and unusable &mdash; far from it &mdash; but there are likely to be changes before they hit 1.0. I can't say to what extent this will be an issue, but you should be aware of that.
+Nothing is without drawbacks, and CouchDB is no exception. For one, it's still alpha. That's not to say it's buggy and unusable &mdash; far from it &mdash; but there are likely to be changes before they hit 1.0. I can't say to what extent this will be an issue, but you should be aware of that.
 
 There is no security model. This turns out to not be _that_ big of a deal, but it's far from ideal. You can lock down the port it runs on to only talk to localhost, which I think happens by default.
 
@@ -64,6 +64,6 @@ end
 
 You might not need that @json/pure@ fix. I was having some problem where @#to_json@ was declared multiple times. It'd be nice if there was a merb_couchpotato gem so you could just say @use_orm :couchpotato@, and maybe use database.yml instead, but it's not really necessary yet.
 
-That's really all it takes. Go checkout the readme for Couch Potato and it's "introduction post":http://upstream-berlin.com/2008/10/27/couch-potato-unleashed-a-couchdb-persistence-layer-in-ruby/. 
+That's really all it takes. Go checkout the readme for Couch Potato and its "introduction post":http://upstream-berlin.com/2008/10/27/couch-potato-unleashed-a-couchdb-persistence-layer-in-ruby/. 
 
 Time to relax.
