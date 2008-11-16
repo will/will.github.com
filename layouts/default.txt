@@ -7,8 +7,7 @@ filter:    haml
   %head
     %meta{ "http-equiv" => "content-type", :content => "text/html; charset=utf-8" }
     %title
-      Will Leinweber -
-      = @page.title
+      = "#{@page.title} - Will Leinweber"
     %meta{ :name => "author", :content => @page.author }
     
     / Blueprint CSS Framework
