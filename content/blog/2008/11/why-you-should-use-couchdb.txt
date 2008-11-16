@@ -12,6 +12,7 @@ h3. New Approach to an Old Problem
 
 Your applications need to store and retrieve data. That's nothing new.  "CouchDB":http://incubator.apache.org/couchdb/, and other document databases like Amazon SimpleDB, are new however. Okay, I'll admit the concept of a document database is some "20 years old":http://en.wikipedia.org/wiki/IBM_Lotus_Notes, but it's safe to say that they've just started to gain popularity over the last year or so.
 
+<div class="image left"><img src="/images/2008/11/couchdb.png" /></div>
 Learning a document database is worthwhile, even if you don't end up using it for anything serious in the near future. You'll gain new insights on how to solve your current problems. Don't take my word for it, there's that line everyone quotes from The Pragmatic Programmer: _Learn at least one new database paradigm a year_, or something like that.
 
 What exactly makes it so great? Read on.
@@ -20,6 +21,12 @@ h3. Stable and Scalable
 
 When you update a document in CouchDB it doesn't go in and change the existing document. Instead, it just adds a new version. The upshot is that your data is never in a bad state, so even in a power failure you're not going to lose data or spend time verifying when you start up again. All these extra versions are deleted when you compact the database, so there isn't much of a storage penalty because of it.
 
+<div class="image right">
+  <a href="http://leinweber.us/post/58513962/we-need-more-erlangs">
+    <img src="/images/2008/11/erlangs.png" /><br />
+    <span class="alt">Other databases have low erlangs</span>
+  </a>
+</div>
 It's written in Erlang, and gets the stability and concurrency from both the language its design idioms. Unlike current relational databases that try and make a single query as fast as possible, CouchDB emphasizes not losing performance as the number of concurrent queries grows. 
 
 Another big plus is that it doesn't have some custom binary protocol. It uses HTTP. This means you can use existing http infrastructure like load balancers and clustering proxies. Better still, it's RESTful, so you interact with it using the CRUD operations we've come to know and love.

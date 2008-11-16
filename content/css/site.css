@@ -21,7 +21,10 @@ body {
 
 /* Headings
  * --------------------------------------------------------------------- */
-h1,h2,h3,h4,h5,h6 { color: <%= @page.color['header'] %>; }
+h1,h2,h3,h4,h5,h6 { 
+  color: <%= @page.color['header'] %>; 
+  clear: both; 
+}
 
 /* Text Elements
  * --------------------------------------------------------------------- */
@@ -117,6 +120,19 @@ a {
   list-style: none;
   font-family: Monaco, 'Courier New', 'Terminal', monospace;
 }
+
+.image{
+  float: right;
+  padding: 0.5em;
+/*  margin: 0.5em;*/
+  margin: 1.5em;
+  background: <%= @page.color['box-bg'] %>;
+  font-family: Monaco, 'Courier New', 'Terminal', monospace;
+}
+.image img {margin: 0;}
+.right{float:right; margin-right: 0;}
+.left{float:left; margin-left: 0;}
+
 
 .commentlink {float: left;}
 
