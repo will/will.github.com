@@ -53,9 +53,15 @@ The first time you run a view it will be slow. It has to go through every docume
 
 h3. Getting Started
 
-Go ahead and compile CouchDB from the svn head rather than going for the last release. You can find instructions over on "their wiki":http://wiki.apache.org/couchdb/Installation. You'll also want a persistence layer. So far, I've been most impressed with "Couch Potato":http://github.com/langalex/couch_potato/tree/master. I've been using it with Merb, which has been great. You just need to add it to your @config/dependencies.rb@ then add this to your @config/init.rb@
+Go ahead and compile CouchDB from the svn head rather than going for the last release. You can find instructions over on "their wiki":http://wiki.apache.org/couchdb/Installation. You'll also want a persistence layer. So far, I've been most impressed with "Couch Potato":http://github.com/langalex/couch_potato/tree/master. I've been using it with Merb, which has been great. You just need to add it to your @config/dependencies.rb@ like this
 
-<%- coderay(:lang => "ruby", :line_numbers => "inline") do -%>
+<%- coderay(:lang => "ruby") do -%>
+dependency "langalex-couch_potato", "0.1", :require_as => "couch_potato"
+<%- end -%>
+
+then add this to your @config/init.rb@
+
+<%- coderay(:lang => "ruby") do -%>
 Merb::BootLoader.before_app_loads do
   CouchPotato::Config.database_name = "appname_#{Merb.environment}"
   require 'json/pure'
