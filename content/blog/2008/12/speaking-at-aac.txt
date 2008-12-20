@@ -6,11 +6,14 @@ layout: post
 filter:
   - textile
 ---
-<div class="right">
-<a href="http://www.actsasconference.com" title="Rails For All presents acts_as_conference"><img src= "http://www.actsasconference.com/images/badge_med_speaker.png" border="0" /></a>
+<div class="right image" style="background: white;">
+<a href="http://www.actsasconference.com" title="Rails For All presents acts_as_conference"><img src= "/images/2008/12/aac_badge.png" /></a>
 </div>
 
-I attended Acts as Confernece last February and had a wonderful time. This time around I'm giving a talk There's really something great about small conferences.
+I attended "Acts as Confernece":http://actsasconference.com last February and had a wonderful time. There's really something special about small conferences that's missing from the larger ones. This time around I'm very excited to be on the other side of the podium as "one of the speakers":http://actsasconference.com/speakers/will-leinweber. Not to mention it's great to go down to Orlando in the middle of a frigid Illinois winter!
 
+Here's a little more on the conference itself:
 
-Acts as Conference 2009 is a two-day Rails conference that will make you a more competitive Rails developer by learning from those driving the innovation that is fueling the Rails community. Held February 6th and 7th in Orlando, Florida, Acts as Conference features a great speaker lineup, free food, a chance to meet with Rails innovators, and a live via video Q&A session with David Heinemeier Hansson. At $125 dollars and limited to 175 attendees, the conference will sell out fast, perhaps faster than last year. Register today at http://www.actsasconference.com. See you there!
+bq. Acts as Conference 2009 is a two-day Rails conference that will make you a more competitive Rails developer by learning from those driving the innovation that is fueling the Rails community. Held February 6th and 7th in Orlando, Florida, Acts as Conference features a great speaker lineup, free food, a chance to meet with Rails innovators, and a live via video Q&A session with David Heinemeier Hansson. At $125 and limited to 175 attendees, the conference will sell out fast, perhaps faster than last year. Register today at "actsasconference.com":http://actsasconference.com.
+
+See you in Florida!
