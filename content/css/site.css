@@ -144,7 +144,10 @@ a {
   padding: 1em;
   padding-bottom 0;
 }
-/* Disqus Hackery
+
+.coderay { margin-bottom: 2em; }
+
+/* Disqus
  * --------------------------------------------------------------------- */
 div#dsq-popup-profile {left: 0 !important;}
  
