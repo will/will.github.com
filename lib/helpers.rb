@@ -36,3 +36,15 @@ end
 def find_post(title)
   @pages.find( :limit => 1, :title => title).first
 end
+
+def open_id_delegation
+  return unless @page.url == "/"
+  %Q{
+  <!-- openid delegation -->
+  <link rel="openid.server" href="http://www.myopenid.com/server" />
+  <link rel="openid.delegate"href="http://wl.myopenid.com/" />
+  <link rel="openid2.local_id" href="http://wl.myopenid.com" />
+  <link rel="openid2.provider" href="http://www.myopenid.com/server" />
+  <meta http-equiv="X-XRDS-Location" content="http://www.myopenid.com/xrds?username=wl.myopenid.com" />
+  }
+end
