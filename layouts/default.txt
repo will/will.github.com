@@ -59,9 +59,7 @@ filter:    haml
           %ul
             - @pages.find(:limit => :all, :draft => nil, :sort_by => "created_at", :blog_post => true, :reverse => true).each do |post|
               %li= link_to post.title, post.url
-      
-        %a{:href =>"http://www.actsasconference.com"}
-          %img{:src => "http://www.actsasconference.com/images/badge_s.png"}
+
       
       .column.span-20.prepend-2.first.last
         %hr
