@@ -28,7 +28,7 @@ filter:    haml
     .container
       .column.span-15.prepend-2.first
         %p.title.name
-          %a{ :href => "/"} Will Leinweber
+          %a{ :href => "/", :rel => "me"} Will Leinweber
       
       .column.span-5.append-2.last
         %p.title.domain
