@@ -1,5 +1,5 @@
 --- 
-title:      CI Radiator in JavaSript
+title:      CI Radiator in Javascript
 created_at: 2010-03-15 00:16:00.078295 -06:00
 blog_post:  true
 layout: post
