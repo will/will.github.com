@@ -42,7 +42,7 @@ There can be some problems with gem bundler, though. The gist of it is that you 
 
 Celerity
 --------
-This is what's actually doing the work. It's a JRuby-only gem, since it uses the Java [HttpUnit](http://httpunit.sourceforge.net/) headless web browser. This is a complete web browser, with it's on javascript engine, except it is just controlled though some API, and doesn't have a display.
+This is what's actually doing the work. It's a JRuby-only gem, since it uses the Java [HttpUnit](http://httpunit.sourceforge.net/) headless web browser. This is a complete web browser, with its own javascript engine, except it is just controlled though some API, and doesn't have a display.
 
 Selenium was cool for it's time. Watir too, I guess, though I never used it. But relying on a real browser sucks. It's really slow. You have to worry about browser upgrades breaking the tenuous control. And it makes your CI server a hundred times more complicated than it has to be. Fuck that, when you can use Celerity which is awesome.
 
