@@ -2,7 +2,7 @@ require 'rake/contrib/sshpublisher'
 
 namespace :deploy do
   SITE.user       = "maduyb@uiuc.us"
-  SITE.host       = "uiuc.us"
+  SITE.host       = "bitfission.com"
   SITE.rsync_args = %w( -av --delete )
 
   task :staging => [:clobber, :build] do
