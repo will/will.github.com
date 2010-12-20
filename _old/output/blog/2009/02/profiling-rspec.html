@@ -1,0 +1,137 @@
+<html lang='en-us' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <meta content='text/html; charset=utf-8' http-equiv='content-type' />
+    <title>
+      Profiling RSpec - Will Leinweber
+    </title>
+    <meta content='Will Leinweber' name='author' />
+    
+    <!-- Blueprint CSS Framework -->
+    <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
+    <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
+    <!-- CodeRay syntax highlighting CSS -->
+    <link href='/css/coderay.css' rel='stylesheet' type='text/css' />
+    <!-- Homepage CSS -->
+    <link href='/css/site.css' media='screen, projection' rel='stylesheet' type='text/css' />
+    <!-- Feed Discovery -->
+    <link href='http://feeds.feedburner.com/bitfission/' rel='alternate' title='RSS feed' type='application/atom+xml' />
+  </head>
+  <body>
+    <div class='container'>
+      <div class='column span-15 prepend-2 first'>
+        <p class='title name'>
+          <a href='/' rel='me'>Will Leinweber</a>
+        </p>
+      </div>
+      <div class='column span-5 append-2 last'>
+        <p class='title domain'>
+          <a href='/'>
+            bitfission<small>.com</small></a>
+        </p>
+      </div>
+      <div class='column span-20 prepend-2 append-2 first last'>
+        <hr />
+      </div>
+      <div class='column span-15 prepend-2 first'>
+        <div class="blogContent">
+            <div class="singleArticleHolder">
+                <h2 class="articleTitle">Profiling RSpec</h2>
+                <p class="articleDate">February 01, 2009</p>
+                <div class="articleContent">
+                  <p>If you have anything approaching a large test suite, the time spent running them becomes an important factor. The longer they take, the less often I tend to run them, which is bad. And I&#8217;m probably not alone in that. Ideally you&#8217;d be refactoring all your tests, removing duplication and such. If you&#8217;re just interested in speeding things up, though it&#8217;d be nice to know where the slow specs are.</p>
+        <p>RSpec ships with a profile formatter that, but it leaves a lot to be desired. It only reports the top 10 slowest examples, and with several thousand specs, the top ten just isn&#8217;t enough. It also doesn&#8217;t provide any sort of statistics which are nice to track over time, say on the CI box. So let&#8217;s improve this.</p>
+        <p><img src="/images/2009/02/stopwatch.jpg" alt="" /></p>
+        <h3>RSpec Formatters</h3>
+        <p>Just run <code>spec</code> by itself, and you&#8217;ll see there are about a half dozen formatters. Let&#8217;s take a closer look at the <a href="http://github.com/dchelimsky/rspec/blob/738d9245c3ff68add2218294e3eb46951a18f245/lib/spec/runner/formatter/profile_formatter.rb">existing profile formatter</a>. It records the time taken for each example and then prints the top ten in <code>#start_dump</code>. The recording part is fine, we just need to do a little more work in that dump method there.</p>
+        <div class="CodeRay">
+        <pre><span class="r">def</span> <span class="fu">start_dump</span>&#x000A;   <span class="r">super</span>&#x000A;   &#x000A;   <span class="iv">@example_times</span> = <span class="iv">@example_times</span>.sort_by <span class="r">do</span> |description, example, time|&#x000A;     time&#x000A;   <span class="r">end</span>.reverse&#x000A;   &#x000A;   times = <span class="iv">@example_times</span>.map {|d,e,t| t}&#x000A;   mean = times.mean&#x000A;   stddev = times.standard_deviation&#x000A;   k = <span class="i">2</span>&#x000A;   <span class="iv">@example_times</span>.reject! { |d,e,t| t &lt; mean + k * stddev }&#x000A;   &#x000A;   <span class="iv">@output</span>.puts <span class="s"><span class="dl">&quot;</span><span class="ch">\n</span><span class="ch">\n</span><span class="k">Top </span><span class="il"><span class="idl">#{</span><span class="iv">@example_times</span>.size<span class="idl">}</span></span><span class="k"> slowest examples:</span><span class="ch">\n</span><span class="dl">&quot;</span></span>&#x000A;   &#x000A;   <span class="iv">@example_times</span>.each <span class="r">do</span> |description, example, time|&#x000A;     <span class="iv">@output</span>.print red(sprintf(<span class="s"><span class="dl">&quot;</span><span class="k">%.7f</span><span class="dl">&quot;</span></span>, time))&#x000A;     <span class="iv">@output</span>.puts <span class="s"><span class="dl">&quot;</span><span class="ch">\t</span><span class="il"><span class="idl">#{</span>description<span class="idl">}</span></span><span class="k"> </span><span class="il"><span class="idl">#{</span>example<span class="idl">}</span></span><span class="dl">&quot;</span></span>&#x000A;   <span class="r">end</span>&#x000A;   &#x000A;   <span class="iv">@output</span>.puts <span class="s"><span class="dl">&quot;</span><span class="ch">\n</span><span class="ch">\n</span><span class="k">Stats</span><span class="dl">&quot;</span></span>&#x000A;   &#x000A;   <span class="iv">@output</span>.puts <span class="s"><span class="dl">&quot;</span><span class="k">Mean:</span><span class="ch">\t</span><span class="il"><span class="idl">#{</span><span class="s"><span class="dl">&quot;</span><span class="k">%.5f</span><span class="dl">&quot;</span></span> % mean<span class="idl">}</span></span><span class="dl">&quot;</span></span>&#x000A;   <span class="iv">@output</span>.puts <span class="s"><span class="dl">&quot;</span><span class="k">StdDev:</span><span class="ch">\t</span><span class="il"><span class="idl">#{</span><span class="s"><span class="dl">&quot;</span><span class="k">%.5f</span><span class="dl">&quot;</span></span> % stddev<span class="idl">}</span></span><span class="dl">&quot;</span></span>&#x000A;   <span class="iv">@output</span>.puts <span class="s"><span class="dl">&quot;</span><span class="k">Total:</span><span class="ch">\t</span><span class="il"><span class="idl">#{</span>times.size<span class="idl">}</span></span><span class="dl">&quot;</span></span>&#x000A;   <span class="iv">@output</span>.puts <span class="s"><span class="dl">&quot;</span><span class="k">Slow:</span><span class="ch">\t</span><span class="il"><span class="idl">#{</span><span class="iv">@example_times</span>.size<span class="idl">}</span></span><span class="dl">&quot;</span></span>&#x000A;   &#x000A;   <span class="iv">@output</span>.flush&#x000A; <span class="r">end</span></pre>
+        </div>
+        <p>So what&#8217;s going on here? It&#8217;s not too much different than the built in one, except we compute the standard deviation and mean of the set of times and use them grab all of the slow specs. This of course assumes that you already have <code>#standard_deviation</code> and <code>#mean</code> on <code>Array</code>. If you don&#8217;t or don&#8217;t feel comfortable adding those to the class, they can just as easily be methods in this module.</p>
+        <p>Once we have those, we keep the ones that are 2 deviations from the mean. The choice of two is arbitrary, but I found this gave just enough to get a good look at the slow specs. Finally we print some of the stats we collected. This is great to run on the your CI box. It still checks the whole suite like <code>rake spec</code>, but now there&#8217;s the chance to record the stats and see how the tests are evolving over time.</p>
+        <h3>Using the new Formatter</h3>
+        <p>To get this going, we have to make a class that inherits from <code>Spec::Runner::Formatter::ProgressBarFormatter</code>, and that file will also need to <code>require "spec/runner/formatter/progress_bar_formatter"</code>. The rest is exactly the same as the built in <code>ProfileFormatter</code>. For example, name this new formatter <code>RobustProfileFormatter</code>, and put it in <code>spec/config</code>. To run it once off the command looks like this: <code>spec -c -r spec/config/robust_profile_formatter.rb -f RobustProfileFormatter</code>. The <code>-c</code> option turns on color output, <code>-r</code> requires the new code, and <code>-f</code> chooses it as the formatter.</p>
+        <p>That&#8217;s a lot to type out, and a rake task would be much nicer. In <code>lib/tasks/rspec.rake</code> there are a bunch of tasks. Inside the <code>spec</code> namespace is a good place to put our new task:</p>
+        <p><div class="CodeRay">
+        <pre>desc <span class="s"><span class="dl">&quot;</span><span class="k">Profile specs</span><span class="dl">&quot;</span></span>&#x000A;<span class="co">Spec</span>::<span class="co">Rake</span>::<span class="co">SpecTask</span>.new(<span class="sy">:profile</span>) <span class="r">do</span> |t|&#x000A;  t.spec_opts = [<span class="s"><span class="dl">&quot;</span><span class="k">-c</span><span class="dl">&quot;</span></span>, &#x000A;                 <span class="s"><span class="dl">&quot;</span><span class="k">-r spec/config/robust_profile_formatter.rb</span><span class="dl">&quot;</span></span>, &#x000A;                 <span class="s"><span class="dl">&quot;</span><span class="k">-f RobustProfileFormatter</span><span class="dl">&quot;</span></span>]&#x000A;  t.spec_files = <span class="co">FileList</span>[<span class="s"><span class="dl">&quot;</span><span class="k">spec/**/*/*_spec.rb</span><span class="dl">&quot;</span></span>]&#x000A;<span class="r">end</span>&#x000A;<br />&#x000A;<div class="CodeRay"><br />&#x000A;<pre>desc <span class="s"><span class="dl">&quot;</span><span class="k">Profile specs</span><span class="dl">&quot;</span></span><br />&#x000A;<span class="co">Spec</span>::<span class="co">Rake</span>::<span class="co">SpecTask</span>.new(<span class="sy">:profile</span>) <span class="r">do</span> |t|<br />&#x000A;  t.spec_opts = [<span class="s"><span class="dl">&quot;</span><span class="k">-c</span><span class="dl">&quot;</span></span>, <br />&#x000A;                 <span class="s"><span class="dl">&quot;</span><span class="k">-r spec/config/robust_profile_formatter.rb</span><span class="dl">&quot;</span></span>, <br />&#x000A;                 <span class="s"><span class="dl">&quot;</span><span class="k">-f RobustProfileFormatter</span><span class="dl">&quot;</span></span>]<br />&#x000A;  t.spec_files = <span class="co">FileList</span>[<span class="s"><span class="dl">&quot;</span><span class="k">spec/<strong>/</strong>/*_spec.rb</span><span class="dl">&quot;</span></span>]<br />&#x000A;<span class="r">end</span><br /></pre></p>
+        </div>
+        <p></notextile></p>
+        <p>That&#8217;s all there is to it, go and speed up your specs!</p>
+        <p><em><a href="http://flickr.com/photos/teamperks/2110119064/">Stopwatch image</a> from flickr</em></p>
+        
+        
+        
+        
+                </div>
+            </div>
+            <div class='otherposts'><ul><li>&nbsp;&nbsp;&nbsp;&nbsp;Next Post: <a href="/blog/2009/02/aac-talk.html">Acts as Conference Talk</a></li><li>Previous Post: <a href="/blog/2008/12/speaking-at-aac.html">Speaking at Acts as Conference</a></li></ul></div>
+            <div id="disqus_thread"></div>    
+            <script type="text/javascript" src="http://disqus.com/forums/bitfission/embed.js">
+              var disqus_title = "Profiling RSpec";
+            </script>
+            <noscript><a href="http://bitfission.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+        </div>
+      </div>
+      <div class='column span-2 sidebar'>
+        <a href='http://feeds.feedburner.com/bitfission'>
+          <img src='/images/rss.png' />
+        </a>
+      </div>
+      <div class='column span-3 append-2 last sidebar'>
+        <ul>
+          <li><a href="http://mailhide.recaptcha.net/d?k=01zfKie6B3RqCTDaRzr6rj9Q==&amp;c=sues3PgmCHchVBA3-99bUL5e9iUd2Vx9nRlM84OYOMw=" onclick="window.open('http://mailhide.recaptcha.net/d?k=01zfKie6B3RqCTDaRzr6rj9Q==&amp;c=sues3PgmCHchVBA3-99bUL5e9iUd2Vx9nRlM84OYOMw=', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;">email</a></li>
+          <li><a href="http://github.com/will">github</a></li>
+          <li><a href="http://leinweber.us">tumble</a></li>
+          <li><a href="http://twitter.com/leinweber">twitter</a></li>
+          <li><a href="http://www.linkedin.com/in/leinweber">linkedin</a></li>
+        </ul>
+      </div>
+      <div class='column span-5 append-2 last sidebar'>
+        <h3>Recent Posts</h3>
+        <div class='box'>
+          <ul>
+            <li><a href="/blog/2010/10/some-talks.html">Some Talks</a></li>
+            <li><a href="/blog/2010/07/auto-merge-gemfile-lock.html">Auto Merge Gemfile.lock</a></li>
+            <li><a href="/blog/2010/05/rails_integration_stack_for_winners.html">Rails Integration Testing Stack for Winners</a></li>
+            <li><a href="/blog/2010/04/speaking_at_rdrc.html">Red Dirt Ruby Conference</a></li>
+            <li><a href="/blog/2010/03/ci_radiator.html">CI Radiator in Javascript</a></li>
+            <li><a href="/blog/2009/09/ruby19.html">Why we're not on Ruby1.9</a></li>
+            <li><a href="/blog/2009/06/celerity.html">Quick Guide to Celerity</a></li>
+            <li><a href="/blog/2009/02/aac-talk.html">Acts as Conference Talk</a></li>
+            <li><a href="/blog/2009/02/profiling-rspec.html">Profiling RSpec</a></li>
+            <li><a href="/blog/2008/12/speaking-at-aac.html">Speaking at Acts as Conference</a></li>
+            <li><a href="/blog/2008/11/why-you-should-use-couchdb.html">Why You Should Use CouchDB</a></li>
+            <li><a href="/blog/2008/11/switching-to-webby.html">Switching to Webby</a></li>
+            <li><a href="/blog/2008/09/closures-in-ruby.html">Closures in Ruby</a></li>
+            <li><a href="/blog/2008/09/faking-or-shift-left.html">Faking "or shift left"</a></li>
+            <li><a href="/blog/2008/04/test-driving-file-parsers.html">Test Driving a File Parser</a></li>
+            <li><a href="/blog/2008/04/reopening-nil.html">Reopening NilClass</a></li>
+            <li><a href="/blog/2008/01/merb-and-datamapper.html">Merb and Datamapper</a></li>
+            <li><a href="/blog/2008/01/more-on-setting-up-leopard.html">More on setting up Leopard</a></li>
+            <li><a href="/blog/2008/01/rubygems-and-leopard.html">RubyGems and Leopard</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class='column span-20 prepend-2 first last'>
+        <hr />
+      </div>
+      <div class='column span-15 prepend-2 first' id='footer'>
+        <p><a href="/">Will Leinweber - bitfission</a></p>
+      </div>
+      <div class='column span-5 append-2 last' id='footer'>
+        <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/us/' rel='license'>
+          <img alt='Creative Commons License' src='http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png' style='border-width:0' />
+        </a>
+      </div>
+    </div>
+    
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+    var pageTracker = _gat._getTracker("UA-3204018-1");
+    pageTracker._trackPageview();
+    } catch(err) {}</script>
+  </body>
+</html>

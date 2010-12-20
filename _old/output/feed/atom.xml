@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+  <title>Will Leinweber</title>
+  <subtitle>Bitfission</subtitle>
+  <link href="http://bitfission.com/feed/atom.xml" rel="self" />
+  <link href="http://bitfission.com/" />
+  <updated>2010-11-20T15:16:22-06:00</updated>
+  <author>
+    <name>Will Leinweber</name>
+    <email>will@bitfission.com</email>
+  </author>
+  <id>http://bitfission.com/</id>
+  
+  <entry>
+    <title>Some Talks</title>
+    <link href="http://bitfission.com/blog/2010/10/some-talks.html" />
+    <id>tag:bitfission.com,2010-07-16:1279311420</id>
+    <updated>2010-07-16T15:17:00-05:00</updated>
+    <content type="html">&lt;p&gt;I gave a few talks and just realized I never put them up anywhere.
+The first talk is one I gave as an introduction to BDD using rspec to some students at uiuc.
+It seems like giving an &quot;intro to bdd&quot; talk is something everyone has to eventually do ;)&lt;/p&gt;
+
+&lt;iframe src=&quot;http://player.vimeo.com/video/11444008&quot; width=&quot;400&quot; height=&quot;300&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
+
+
+&lt;p&gt;&lt;a href=&quot;http://vimeo.com/11444008&quot;&gt;Intro to Behavior Driven Design&lt;/a&gt; from &lt;a href=&quot;http://vimeo.com/willl&quot;&gt;will l&lt;/a&gt; on &lt;a href=&quot;http://vimeo.com&quot;&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;
+
+
+&lt;p&gt;Second is a talk I gave at pecha kucha, which is a lot like ignite. Same auto advancing format, just a different amount of slides and time per slide.&lt;/p&gt;
+
+&lt;iframe src=&quot;http://player.vimeo.com/video/13806419&quot; width=&quot;400&quot; height=&quot;225&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
+
+
+&lt;p&gt;&lt;a href=&quot;http://vimeo.com/13806419&quot;&gt;me @ pecha kucha&lt;/a&gt; from &lt;a href=&quot;http://vimeo.com/willl&quot;&gt;will l&lt;/a&gt; on &lt;a href=&quot;http://vimeo.com&quot;&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Auto Merge Gemfile.lock</title>
+    <link href="http://bitfission.com/blog/2010/07/auto-merge-gemfile-lock.html" />
+    <id>tag:bitfission.com,2010-07-16:1279257420</id>
+    <updated>2010-07-16T00:17:00-05:00</updated>
+    <content type="html">
+
+&lt;div class=&quot;right image&quot;&gt;
+  &lt;img src=&quot;/images/2010/07/lock.jpg&quot; /&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Here's the problem: you're working on a topic branch and add a gem to your Gemfile, and someone else has added a gem to master before you're done. When you go to rebase, every single one of your commits is going to have a conflict with &lt;code&gt;Gemfile.lock&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;All you have to do is run &lt;code&gt;bundle lock&lt;/code&gt; to get bundler to relock then add that and continue your rebase. But that's so damn tedious.&lt;/p&gt;
+
+&lt;p&gt;Good news! I just figured out how to tell git how to do that for you, and it works great. There are two files you have to edit.&lt;/p&gt;
+
+&lt;h3&gt;gitconfig&lt;/h3&gt;
+
+&lt;p&gt;First is your &lt;code&gt;~/.gitconfig&lt;/code&gt; file. Here we're going to give it a new merge strategy, one that will just relock the gemfile. Add this to the end:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[merge &quot;gemfilelock&quot;]
+  name = relocks the gemfile.lock
+  driver = bundle lock
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The driver is what git will use to try and fix the conflict. Its exit status will tell git if the merge was successful or not. Here all we're doing is having bundler relock. You can see it in action in &lt;a href=&quot;http://github.com/will/dotfiles/commit/4ed4930c61df795b7fbc9732d3c6463164ebb43f&quot;&gt;my dotfiles&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3&gt;gitattributes&lt;/h3&gt;
+
+&lt;p&gt;Next up, we have to tell git to use our new strategy for &lt;code&gt;Gemfile.lock&lt;/code&gt;, and we do that with &lt;a href=&quot;http://www.kernel.org/pub/software/scm/git/docs/gitattributes.html&quot;&gt;gitattributes&lt;/a&gt;. You can either put this in &lt;code&gt;project/.git/info/attributes&lt;/code&gt; or &lt;code&gt;project/.gitattributes&lt;/code&gt;. I did the .git directory one myself, but it doesn't matter. We just need one line in this file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Gemfile.lock merge=gemfilelock
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;results&lt;/h3&gt;
+
+&lt;p&gt;And that's it! Here's what happen when you rebase now&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;First, rewinding head to replay your work on top of it...
+Applying: commit one
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+Your bundle is already locked, relocking.
+&lt;span style=&quot;color: green;&quot;&gt;Your bundle is now locked. Use `bundle show [gemname]` to list the gems in the environment.&lt;/span&gt;
+Auto-merging Gemfile
+Auto-merging Gemfile.lock
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;p&gt;Now that, if I may say so myself, is really awesome! (image credit &lt;a href=&quot;http://www.flickr.com/photos/maistora/3237164755/&quot;&gt;malstora&lt;/a&gt;)&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Red Dirt Ruby Conference</title>
+    <link href="http://bitfission.com/blog/2010/04/speaking_at_rdrc.html" />
+    <id>tag:bitfission.com,2010-04-22:1271916960</id>
+    <updated>2010-04-22T01:16:00-05:00</updated>
+    <content type="html">&lt;p&gt;&lt;img src=&quot;/images/2010/04/rdrc.png&quot; alt=&quot;logo&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I'll be speaking about using CouchDB from ruby at the upcoming &lt;a href=&quot;http://reddirtrubyconf.com/&quot;&gt;Red Dirt Ruby Conference&lt;/a&gt; on May 6th in Oklahoma City. The format is new, at least to me. There are four themes: Ruby, Rails 3, NoSQL, and Servers.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://reddirtrubyconf.com/presentation/detail/31&quot;&gt;My talk&lt;/a&gt; is in the NOSQL theme and it will give you everything you need to get started using CouchDB from Ruby. The rest of the lineup looks amazing, and I'm really looking forward to it.&lt;/p&gt;
+
+&lt;p&gt;I'll be sure to post slides and such up here when I have them. Hope to see you in Oklahoma!&lt;/p&gt;
+
+&lt;p&gt;Update: And here are my slides:&lt;/p&gt;
+
+&lt;div style=&quot;width:425px&quot; id=&quot;__ss_3996196&quot;&gt;&lt;strong style=&quot;display:block;margin:12px 0 4px&quot;&gt;&lt;a href=&quot;http://www.slideshare.net/leinweber/couchdb-red-dirt-ruby-conference&quot; title=&quot;CouchDB @ red dirt ruby conference&quot;&gt;CouchDB @ red dirt ruby conference&lt;/a&gt;&lt;/strong&gt;&lt;object id=&quot;__sse3996196&quot; width=&quot;425&quot; height=&quot;355&quot;&gt;&lt;param name=&quot;movie&quot; value=&quot;http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=2010-05-06couchdbrubyandyounewcolor-100506112253-phpapp02&amp;rel=0&amp;stripped_title=couchdb-red-dirt-ruby-conference&quot; /&gt;&lt;param name=&quot;allowFullScreen&quot; value=&quot;true&quot;/&gt;&lt;param name=&quot;allowScriptAccess&quot; value=&quot;always&quot;/&gt;&lt;embed name=&quot;__sse3996196&quot; src=&quot;http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=2010-05-06couchdbrubyandyounewcolor-100506112253-phpapp02&amp;rel=0&amp;stripped_title=couchdb-red-dirt-ruby-conference&quot; type=&quot;application/x-shockwave-flash&quot; allowscriptaccess=&quot;always&quot; allowfullscreen=&quot;true&quot; width=&quot;425&quot; height=&quot;355&quot;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/div&gt;
+
+
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Rails Integration Testing Stack for Winners</title>
+    <link href="http://bitfission.com/blog/2010/05/rails_integration_stack_for_winners.html" />
+    <id>tag:bitfission.com,2010-05-01:1272691020</id>
+    <updated>2010-05-01T00:17:00-05:00</updated>
+    <content type="html">&lt;p&gt;Full-stack, acceptance, integration, or whatever-you-want-to-call-it testing should be a large part of your test suite. I'm not going to waste time trying to convince anyone of this, since there are probably a million other blog posts doing that (and probably twice as many arguing the different names).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2010/05/finish.jpg&quot; alt=&quot;finish line&quot; /&gt;
+Rather, I'll show you the hands-down best way to do it with what's out there right now. Follow this setup and you too can be a winner. I've written &lt;a href=&quot;/2009/06/celerity.html&quot;&gt;a bit&lt;/a&gt; about this earlier, but things have gotten better since then.&lt;/p&gt;
+
+&lt;p&gt;Currently, while Rails 3 is close, it's not out yet, so I'm ignoring it for this post. Latest is 2.3.5. Here we go.&lt;/p&gt;
+
+&lt;h2&gt;Cucumber&lt;/h2&gt;
+
+&lt;p&gt;Cucumber drives everything. It's awesome, and you should have already heard of it. Everyone uses it. It's surpassed the vegetable on google for the top result.&lt;/p&gt;
+
+&lt;p&gt;It ships with webrat, but &lt;em&gt;don't use webrat&lt;/em&gt;. It's neat and probably helped a lot to get cucumber popular. But it can't do javascript. And what site doesn't have JS these days. You need to be testing that too, you know.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://cukes.info/&quot;&gt;Cucumber &amp;mdash; cukes.info&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Capybara&lt;/h2&gt;
+
+&lt;p&gt;This is what you use instead of webrat. It lets you use a bunch of web drivers behind it. Out out of the box it supports selenium (ugh) and Celerity/Culerity (awesome). Before getting cucumber to work with Capybara was a little hacky, but they're best friends now. Use this.&lt;/p&gt;
+
+&lt;p&gt;You tag the stories that need javascript with @javascript, and it'll fire up culerity when it needs to. That's all you have to do. It's fantastic.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://github.com/jnicklas/capybara&quot;&gt;Capybara &amp;mdash; github&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Culerity&lt;/h2&gt;
+
+&lt;p&gt;This provides a nice bridge between your MRI Ruby rails app, and the jruby-only gem Celerity. It'll fire off a separate server running in the test environment, then start up a jruby process for celerity.&lt;/p&gt;
+
+&lt;p&gt;Now this one can be a bit of a pain to set up, since you need to install jruby and then celerity and make sure that's all working and wired up. A nice alternative is &lt;a href=&quot;http://github.com/fletcherm/culerity/&quot;&gt;Matt Fletcher's fork&lt;/a&gt;, which bundles all that into the gem itself so you don't have to worry about it.&lt;/p&gt;
+
+&lt;p&gt;There can be some problems with gem bundler, though. The gist of it is that you have to use JRuby v1.3.1 or earlier. I wrote more details about the bug on the  &lt;a href=&quot;http://groups.google.com/group/culerity-dev/browse_thread/thread/3c1ed5f38d540ad1&quot;&gt;mailing list&lt;/a&gt;. It looks like &lt;em&gt;just yesterday&lt;/em&gt; Matt updated his fork to fix this, so hurray!&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://github.com/langalex/culerity&quot;&gt;Culerity &amp;mdash; github&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Celerity&lt;/h2&gt;
+
+&lt;p&gt;This is what's actually doing the work. It's a JRuby-only gem, since it uses the Java &lt;a href=&quot;http://httpunit.sourceforge.net/&quot;&gt;HttpUnit&lt;/a&gt; headless web browser. This is a complete web browser, with its own javascript engine, except it is just controlled though some API, and doesn't have a display.&lt;/p&gt;
+
+&lt;p&gt;Selenium was cool for it's time. Watir too, I guess, though I never used it. But relying on a real browser sucks. It's really slow. You have to worry about browser upgrades breaking the tenuous control. And it makes your CI server a hundred times more complicated than it has to be. Fuck that, when you can use Celerity which is awesome.&lt;/p&gt;
+
+&lt;p&gt;For some reason I can't quite remember, I had to stay on version 0.7.6. If you're having weird problems try that version. Of course, if you're using Matt's culerity fork like I suggested, you don't have to worry about it.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://celerity.rubyforge.org/&quot;&gt;Celerity&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;picture credit: &lt;a href=&quot;http://www.flickr.com/photos/philon/2477878611/&quot;&gt;philo nordlund&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>CI Radiator in Javascript</title>
+    <link href="http://bitfission.com/blog/2010/03/ci_radiator.html" />
+    <id>tag:bitfission.com,2010-03-15:1268633760</id>
+    <updated>2010-03-15T01:16:00-05:00</updated>
+    <content type="html">&lt;p&gt;Continuous integration is a must. But if your team can't easily see the current build status, you loose a major benefit of CI: short feedback loops. The longer it takes to notice that the build is broken, the worse off you'll be.&lt;/p&gt;
+
+&lt;p&gt;I wrote really simple radiator that shows the current build state and the SHA of the associated commit just using HTML and JavaScript. We have it sitting up in the corner of the room, and it's been invaluable over the last few months. I even made a video showing it off, but never got around to really sharing it. Check it out:&lt;/p&gt;
+
+&lt;p&gt;&lt;object width=&quot;500&quot; height=&quot;375&quot;&gt;&lt;param name=&quot;allowfullscreen&quot; value=&quot;true&quot; /&gt;&lt;param name=&quot;allowscriptaccess&quot; value=&quot;always&quot; /&gt;&lt;param name=&quot;movie&quot; value=&quot;http://vimeo.com/moogaloop.swf?clip_id=8851542&amp;amp;server=vimeo.com&amp;amp;show_title=1&amp;amp;show_byline=0&amp;amp;show_portrait=0&amp;amp;color=ff0179&amp;amp;fullscreen=1&quot; /&gt;&lt;embed src=&quot;http://vimeo.com/moogaloop.swf?clip_id=8851542&amp;amp;server=vimeo.com&amp;amp;show_title=1&amp;amp;show_byline=0&amp;amp;show_portrait=0&amp;amp;color=ff0179&amp;amp;fullscreen=1&quot; type=&quot;application/x-shockwave-flash&quot; allowfullscreen=&quot;true&quot; allowscriptaccess=&quot;always&quot; width=&quot;500&quot; height=&quot;375&quot;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/p&gt;
+
+&lt;p&gt;We use Hudson for CI, and if you're using it too, you can just go ahead and use this html yourself with a few modifications. Enjoy!&lt;/p&gt;
+
+&lt;script src=&quot;http://gist.github.com/281402.js&quot;&gt;&lt;/script&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Why You Should Use CouchDB</title>
+    <link href="http://bitfission.com/blog/2008/11/why-you-should-use-couchdb.html" />
+    <id>tag:bitfission.com,2008-11-16:1226858400</id>
+    <updated>2008-11-16T12:00:00-06:00</updated>
+    <content type="html">&lt;h3&gt;New Approach to an Old Problem&lt;/h3&gt;
+&lt;p&gt;Your applications need to store and retrieve data. That&amp;#8217;s nothing new.  &lt;a href=&quot;http://incubator.apache.org/couchdb/&quot;&gt;CouchDB&lt;/a&gt;, and other document databases like Amazon SimpleDB, are new to the game however. Okay, I&amp;#8217;ll admit the general concept is some &lt;a href=&quot;http://en.wikipedia.org/wiki/IBM_Lotus_Notes&quot;&gt;20 years old&lt;/a&gt;, but it&amp;#8217;s safe to say that they&amp;#8217;ve recently started to gain popularity over the last year or so.&lt;/p&gt;
+&lt;div class=&quot;image left&quot;&gt;&lt;img src=&quot;/images/2008/11/couchdb.png&quot; /&gt;&lt;/div&gt;
+&lt;p&gt;Learning a document database is worthwhile, even if you don&amp;#8217;t end up using it for anything serious in the near future. You&amp;#8217;ll gain new insights on how to solve your current problems. Don&amp;#8217;t take my word for it, there&amp;#8217;s that line everyone quotes from The Pragmatic Programmer: &lt;em&gt;Learn at least one new database paradigm a year&lt;/em&gt;, or something like that.&lt;/p&gt;
+&lt;p&gt;What exactly makes CouchDB so great? Read on.&lt;/p&gt;
+&lt;h3&gt;Stable and Scalable&lt;/h3&gt;
+&lt;p&gt;When you update a document in CouchDB, it doesn&amp;#8217;t go in and change the existing document. Instead, it just adds a new version. The upshot is that your data is never in a bad state, so even in the case of a power failure, you&amp;#8217;re not going to lose data or spend time verifying against corruption when you start up again. All these extra versions are deleted when you compact the database, so there isn&amp;#8217;t much of a storage penalty because of it.&lt;/p&gt;
+&lt;div class=&quot;image right&quot;&gt;
+&lt;a href=&quot;http://leinweber.us/post/58513962/we-need-more-erlangs&quot;&gt;
+&lt;img src=&quot;/images/2008/11/erlangs.png&quot; /&gt;&lt;br /&gt;
+&lt;span class=&quot;alt&quot;&gt;Other databases have low erlangs&lt;/span&gt;
+&lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;It&amp;#8217;s written in Erlang, and benefits from the stability and concurrency of the language its design idioms. Also, unlike current relational databases that try and make a single query as fast as possible, CouchDB tries to maintain consistent performance as the number of queries grows.&lt;/p&gt;
+&lt;p&gt;Another big plus is that it doesn&amp;#8217;t have a custom binary protocol. It uses regular HTTP. This means you can use existing http infrastructure tools such as load balancers and clustering proxies. Better still, it&amp;#8217;s RESTful, so you interact with it using the CRUD operations we&amp;#8217;ve come to know and love.&lt;/p&gt;
+&lt;p&gt;The way you query data from CouchDB is through views which are written using the map/reduce approach. These views themselves are indexed, so they&amp;#8217;re very fast as long as you keep the indices fresh. While it&amp;#8217;s not an option now, it&amp;#8217;s possible that in the future the mapping step could be distributed amongst several nodes which could make it ridiculously fast.&lt;/p&gt;
+&lt;h3&gt;Deep Structures, No Schemas&lt;/h3&gt;
+&lt;p&gt;Data has it&amp;#8217;s own natural shape, and I know I&amp;#8217;m not the only one who is sick and tired of fighting that fact. It is often an uphill battle cramming models into relational records. Your data is more complex than a few simple strings, numbers, and boolean values. You have lists, you have hashes, and even small variations between instances of the same object. This is unacceptable in the relational world.&lt;/p&gt;
+&lt;p&gt;ORMs like ActiveRecord and DataMapper have done a lot to to ease the pain and abstract away the nastiness of SQL. It&amp;#8217;s not enough though. It&amp;#8217;s like treating the symptoms and not the underlying condition. You still have to worry about joins, normalization, and other artifacts from relational databases. These issues leak their way up into your models where they don&amp;#8217;t belong, and obscure more important logic.&lt;/p&gt;
+&lt;p&gt;All of this isn&amp;#8217;t an issue with CouchDB, and that&amp;#8217;s the biggest selling point for me. The fields in your documents can be hashes, they can be arrays, they can be arrays of hashes. Anything that can be serialized to JSON. It&amp;#8217;s about documents &amp;mdash; not records.&lt;/p&gt;
+&lt;p&gt;As a quick example, rather than having to create an assets table for uploads, you can store all the metadata in a single field. That field can live right on the object that is responsible for it, where it belongs. Or you could store all the comments for a blog post inline with the post itself. There&amp;#8217;s a good article comparing &lt;a href=&quot;http://www.cmlenz.net/archives/2007/10/couchdb-joins&quot;&gt;inline vs. separate storage&lt;/a&gt; that is worth a read.&lt;/p&gt;
+&lt;h3&gt;Downsides&lt;/h3&gt;
+&lt;p&gt;Nothing is without drawbacks, and CouchDB is no exception. For one, it&amp;#8217;s still alpha. That&amp;#8217;s not to say it&amp;#8217;s buggy and unusable &amp;mdash; far from it &amp;mdash; but there are likely to be changes before they hit 1.0. I can&amp;#8217;t say to what extent this will be an issue, but you should be aware of that.&lt;/p&gt;
+&lt;p&gt;There is no security model. This turns out to not be &lt;em&gt;that&lt;/em&gt; big of a deal, but it&amp;#8217;s far from ideal. You can lock down the port it runs on to only talk to localhost, which I think happens by default.&lt;/p&gt;
+&lt;p&gt;The first time you run a view it will be slow. It has to go through every document and build the index. After that though, it only has to go through the new or changed documents and is significantly faster. You can make sure your views are fresh by running them after every couple hundred updates or every 10 minutes or so. But if you&amp;#8217;re always running unique views, CouchDB probably isn&amp;#8217;t a good choice.&lt;/p&gt;
+&lt;h3&gt;Getting Started&lt;/h3&gt;
+&lt;p&gt;Go ahead and compile CouchDB from the svn head rather than going for the last release. You can find instructions over on &lt;a href=&quot;http://wiki.apache.org/couchdb/Installation&quot;&gt;their wiki&lt;/a&gt;. You&amp;#8217;ll also want a persistence layer. So far, I&amp;#8217;ve been most impressed with &lt;a href=&quot;http://github.com/langalex/couch_potato/tree/master&quot;&gt;Couch Potato&lt;/a&gt;. I&amp;#8217;ve been using it with Merb, which has been great. You just need to add it to your &lt;code&gt;config/dependencies.rb&lt;/code&gt; like this&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;dependency &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;langalex-couch_potato&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:require_as&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;couch_potato&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;then add this to your &lt;code&gt;config/init.rb&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;co&quot;&gt;Merb&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;BootLoader&lt;/span&gt;.before_app_loads &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;co&quot;&gt;CouchPotato&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Config&lt;/span&gt;.database_name = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;appname_&lt;/span&gt;&lt;span class=&quot;il&quot;&gt;&lt;span class=&quot;idl&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;co&quot;&gt;Merb&lt;/span&gt;.environment&lt;span class=&quot;idl&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+  require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;json/pure&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;You might not need that &lt;code&gt;json/pure&lt;/code&gt; fix. I was having some problem where &lt;code&gt;#to_json&lt;/code&gt; was declared multiple times. It&amp;#8217;d be nice if there was a merb_couchpotato gem so you could just say &lt;code&gt;use_orm :couchpotato&lt;/code&gt;, and maybe use database.yml instead, but it&amp;#8217;s not really necessary yet.&lt;/p&gt;
+&lt;p&gt;That&amp;#8217;s really all it takes. Go checkout the readme for Couch Potato and its &lt;a href=&quot;http://upstream-berlin.com/2008/10/27/couch-potato-unleashed-a-couchdb-persistence-layer-in-ruby/&quot;&gt;introduction post&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Time to relax.&lt;/p&gt;</content>
+  </entry>
+  
+  <entry>
+    <title>Why we're not on Ruby1.9</title>
+    <link href="http://bitfission.com/blog/2009/09/ruby19.html" />
+    <id>tag:bitfission.com,2009-09-11:1252649877</id>
+    <updated>2009-09-11T01:17:57-05:00</updated>
+    <content type="html">&lt;p&gt;It's been out for a while now, but as a community we just aren't using it. Why?&lt;/p&gt;
+
+&lt;p&gt;There have been technical excuses, namely broken gems. It's probably true that this is holding people back from upgrading, but gems can be fixed if we actually cared. So it's not a technical reason.&lt;/p&gt;
+
+&lt;p&gt;I've also seen marketing excuses. Odd numbers are generally for developmental releases and even for production. Yeah that's true in some places, but this can't be that big of a hurdle. The other argument is that it should have been 2.0. This holds a bit more weight as a whole number bump would probably make this seem like an important update. Which it is.&lt;/p&gt;
+
+&lt;p&gt;We've normally been quick to adopt new practices and tech. Remember when REST was introduced? About a year later, we were all building restful apps and were annoyed when we had to interact with old, non-rest apis. Or the near instantaneous mass migration to git. What was different in those cases?&lt;/p&gt;
+
+&lt;h3&gt;Evangelists&lt;/h3&gt;
+
+&lt;div class=&quot;right image&quot;&gt;
+  &lt;img src=&quot;/images/2009/09/megaphone.jpg&quot; /&gt;&lt;br /&gt; 
+  photo: &lt;a href=&quot;http://www.flickr.com/photos/belljar/&quot;&gt;Esther_G&lt;/a&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;The guys with the well read blogs, the vocal consultancies, the regular conference speakers. In the past they said, &quot;Hey I'm using this, it's great, you should too&quot;. And we did. That hasn't happened this time.&lt;/p&gt;
+
+&lt;p&gt;We need I've-switched-to-1.9 posts and talks. Hell, lie about it, if it'll get the community to upgrade. There'll be problems with gems, sure, but that period will be short. We'll make it through.&lt;/p&gt;
+
+&lt;p&gt;I'll end by doing my part: I've switched to ruby 1.9.1, it's great, and you should too.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Faking &quot;or shift left&quot;</title>
+    <link href="http://bitfission.com/blog/2008/09/faking-or-shift-left.html" />
+    <id>tag:bitfission.com,2008-09-04:1220509811</id>
+    <updated>2008-09-04T01:30:11-05:00</updated>
+    <content type="html">&lt;p&gt;
+I've often been annoyed at the lack of &lt;code&gt;||&lt;&lt;&lt;/code&gt; after being spoiled with &lt;code&gt;||=&lt;/code&gt; for so long. The workaround I've typically used is to go ahead and use &lt;code&gt;||= [ ]&lt;/code&gt; to make sure I have an empty array. That's ugly though. You're dropping down a level and writing the &quot;how&quot; instead of the &quot;why&quot;. 
+&lt;/p&gt;
+&lt;p&gt;
+Today some code &lt;a href=http://blog.jayfields.com/2008/09/ruby-recording-method-calls-and.html&gt;Jay Fields posted&lt;/a&gt; had the answer I've been looking for. It's not quite as elegant as having the operator itself, but it does the job of tucking away the ugly detail of ensuring you have an empty array to shift on.
+&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;method_stack&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;iv&quot;&gt;@method_stack&lt;/span&gt; ||= []
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;  
+&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;method_missing&lt;/span&gt;(sym, *args)
+&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt;   method_stack &amp;lt;&amp;lt; [sym, args]
+&lt;span class=&quot;no&quot;&gt;7&lt;/span&gt;   &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+We're still using &lt;code&gt;||= [ ]&lt;/code&gt; but it is hidden away in its own spot, which I find to be much cleaner.
+</content>
+  </entry>
+  
+  <entry>
+    <title>Closures in Ruby</title>
+    <link href="http://bitfission.com/blog/2008/09/closures-in-ruby.html" />
+    <id>tag:bitfission.com,2008-09-15:1221460211</id>
+    <updated>2008-09-15T01:30:11-05:00</updated>
+    <content type="html">I remember reading that Proc.new and lambda weren't exactly the same, but I never ran into any problems so I never bothered to look up exactly &lt;em&gt;what&lt;/em&gt; the differences were. I just always used lambda, which as it turns out, is probably for the best.
+
+Paul Cantrell wrote a &lt;a href=&quot;http://innig.net/software/ruby/closures-in-ruby.rb&quot;&gt;article/script&lt;/a&gt; hybrid that does a great job showing and telling all of the differences with the 7 (who knew?) different ways you can have a closure. It's worth a read, check it out.
+
+Here's the summary table that's about halfway through.
+&lt;pre&gt;
+
+                                                    &quot;return&quot; returns
+                                                    from closure or
+                                   True closure?    declaring context?     Arity check?
+                                   ---------------  -------------------    -------------------
+1. block (called with yield)       N                declaring              no
+2. block (&amp;b =&gt; f(&amp;b) =&gt; yield)    N                declaring              no
+3. block (&amp;b =&gt; b.call)            Y except return  declaring              warn on too few
+4. Proc.new                        Y except return  declaring              warn on too few
+5. proc                                &lt;&lt;&lt; alias for lambda in 1.8, Proc.new in 1.9 &gt;&gt;&gt;
+6. lambda                          Y                closure                yes, except arity 1
+7. method                          Y                closure                yes
+&lt;/pre&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Reopening NilClass</title>
+    <link href="http://bitfission.com/blog/2008/04/reopening-nil.html" />
+    <id>tag:bitfission.com,2008-04-03:1207204211</id>
+    <updated>2008-04-03T01:30:11-05:00</updated>
+    <content type="html">&lt;p&gt;I just read a post advocating &lt;a href=&quot;http://blog.rubyenrails.nl/articles/2008/02/29/our-daily-method-18-nilclass-method_missing&quot;&gt;changing NilClass#method_missing to always return nil&lt;/a&gt;. Their argument is that you no longer have to check if you actually have something before calling methods on it like:&lt;/p&gt;
+&lt;p&gt;@sun &amp;amp;&amp;amp; @sun.still_burning?&lt;/p&gt;
+
+&lt;p&gt;Instead, you could just call @sun.still_burning?, which is nice. I usually just check &lt;a href=&quot;isTheSunStillBurning.com&quot;&gt;is the sun still burning.com&lt;/a&gt; 20 times a day to make sure, but you get the point. &lt;em&gt;&lt;strong&gt;Edit:&lt;/strong&gt; it looks like this site is no longer up, and now I get worried at night, when I can&amp;#8217;t tell&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://farm1.static.flickr.com/77/158529397_d0e4a4cfb0.jpg&quot; style=&quot;margin-right: 10em&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Now, it&amp;#8217;s a very attractive, very short solution to an every day annoyance &amp;#8212; that alone is enough to make me worry. Overriding #method_missing on NilClass just seems &lt;em&gt;wrong_.  The better solution is to define Null Objects for all of your classes, and have those returned instead of nothing. Yeah, it&amp;#8217;s more work than the method&lt;/em&gt;missing solution, but it&amp;#8217;s a lot safer and doesn&amp;#8217;t leave such a bad taste in my mouth.&lt;/p&gt;
+&lt;h3&gt;I do actually reopen NilClass though&lt;/h3&gt;
+&lt;p&gt;Often, actually. Working with rspec and making typos can be very frustrating otherwise. If do @sum.should_recieve(:set) instead of @sun, then you&amp;#8217;ll get&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;co&quot;&gt;Mock&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;some mock&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt; received unexpected message &lt;span class=&quot;sy&quot;&gt;:tyop?&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# or&lt;/span&gt;
+&lt;span class=&quot;co&quot;&gt;Mock&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;NilClass&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt; expected &lt;span class=&quot;sy&quot;&gt;:list_pathways&lt;/span&gt; with (&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;hsa&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;) once, but received it &lt;span class=&quot;i&quot;&gt;0&lt;/span&gt; times
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The second one is easy to realize you have a typo, sure. But I know I&amp;#8217;ve wasted time wondering why the expectation failed, and I&amp;#8217;m sure you have too. By adding a few methods to NilClass, this is no longer an issue:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;NilClass&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;       &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;should_receive&lt;/span&gt;(*args)
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;         raise &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;WARNING: you tried to add expectations to nil!&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;       &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt;       &lt;span class=&quot;r&quot;&gt;alias&lt;/span&gt; &lt;span class=&quot;sy&quot;&gt;:stub!&lt;/span&gt; &lt;span class=&quot;sy&quot;&gt;:should_receive&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Now we get: &lt;code&gt;WARNING: you tried to add expectations to nil!&lt;/code&gt; and even a line number to where the typo is.&lt;/p&gt;
+&lt;p&gt;When else have you found it okay to mess around with NilClass? I&amp;#8217;m sure there are a few other occasions where it makes sense.&lt;/p&gt;
+&lt;p&gt;Sun picture from &lt;a href=&quot;http://flickr.com/photos/rogersmith/61126609/&quot;&gt;rodger smith, flickr&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,154 @@
+<html lang='en-us' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <meta content='text/html; charset=utf-8' http-equiv='content-type' />
+    <title>
+      Test Driving a File Parser - Will Leinweber
+    </title>
+    <meta content='Will Leinweber' name='author' />
+    
+    <!-- Blueprint CSS Framework -->
+    <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
+    <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
+    <!-- CodeRay syntax highlighting CSS -->
+    <link href='/css/coderay.css' rel='stylesheet' type='text/css' />
+    <!-- Homepage CSS -->
+    <link href='/css/site.css' media='screen, projection' rel='stylesheet' type='text/css' />
+    <!-- Feed Discovery -->
+    <link href='http://feeds.feedburner.com/bitfission/' rel='alternate' title='RSS feed' type='application/atom+xml' />
+  </head>
+  <body>
+    <div class='container'>
+      <div class='column span-15 prepend-2 first'>
+        <p class='title name'>
+          <a href='/' rel='me'>Will Leinweber</a>
+        </p>
+      </div>
+      <div class='column span-5 append-2 last'>
+        <p class='title domain'>
+          <a href='/'>
+            bitfission<small>.com</small></a>
+        </p>
+      </div>
+      <div class='column span-20 prepend-2 append-2 first last'>
+        <hr />
+      </div>
+      <div class='column span-15 prepend-2 first'>
+        <div class="blogContent">
+            <div class="singleArticleHolder">
+                <h2 class="articleTitle">Test Driving a File Parser</h2>
+                <p class="articleDate">April 12, 2008</p>
+                <div class="articleContent">
+                  <p>
+        My current project involves pulling gene names and group data from a tab separated file, then coloring those genes on a pathway diagram. Just like any other part of an application, the parser should be well tested. But how exactly should you go about testing all the different edge cases that the parser will see? 
+        </p>
+        
+        <p>
+        One method I've worked with was to have several sample files in the fixtures directory and load them. I don't really like this, for much the same reason I don't like fixtures. It's too easy for fixtures to deteriorate into a large, unmaintainable mess. But more importantly, I can't see the whole test on one screen. Parts are hidden across several files, all of which you have to read before you can understand the test. 
+        </p>
+        
+        <p>
+        <a href="/images/2008/04/pathway.gif"><img src="/images/2008/04/pathway.th.png" style="margin-right: 10em;"></a>
+        </p>
+        
+        <p>
+        I've come up with a simple way to solve this problem. The test files should be created in the test. Now this is for tab separated files, but it could easily be changed to create csv files, or both.
+        </p>
+        
+        <div class="CodeRay">
+        <pre><span class="no"> 1</span> it <span class="s"><span class="dl">&quot;</span><span class="k">should skip empty lines and extra columns</span><span class="dl">&quot;</span></span> <span class="r">do</span>&#x000A;<span class="no"> 2</span>   file = [&#x000A;<span class="no"> 3</span>     [ <span class="s"><span class="dl">&quot;</span><span class="k">gene 1</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">group 1</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">only the first two columns count</span><span class="dl">&quot;</span></span> ],&#x000A;<span class="no"> 4</span>     [ ],&#x000A;<span class="no"> 5</span>     [ <span class="s"><span class="dl">&quot;</span><span class="k">gene 2</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">group 1</span><span class="dl">&quot;</span></span> ]&#x000A;<span class="no"> 6</span>   ].to_test_file&#x000A;<span class="no"> 7</span> &#x000A;<span class="no"> 8</span>   parser = <span class="co">Parser</span>.new file&#x000A;<span class="no"> 9</span>   parser.import&#x000A;<span class="no"><strong>10</strong></span> &#x000A;<span class="no">11</span>   parser.lines.should == [ [ <span class="s"><span class="dl">&quot;</span><span class="k">gene 1</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">group 1</span><span class="dl">&quot;</span></span> ],&#x000A;<span class="no">12</span>                            [ <span class="s"><span class="dl">&quot;</span><span class="k">gene 2</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">group 1</span><span class="dl">&quot;</span></span> ] ]&#x000A;<span class="no">13</span> <span class="r">end</span></pre>
+        </div>
+        <p>
+        (I actually have the empty lines test separate from the extra columns test, I just wanted to put them together for this post.)
+        </p>
+        
+        <p>
+        #to_test_file is a method on Array, and it will create a file in the tmp decretory, then return the file name. Right now it can optionally take a specific file name. I've never had reason to use that, so I'll probably remove that bit of complexity.
+        </p>
+        
+        <div class="CodeRay">
+        <pre><span class="no"> 1</span> <span class="r">class</span> <span class="cl">Array</span>&#x000A;<span class="no"> 2</span>   <span class="r">def</span> <span class="fu">to_test_file</span>(filename = <span class="s"><span class="dl">&quot;</span><span class="k">test_file</span><span class="dl">&quot;</span></span>)&#x000A;<span class="no"> 3</span>     <span class="co">File</span>.open(<span class="s"><span class="dl">&quot;</span><span class="k">tmp/</span><span class="il"><span class="idl">#{</span>filename<span class="idl">}</span></span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">w</span><span class="dl">&quot;</span></span>) <span class="r">do</span> |f|&#x000A;<span class="no"> 4</span>       <span class="pc">self</span>.each <span class="r">do</span> |line|&#x000A;<span class="no"> 5</span>         f &lt;&lt; line.join(<span class="s"><span class="dl">&quot;</span><span class="ch">\t</span><span class="dl">&quot;</span></span>)+<span class="s"><span class="dl">&quot;</span><span class="ch">\n</span><span class="dl">&quot;</span></span>&#x000A;<span class="no"> 6</span>       <span class="r">end</span>&#x000A;<span class="no"> 7</span>     <span class="r">end</span>&#x000A;<span class="no"> 8</span>     <span class="s"><span class="dl">&quot;</span><span class="k">tmp/</span><span class="il"><span class="idl">#{</span>filename<span class="idl">}</span></span><span class="dl">&quot;</span></span>&#x000A;<span class="no"> 9</span>   <span class="r">end</span>&#x000A;<span class="no"><strong>10</strong></span> <span class="r">end</span></pre>
+        </div>
+        <p>
+        Stick that in spec_helper or test_helper. 
+        </p>
+        
+        <p>
+        Originally I had it on String, and put in all of the \t and \n myself. That was an unreadable mess. With Array you get the column and line separation implicitly.
+        </p>
+        
+        This doesn't help at all for very large or complicated files. But for small, simple files, this is one of the easiest ways for testing the parser and keeping everything all in one place.
+        </p>
+                </div>
+            </div>
+            <div class='otherposts'><ul><li>&nbsp;&nbsp;&nbsp;&nbsp;Next Post: <a href="/blog/2008/09/faking-or-shift-left.html">Faking "or shift left"</a></li><li>Previous Post: <a href="/blog/2008/04/reopening-nil.html">Reopening NilClass</a></li></ul></div>
+            <div id="disqus_thread"></div>    
+            <script type="text/javascript" src="http://disqus.com/forums/bitfission/embed.js">
+              var disqus_title = "Test Driving a File Parser";
+            </script>
+            <noscript><a href="http://bitfission.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+        </div>
+      </div>
+      <div class='column span-2 sidebar'>
+        <a href='http://feeds.feedburner.com/bitfission'>
+          <img src='/images/rss.png' />
+        </a>
+      </div>
+      <div class='column span-3 append-2 last sidebar'>
+        <ul>
+          <li><a href="http://mailhide.recaptcha.net/d?k=01zfKie6B3RqCTDaRzr6rj9Q==&amp;c=sues3PgmCHchVBA3-99bUL5e9iUd2Vx9nRlM84OYOMw=" onclick="window.open('http://mailhide.recaptcha.net/d?k=01zfKie6B3RqCTDaRzr6rj9Q==&amp;c=sues3PgmCHchVBA3-99bUL5e9iUd2Vx9nRlM84OYOMw=', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;">email</a></li>
+          <li><a href="http://github.com/will">github</a></li>
+          <li><a href="http://leinweber.us">tumble</a></li>
+          <li><a href="http://twitter.com/leinweber">twitter</a></li>
+          <li><a href="http://www.linkedin.com/in/leinweber">linkedin</a></li>
+        </ul>
+      </div>
+      <div class='column span-5 append-2 last sidebar'>
+        <h3>Recent Posts</h3>
+        <div class='box'>
+          <ul>
+            <li><a href="/blog/2010/10/some-talks.html">Some Talks</a></li>
+            <li><a href="/blog/2010/07/auto-merge-gemfile-lock.html">Auto Merge Gemfile.lock</a></li>
+            <li><a href="/blog/2010/05/rails_integration_stack_for_winners.html">Rails Integration Testing Stack for Winners</a></li>
+            <li><a href="/blog/2010/04/speaking_at_rdrc.html">Red Dirt Ruby Conference</a></li>
+            <li><a href="/blog/2010/03/ci_radiator.html">CI Radiator in Javascript</a></li>
+            <li><a href="/blog/2009/09/ruby19.html">Why we're not on Ruby1.9</a></li>
+            <li><a href="/blog/2009/06/celerity.html">Quick Guide to Celerity</a></li>
+            <li><a href="/blog/2009/02/aac-talk.html">Acts as Conference Talk</a></li>
+            <li><a href="/blog/2009/02/profiling-rspec.html">Profiling RSpec</a></li>
+            <li><a href="/blog/2008/12/speaking-at-aac.html">Speaking at Acts as Conference</a></li>
+            <li><a href="/blog/2008/11/why-you-should-use-couchdb.html">Why You Should Use CouchDB</a></li>
+            <li><a href="/blog/2008/11/switching-to-webby.html">Switching to Webby</a></li>
+            <li><a href="/blog/2008/09/closures-in-ruby.html">Closures in Ruby</a></li>
+            <li><a href="/blog/2008/09/faking-or-shift-left.html">Faking "or shift left"</a></li>
+            <li><a href="/blog/2008/04/test-driving-file-parsers.html">Test Driving a File Parser</a></li>
+            <li><a href="/blog/2008/04/reopening-nil.html">Reopening NilClass</a></li>
+            <li><a href="/blog/2008/01/merb-and-datamapper.html">Merb and Datamapper</a></li>
+            <li><a href="/blog/2008/01/more-on-setting-up-leopard.html">More on setting up Leopard</a></li>
+            <li><a href="/blog/2008/01/rubygems-and-leopard.html">RubyGems and Leopard</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class='column span-20 prepend-2 first last'>
+        <hr />
+      </div>
+      <div class='column span-15 prepend-2 first' id='footer'>
+        <p><a href="/">Will Leinweber - bitfission</a></p>
+      </div>
+      <div class='column span-5 append-2 last' id='footer'>
+        <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/us/' rel='license'>
+          <img alt='Creative Commons License' src='http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png' style='border-width:0' />
+        </a>
+      </div>
+    </div>
+    
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+    var pageTracker = _gat._getTracker("UA-3204018-1");
+    pageTracker._trackPageview();
+    } catch(err) {}</script>
+  </body>
+</html>

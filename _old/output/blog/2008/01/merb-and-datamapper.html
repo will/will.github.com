@@ -1,0 +1,150 @@
+<html lang='en-us' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <meta content='text/html; charset=utf-8' http-equiv='content-type' />
+    <title>
+      Merb and Datamapper - Will Leinweber
+    </title>
+    <meta content='Will Leinweber' name='author' />
+    
+    <!-- Blueprint CSS Framework -->
+    <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
+    <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
+    <!-- CodeRay syntax highlighting CSS -->
+    <link href='/css/coderay.css' rel='stylesheet' type='text/css' />
+    <!-- Homepage CSS -->
+    <link href='/css/site.css' media='screen, projection' rel='stylesheet' type='text/css' />
+    <!-- Feed Discovery -->
+    <link href='http://feeds.feedburner.com/bitfission/' rel='alternate' title='RSS feed' type='application/atom+xml' />
+  </head>
+  <body>
+    <div class='container'>
+      <div class='column span-15 prepend-2 first'>
+        <p class='title name'>
+          <a href='/' rel='me'>Will Leinweber</a>
+        </p>
+      </div>
+      <div class='column span-5 append-2 last'>
+        <p class='title domain'>
+          <a href='/'>
+            bitfission<small>.com</small></a>
+        </p>
+      </div>
+      <div class='column span-20 prepend-2 append-2 first last'>
+        <hr />
+      </div>
+      <div class='column span-15 prepend-2 first'>
+        <div class="blogContent">
+            <div class="singleArticleHolder">
+                <h2 class="articleTitle">Merb and Datamapper</h2>
+                <p class="articleDate">January 20, 2008</p>
+                <div class="articleContent">
+                  <p>With the recent release of <a href="http://merbivore.com">Merb 0.5</a>, I've decided to use it along with <a href="http://datamapper.org">datamapper</a> for one of my new projects. It isn't different enough to be completely foreign, but enough to be a refreshing change. I haven't done a whole lot with either yet, but I have had a patch accepted, ran into a huge, annoying problem with autotest, and found out how to watch the SQL datamaper is generating.</p>
+        
+        <h2>stats patch</h2>
+        
+        <p>While I was in #merb earlier today, <a href="http://hassox.blogspot.com/">hassox</a> posted some <a href="http://pastie.caboo.se/136989">current benchmarks</a>. Being somewhat a stickler for statistics, I had to point out that means alone were meaningless. Not to get into all of the boring details, two distributions can have the same mean, but be completely different. Here is an image I made in Mathematica and sktich to show why:
+        <a href="http://skitch.com/leinweber/fydc/normal-distribution"><img src="http://img.skitch.com/20080120-tscppcbjptm64suuupkr63bsqe.preview.jpg" alt="normal distribution" /></a></p>
+        
+        <p>They all have the same mean, but a random pick from the distribution with the smaller variance of 0.5 is more likely to be actually be near the mean than with either of the ones with higher variances. If you apply this to load times, two severs could serve pages just as quickly on average. However, the one with the higher variance is going to seem a lot slower, since there are more slow points in the set.</p>
+        
+        <p>I submitted a <a href="http://merb.devjavu.com/ticket/460">patch</a> to add the standard deviations to each of the tests and <a href="http://pastie.caboo.se/139496">clean up the output a bit</a>.</p>
+        
+        <h2>AutoTest problem</h2>
+        
+        <p>I was trying to get autotest up and running but kept running into this problem:</p>
+        
+        <pre><code>/Library/Ruby/Site/1.8/rubygems/custom_require.rb:27:in `gem_original_require': &#x000A;no such file to load -- rspec_autotest (LoadError)&#x000A;from /Library/Ruby/Site/1.8/rubygems/custom_require.rb:27:in `require'&#x000A;from /Library/Ruby/Gems/1.8/gems/zentest-3.5.0/bin/autotest:35&#x000A;from /usr/bin/autotest:19:in `load'&#x000A;from /usr/bin/autotest:19&#x000A;</code></pre>
+        
+        <p>After futilely searching for the problem for a long time, and asking in #merb where someone else was having the same problem, I was about to give up and just run my tests by hand (oh no!). I decided to check the versions of all my gems, and it turned out that zentest was only 3.5.0 when the latest was 3.7.2. I thought that was odd, because I just installed the gem that night. Odder still, updating the gem did nothing to increase the version. It turns out there is zentest and there is ZenTest</p>
+        
+        <pre><code>$ gem list -r | grep -i zentest&#x000A;zentest (3.5.0)&#x000A;ZenTest (3.7.2, 3.7.1, 3.7.0, 3.6.1, 3.6.0, 3.5.2, 3.5.1, 3.4.3, 3.4.2, 3.4.1, 3.4.0, 3.3.0, 3.2.0, 3.1.0, 3.0.0)&#x000A;</code></pre>
+        
+        <p><em><strong>edit</strong>: As of Jan 20, 2008 this seems to be fixed, and there is only ZenTest</em></p>
+        
+        <p>Uninstalling zentest and installing ZenTest fixed the problem.</p>
+        
+        <h2>Watching Datamapper's SQL</h2>
+        
+        <p>This is very easy to do. Just edit your config/database.yml file to include</p>
+        
+        <div class="CodeRay">
+        <pre><span class="no">1</span>   <span class="sy">:log_stream</span>: <span class="er">STDOUT</span>&#x000A;<span class="no">2</span>   <span class="sy">:log_level</span>: <span class="er">0</span></pre>
+        </div>
+        
+        
+        <p>and you can see the SQL in your merb process.</p>
+        
+                </div>
+            </div>
+            <div class='otherposts'><ul><li>&nbsp;&nbsp;&nbsp;&nbsp;Next Post: <a href="/blog/2008/04/reopening-nil.html">Reopening NilClass</a></li><li>Previous Post: <a href="/blog/2008/01/more-on-setting-up-leopard.html">More on setting up Leopard</a></li></ul></div>
+            <div id="disqus_thread"></div>    
+            <script type="text/javascript" src="http://disqus.com/forums/bitfission/embed.js">
+              var disqus_title = "Merb and Datamapper";
+            </script>
+            <noscript><a href="http://bitfission.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+        </div>
+      </div>
+      <div class='column span-2 sidebar'>
+        <a href='http://feeds.feedburner.com/bitfission'>
+          <img src='/images/rss.png' />
+        </a>
+      </div>
+      <div class='column span-3 append-2 last sidebar'>
+        <ul>
+          <li><a href="http://mailhide.recaptcha.net/d?k=01zfKie6B3RqCTDaRzr6rj9Q==&amp;c=sues3PgmCHchVBA3-99bUL5e9iUd2Vx9nRlM84OYOMw=" onclick="window.open('http://mailhide.recaptcha.net/d?k=01zfKie6B3RqCTDaRzr6rj9Q==&amp;c=sues3PgmCHchVBA3-99bUL5e9iUd2Vx9nRlM84OYOMw=', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;">email</a></li>
+          <li><a href="http://github.com/will">github</a></li>
+          <li><a href="http://leinweber.us">tumble</a></li>
+          <li><a href="http://twitter.com/leinweber">twitter</a></li>
+          <li><a href="http://www.linkedin.com/in/leinweber">linkedin</a></li>
+        </ul>
+      </div>
+      <div class='column span-5 append-2 last sidebar'>
+        <h3>Recent Posts</h3>
+        <div class='box'>
+          <ul>
+            <li><a href="/blog/2010/10/some-talks.html">Some Talks</a></li>
+            <li><a href="/blog/2010/07/auto-merge-gemfile-lock.html">Auto Merge Gemfile.lock</a></li>
+            <li><a href="/blog/2010/05/rails_integration_stack_for_winners.html">Rails Integration Testing Stack for Winners</a></li>
+            <li><a href="/blog/2010/04/speaking_at_rdrc.html">Red Dirt Ruby Conference</a></li>
+            <li><a href="/blog/2010/03/ci_radiator.html">CI Radiator in Javascript</a></li>
+            <li><a href="/blog/2009/09/ruby19.html">Why we're not on Ruby1.9</a></li>
+            <li><a href="/blog/2009/06/celerity.html">Quick Guide to Celerity</a></li>
+            <li><a href="/blog/2009/02/aac-talk.html">Acts as Conference Talk</a></li>
+            <li><a href="/blog/2009/02/profiling-rspec.html">Profiling RSpec</a></li>
+            <li><a href="/blog/2008/12/speaking-at-aac.html">Speaking at Acts as Conference</a></li>
+            <li><a href="/blog/2008/11/why-you-should-use-couchdb.html">Why You Should Use CouchDB</a></li>
+            <li><a href="/blog/2008/11/switching-to-webby.html">Switching to Webby</a></li>
+            <li><a href="/blog/2008/09/closures-in-ruby.html">Closures in Ruby</a></li>
+            <li><a href="/blog/2008/09/faking-or-shift-left.html">Faking "or shift left"</a></li>
+            <li><a href="/blog/2008/04/test-driving-file-parsers.html">Test Driving a File Parser</a></li>
+            <li><a href="/blog/2008/04/reopening-nil.html">Reopening NilClass</a></li>
+            <li><a href="/blog/2008/01/merb-and-datamapper.html">Merb and Datamapper</a></li>
+            <li><a href="/blog/2008/01/more-on-setting-up-leopard.html">More on setting up Leopard</a></li>
+            <li><a href="/blog/2008/01/rubygems-and-leopard.html">RubyGems and Leopard</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class='column span-20 prepend-2 first last'>
+        <hr />
+      </div>
+      <div class='column span-15 prepend-2 first' id='footer'>
+        <p><a href="/">Will Leinweber - bitfission</a></p>
+      </div>
+      <div class='column span-5 append-2 last' id='footer'>
+        <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/us/' rel='license'>
+          <img alt='Creative Commons License' src='http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png' style='border-width:0' />
+        </a>
+      </div>
+    </div>
+    
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+    var pageTracker = _gat._getTracker("UA-3204018-1");
+    pageTracker._trackPageview();
+    } catch(err) {}</script>
+  </body>
+</html>

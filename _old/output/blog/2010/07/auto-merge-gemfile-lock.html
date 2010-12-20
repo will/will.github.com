@@ -1,0 +1,150 @@
+<html lang='en-us' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <meta content='text/html; charset=utf-8' http-equiv='content-type' />
+    <title>
+      Auto Merge Gemfile.lock - Will Leinweber
+    </title>
+    <meta content='Will Leinweber' name='author' />
+    
+    <!-- Blueprint CSS Framework -->
+    <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
+    <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
+    <!-- CodeRay syntax highlighting CSS -->
+    <link href='/css/coderay.css' rel='stylesheet' type='text/css' />
+    <!-- Homepage CSS -->
+    <link href='/css/site.css' media='screen, projection' rel='stylesheet' type='text/css' />
+    <!-- Feed Discovery -->
+    <link href='http://feeds.feedburner.com/bitfission/' rel='alternate' title='RSS feed' type='application/atom+xml' />
+  </head>
+  <body>
+    <div class='container'>
+      <div class='column span-15 prepend-2 first'>
+        <p class='title name'>
+          <a href='/' rel='me'>Will Leinweber</a>
+        </p>
+      </div>
+      <div class='column span-5 append-2 last'>
+        <p class='title domain'>
+          <a href='/'>
+            bitfission<small>.com</small></a>
+        </p>
+      </div>
+      <div class='column span-20 prepend-2 append-2 first last'>
+        <hr />
+      </div>
+      <div class='column span-15 prepend-2 first'>
+        <div class="blogContent">
+            <div class="singleArticleHolder">
+                <h2 class="articleTitle">Auto Merge Gemfile.lock</h2>
+                <p class="articleDate">July 16, 2010</p>
+                <div class="articleContent">
+                  
+        
+        <div class="right image">
+          <img src="/images/2010/07/lock.jpg" />
+        </div>
+        
+        
+        <p>Here's the problem: you're working on a topic branch and add a gem to your Gemfile, and someone else has added a gem to master before you're done. When you go to rebase, every single one of your commits is going to have a conflict with <code>Gemfile.lock</code>.</p>
+        
+        <p>All you have to do is run <code>bundle lock</code> to get bundler to relock then add that and continue your rebase. But that's so damn tedious.</p>
+        
+        <p>Good news! I just figured out how to tell git how to do that for you, and it works great. There are two files you have to edit.</p>
+        
+        <h3>gitconfig</h3>
+        
+        <p>First is your <code>~/.gitconfig</code> file. Here we're going to give it a new merge strategy, one that will just relock the gemfile. Add this to the end:</p>
+        
+        <pre><code>[merge "gemfilelock"]&#x000A;  name = relocks the gemfile.lock&#x000A;  driver = bundle lock&#x000A;</code></pre>
+        
+        <p>The driver is what git will use to try and fix the conflict. Its exit status will tell git if the merge was successful or not. Here all we're doing is having bundler relock. You can see it in action in <a href="http://github.com/will/dotfiles/commit/4ed4930c61df795b7fbc9732d3c6463164ebb43f">my dotfiles</a></p>
+        
+        <h3>gitattributes</h3>
+        
+        <p>Next up, we have to tell git to use our new strategy for <code>Gemfile.lock</code>, and we do that with <a href="http://www.kernel.org/pub/software/scm/git/docs/gitattributes.html">gitattributes</a>. You can either put this in <code>project/.git/info/attributes</code> or <code>project/.gitattributes</code>. I did the .git directory one myself, but it doesn't matter. We just need one line in this file:</p>
+        
+        <pre><code>Gemfile.lock merge=gemfilelock&#x000A;</code></pre>
+        
+        <h3>results</h3>
+        
+        <p>And that's it! Here's what happen when you rebase now</p>
+        
+        <pre><code>First, rewinding head to replay your work on top of it...&#x000A;Applying: commit one&#x000A;Using index info to reconstruct a base tree...&#x000A;Falling back to patching base and 3-way merge...&#x000A;Your bundle is already locked, relocking.&#x000A;<span style="color: green;">Your bundle is now locked. Use `bundle show [gemname]` to list the gems in the environment.</span>&#x000A;Auto-merging Gemfile&#x000A;Auto-merging Gemfile.lock&#x000A;</code></pre>
+        
+        
+        <p>Now that, if I may say so myself, is really awesome! (image credit <a href="http://www.flickr.com/photos/maistora/3237164755/">malstora</a>)</p>
+        
+                </div>
+            </div>
+            <div class='otherposts'><ul><li>&nbsp;&nbsp;&nbsp;&nbsp;Next Post: <a href="/blog/2010/10/some-talks.html">Some Talks</a></li><li>Previous Post: <a href="/blog/2010/05/rails_integration_stack_for_winners.html">Rails Integration Testing Stack for Winners</a></li></ul></div>
+            <div id="disqus_thread"></div>    
+            <script type="text/javascript" src="http://disqus.com/forums/bitfission/embed.js">
+              var disqus_title = "Auto Merge Gemfile.lock";
+            </script>
+            <noscript><a href="http://bitfission.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+        </div>
+      </div>
+      <div class='column span-2 sidebar'>
+        <a href='http://feeds.feedburner.com/bitfission'>
+          <img src='/images/rss.png' />
+        </a>
+      </div>
+      <div class='column span-3 append-2 last sidebar'>
+        <ul>
+          <li><a href="http://mailhide.recaptcha.net/d?k=01zfKie6B3RqCTDaRzr6rj9Q==&amp;c=sues3PgmCHchVBA3-99bUL5e9iUd2Vx9nRlM84OYOMw=" onclick="window.open('http://mailhide.recaptcha.net/d?k=01zfKie6B3RqCTDaRzr6rj9Q==&amp;c=sues3PgmCHchVBA3-99bUL5e9iUd2Vx9nRlM84OYOMw=', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;">email</a></li>
+          <li><a href="http://github.com/will">github</a></li>
+          <li><a href="http://leinweber.us">tumble</a></li>
+          <li><a href="http://twitter.com/leinweber">twitter</a></li>
+          <li><a href="http://www.linkedin.com/in/leinweber">linkedin</a></li>
+        </ul>
+      </div>
+      <div class='column span-5 append-2 last sidebar'>
+        <h3>Recent Posts</h3>
+        <div class='box'>
+          <ul>
+            <li><a href="/blog/2010/10/some-talks.html">Some Talks</a></li>
+            <li><a href="/blog/2010/07/auto-merge-gemfile-lock.html">Auto Merge Gemfile.lock</a></li>
+            <li><a href="/blog/2010/05/rails_integration_stack_for_winners.html">Rails Integration Testing Stack for Winners</a></li>
+            <li><a href="/blog/2010/04/speaking_at_rdrc.html">Red Dirt Ruby Conference</a></li>
+            <li><a href="/blog/2010/03/ci_radiator.html">CI Radiator in Javascript</a></li>
+            <li><a href="/blog/2009/09/ruby19.html">Why we're not on Ruby1.9</a></li>
+            <li><a href="/blog/2009/06/celerity.html">Quick Guide to Celerity</a></li>
+            <li><a href="/blog/2009/02/aac-talk.html">Acts as Conference Talk</a></li>
+            <li><a href="/blog/2009/02/profiling-rspec.html">Profiling RSpec</a></li>
+            <li><a href="/blog/2008/12/speaking-at-aac.html">Speaking at Acts as Conference</a></li>
+            <li><a href="/blog/2008/11/why-you-should-use-couchdb.html">Why You Should Use CouchDB</a></li>
+            <li><a href="/blog/2008/11/switching-to-webby.html">Switching to Webby</a></li>
+            <li><a href="/blog/2008/09/closures-in-ruby.html">Closures in Ruby</a></li>
+            <li><a href="/blog/2008/09/faking-or-shift-left.html">Faking "or shift left"</a></li>
+            <li><a href="/blog/2008/04/test-driving-file-parsers.html">Test Driving a File Parser</a></li>
+            <li><a href="/blog/2008/04/reopening-nil.html">Reopening NilClass</a></li>
+            <li><a href="/blog/2008/01/merb-and-datamapper.html">Merb and Datamapper</a></li>
+            <li><a href="/blog/2008/01/more-on-setting-up-leopard.html">More on setting up Leopard</a></li>
+            <li><a href="/blog/2008/01/rubygems-and-leopard.html">RubyGems and Leopard</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class='column span-20 prepend-2 first last'>
+        <hr />
+      </div>
+      <div class='column span-15 prepend-2 first' id='footer'>
+        <p><a href="/">Will Leinweber - bitfission</a></p>
+      </div>
+      <div class='column span-5 append-2 last' id='footer'>
+        <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/us/' rel='license'>
+          <img alt='Creative Commons License' src='http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png' style='border-width:0' />
+        </a>
+      </div>
+    </div>
+    
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+    var pageTracker = _gat._getTracker("UA-3204018-1");
+    pageTracker._trackPageview();
+    } catch(err) {}</script>
+  </body>
+</html>

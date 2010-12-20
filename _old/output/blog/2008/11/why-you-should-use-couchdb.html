@@ -1,0 +1,151 @@
+<html lang='en-us' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <meta content='text/html; charset=utf-8' http-equiv='content-type' />
+    <title>
+      Why You Should Use CouchDB - Will Leinweber
+    </title>
+    <meta content='Will Leinweber' name='author' />
+    
+    <!-- Blueprint CSS Framework -->
+    <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
+    <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
+    <!-- CodeRay syntax highlighting CSS -->
+    <link href='/css/coderay.css' rel='stylesheet' type='text/css' />
+    <!-- Homepage CSS -->
+    <link href='/css/site.css' media='screen, projection' rel='stylesheet' type='text/css' />
+    <!-- Feed Discovery -->
+    <link href='http://feeds.feedburner.com/bitfission/' rel='alternate' title='RSS feed' type='application/atom+xml' />
+  </head>
+  <body>
+    <div class='container'>
+      <div class='column span-15 prepend-2 first'>
+        <p class='title name'>
+          <a href='/' rel='me'>Will Leinweber</a>
+        </p>
+      </div>
+      <div class='column span-5 append-2 last'>
+        <p class='title domain'>
+          <a href='/'>
+            bitfission<small>.com</small></a>
+        </p>
+      </div>
+      <div class='column span-20 prepend-2 append-2 first last'>
+        <hr />
+      </div>
+      <div class='column span-15 prepend-2 first'>
+        <div class="blogContent">
+            <div class="singleArticleHolder">
+                <h2 class="articleTitle">Why You Should Use CouchDB</h2>
+                <p class="articleDate">November 16, 2008</p>
+                <div class="articleContent">
+                  <h3>New Approach to an Old Problem</h3>
+        <p>Your applications need to store and retrieve data. That&#8217;s nothing new.  <a href="http://incubator.apache.org/couchdb/">CouchDB</a>, and other document databases like Amazon SimpleDB, are new to the game however. Okay, I&#8217;ll admit the general concept is some <a href="http://en.wikipedia.org/wiki/IBM_Lotus_Notes">20 years old</a>, but it&#8217;s safe to say that they&#8217;ve recently started to gain popularity over the last year or so.</p>
+        <div class="image left"><img src="/images/2008/11/couchdb.png" /></div>
+        <p>Learning a document database is worthwhile, even if you don&#8217;t end up using it for anything serious in the near future. You&#8217;ll gain new insights on how to solve your current problems. Don&#8217;t take my word for it, there&#8217;s that line everyone quotes from The Pragmatic Programmer: <em>Learn at least one new database paradigm a year</em>, or something like that.</p>
+        <p>What exactly makes CouchDB so great? Read on.</p>
+        <h3>Stable and Scalable</h3>
+        <p>When you update a document in CouchDB, it doesn&#8217;t go in and change the existing document. Instead, it just adds a new version. The upshot is that your data is never in a bad state, so even in the case of a power failure, you&#8217;re not going to lose data or spend time verifying against corruption when you start up again. All these extra versions are deleted when you compact the database, so there isn&#8217;t much of a storage penalty because of it.</p>
+        <div class="image right">
+        <a href="http://leinweber.us/post/58513962/we-need-more-erlangs">
+        <img src="/images/2008/11/erlangs.png" /><br />
+        <span class="alt">Other databases have low erlangs</span>
+        </a>
+        </div>
+        <p>It&#8217;s written in Erlang, and benefits from the stability and concurrency of the language its design idioms. Also, unlike current relational databases that try and make a single query as fast as possible, CouchDB tries to maintain consistent performance as the number of queries grows.</p>
+        <p>Another big plus is that it doesn&#8217;t have a custom binary protocol. It uses regular HTTP. This means you can use existing http infrastructure tools such as load balancers and clustering proxies. Better still, it&#8217;s RESTful, so you interact with it using the CRUD operations we&#8217;ve come to know and love.</p>
+        <p>The way you query data from CouchDB is through views which are written using the map/reduce approach. These views themselves are indexed, so they&#8217;re very fast as long as you keep the indices fresh. While it&#8217;s not an option now, it&#8217;s possible that in the future the mapping step could be distributed amongst several nodes which could make it ridiculously fast.</p>
+        <h3>Deep Structures, No Schemas</h3>
+        <p>Data has it&#8217;s own natural shape, and I know I&#8217;m not the only one who is sick and tired of fighting that fact. It is often an uphill battle cramming models into relational records. Your data is more complex than a few simple strings, numbers, and boolean values. You have lists, you have hashes, and even small variations between instances of the same object. This is unacceptable in the relational world.</p>
+        <p>ORMs like ActiveRecord and DataMapper have done a lot to to ease the pain and abstract away the nastiness of SQL. It&#8217;s not enough though. It&#8217;s like treating the symptoms and not the underlying condition. You still have to worry about joins, normalization, and other artifacts from relational databases. These issues leak their way up into your models where they don&#8217;t belong, and obscure more important logic.</p>
+        <p>All of this isn&#8217;t an issue with CouchDB, and that&#8217;s the biggest selling point for me. The fields in your documents can be hashes, they can be arrays, they can be arrays of hashes. Anything that can be serialized to JSON. It&#8217;s about documents &mdash; not records.</p>
+        <p>As a quick example, rather than having to create an assets table for uploads, you can store all the metadata in a single field. That field can live right on the object that is responsible for it, where it belongs. Or you could store all the comments for a blog post inline with the post itself. There&#8217;s a good article comparing <a href="http://www.cmlenz.net/archives/2007/10/couchdb-joins">inline vs. separate storage</a> that is worth a read.</p>
+        <h3>Downsides</h3>
+        <p>Nothing is without drawbacks, and CouchDB is no exception. For one, it&#8217;s still alpha. That&#8217;s not to say it&#8217;s buggy and unusable &mdash; far from it &mdash; but there are likely to be changes before they hit 1.0. I can&#8217;t say to what extent this will be an issue, but you should be aware of that.</p>
+        <p>There is no security model. This turns out to not be <em>that</em> big of a deal, but it&#8217;s far from ideal. You can lock down the port it runs on to only talk to localhost, which I think happens by default.</p>
+        <p>The first time you run a view it will be slow. It has to go through every document and build the index. After that though, it only has to go through the new or changed documents and is significantly faster. You can make sure your views are fresh by running them after every couple hundred updates or every 10 minutes or so. But if you&#8217;re always running unique views, CouchDB probably isn&#8217;t a good choice.</p>
+        <h3>Getting Started</h3>
+        <p>Go ahead and compile CouchDB from the svn head rather than going for the last release. You can find instructions over on <a href="http://wiki.apache.org/couchdb/Installation">their wiki</a>. You&#8217;ll also want a persistence layer. So far, I&#8217;ve been most impressed with <a href="http://github.com/langalex/couch_potato/tree/master">Couch Potato</a>. I&#8217;ve been using it with Merb, which has been great. You just need to add it to your <code>config/dependencies.rb</code> like this</p>
+        <div class="CodeRay">
+        <pre>dependency <span class="s"><span class="dl">&quot;</span><span class="k">langalex-couch_potato</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">0.1</span><span class="dl">&quot;</span></span>, <span class="sy">:require_as</span> =&gt; <span class="s"><span class="dl">&quot;</span><span class="k">couch_potato</span><span class="dl">&quot;</span></span></pre>
+        </div>
+        <p>then add this to your <code>config/init.rb</code></p>
+        <div class="CodeRay">
+        <pre><span class="co">Merb</span>::<span class="co">BootLoader</span>.before_app_loads <span class="r">do</span>&#x000A;  <span class="co">CouchPotato</span>::<span class="co">Config</span>.database_name = <span class="s"><span class="dl">&quot;</span><span class="k">appname_</span><span class="il"><span class="idl">#{</span><span class="co">Merb</span>.environment<span class="idl">}</span></span><span class="dl">&quot;</span></span>&#x000A;  require <span class="s"><span class="dl">'</span><span class="k">json/pure</span><span class="dl">'</span></span>&#x000A;<span class="r">end</span></pre>
+        </div>
+        <p>You might not need that <code>json/pure</code> fix. I was having some problem where <code>#to_json</code> was declared multiple times. It&#8217;d be nice if there was a merb_couchpotato gem so you could just say <code>use_orm :couchpotato</code>, and maybe use database.yml instead, but it&#8217;s not really necessary yet.</p>
+        <p>That&#8217;s really all it takes. Go checkout the readme for Couch Potato and its <a href="http://upstream-berlin.com/2008/10/27/couch-potato-unleashed-a-couchdb-persistence-layer-in-ruby/">introduction post</a>.</p>
+        <p>Time to relax.</p>
+                </div>
+            </div>
+            <div class='otherposts'><ul><li>&nbsp;&nbsp;&nbsp;&nbsp;Next Post: <a href="/blog/2008/12/speaking-at-aac.html">Speaking at Acts as Conference</a></li><li>Previous Post: <a href="/blog/2008/11/switching-to-webby.html">Switching to Webby</a></li></ul></div>
+            <div id="disqus_thread"></div>    
+            <script type="text/javascript" src="http://disqus.com/forums/bitfission/embed.js">
+              var disqus_title = "Why You Should Use CouchDB";
+            </script>
+            <noscript><a href="http://bitfission.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+        </div>
+      </div>
+      <div class='column span-2 sidebar'>
+        <a href='http://feeds.feedburner.com/bitfission'>
+          <img src='/images/rss.png' />
+        </a>
+      </div>
+      <div class='column span-3 append-2 last sidebar'>
+        <ul>
+          <li><a href="http://mailhide.recaptcha.net/d?k=01zfKie6B3RqCTDaRzr6rj9Q==&amp;c=sues3PgmCHchVBA3-99bUL5e9iUd2Vx9nRlM84OYOMw=" onclick="window.open('http://mailhide.recaptcha.net/d?k=01zfKie6B3RqCTDaRzr6rj9Q==&amp;c=sues3PgmCHchVBA3-99bUL5e9iUd2Vx9nRlM84OYOMw=', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;">email</a></li>
+          <li><a href="http://github.com/will">github</a></li>
+          <li><a href="http://leinweber.us">tumble</a></li>
+          <li><a href="http://twitter.com/leinweber">twitter</a></li>
+          <li><a href="http://www.linkedin.com/in/leinweber">linkedin</a></li>
+        </ul>
+      </div>
+      <div class='column span-5 append-2 last sidebar'>
+        <h3>Recent Posts</h3>
+        <div class='box'>
+          <ul>
+            <li><a href="/blog/2010/10/some-talks.html">Some Talks</a></li>
+            <li><a href="/blog/2010/07/auto-merge-gemfile-lock.html">Auto Merge Gemfile.lock</a></li>
+            <li><a href="/blog/2010/05/rails_integration_stack_for_winners.html">Rails Integration Testing Stack for Winners</a></li>
+            <li><a href="/blog/2010/04/speaking_at_rdrc.html">Red Dirt Ruby Conference</a></li>
+            <li><a href="/blog/2010/03/ci_radiator.html">CI Radiator in Javascript</a></li>
+            <li><a href="/blog/2009/09/ruby19.html">Why we're not on Ruby1.9</a></li>
+            <li><a href="/blog/2009/06/celerity.html">Quick Guide to Celerity</a></li>
+            <li><a href="/blog/2009/02/aac-talk.html">Acts as Conference Talk</a></li>
+            <li><a href="/blog/2009/02/profiling-rspec.html">Profiling RSpec</a></li>
+            <li><a href="/blog/2008/12/speaking-at-aac.html">Speaking at Acts as Conference</a></li>
+            <li><a href="/blog/2008/11/why-you-should-use-couchdb.html">Why You Should Use CouchDB</a></li>
+            <li><a href="/blog/2008/11/switching-to-webby.html">Switching to Webby</a></li>
+            <li><a href="/blog/2008/09/closures-in-ruby.html">Closures in Ruby</a></li>
+            <li><a href="/blog/2008/09/faking-or-shift-left.html">Faking "or shift left"</a></li>
+            <li><a href="/blog/2008/04/test-driving-file-parsers.html">Test Driving a File Parser</a></li>
+            <li><a href="/blog/2008/04/reopening-nil.html">Reopening NilClass</a></li>
+            <li><a href="/blog/2008/01/merb-and-datamapper.html">Merb and Datamapper</a></li>
+            <li><a href="/blog/2008/01/more-on-setting-up-leopard.html">More on setting up Leopard</a></li>
+            <li><a href="/blog/2008/01/rubygems-and-leopard.html">RubyGems and Leopard</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class='column span-20 prepend-2 first last'>
+        <hr />
+      </div>
+      <div class='column span-15 prepend-2 first' id='footer'>
+        <p><a href="/">Will Leinweber - bitfission</a></p>
+      </div>
+      <div class='column span-5 append-2 last' id='footer'>
+        <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/us/' rel='license'>
+          <img alt='Creative Commons License' src='http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png' style='border-width:0' />
+        </a>
+      </div>
+    </div>
+    
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+    var pageTracker = _gat._getTracker("UA-3204018-1");
+    pageTracker._trackPageview();
+    } catch(err) {}</script>
+  </body>
+</html>

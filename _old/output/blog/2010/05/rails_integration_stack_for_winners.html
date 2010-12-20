@@ -1,0 +1,159 @@
+<html lang='en-us' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <meta content='text/html; charset=utf-8' http-equiv='content-type' />
+    <title>
+      Rails Integration Testing Stack for Winners - Will Leinweber
+    </title>
+    <meta content='Will Leinweber' name='author' />
+    
+    <!-- Blueprint CSS Framework -->
+    <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
+    <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
+    <!-- CodeRay syntax highlighting CSS -->
+    <link href='/css/coderay.css' rel='stylesheet' type='text/css' />
+    <!-- Homepage CSS -->
+    <link href='/css/site.css' media='screen, projection' rel='stylesheet' type='text/css' />
+    <!-- Feed Discovery -->
+    <link href='http://feeds.feedburner.com/bitfission/' rel='alternate' title='RSS feed' type='application/atom+xml' />
+  </head>
+  <body>
+    <div class='container'>
+      <div class='column span-15 prepend-2 first'>
+        <p class='title name'>
+          <a href='/' rel='me'>Will Leinweber</a>
+        </p>
+      </div>
+      <div class='column span-5 append-2 last'>
+        <p class='title domain'>
+          <a href='/'>
+            bitfission<small>.com</small></a>
+        </p>
+      </div>
+      <div class='column span-20 prepend-2 append-2 first last'>
+        <hr />
+      </div>
+      <div class='column span-15 prepend-2 first'>
+        <div class="blogContent">
+            <div class="singleArticleHolder">
+                <h2 class="articleTitle">Rails Integration Testing Stack for Winners</h2>
+                <p class="articleDate">May 01, 2010</p>
+                <div class="articleContent">
+                  <p>Full-stack, acceptance, integration, or whatever-you-want-to-call-it testing should be a large part of your test suite. I'm not going to waste time trying to convince anyone of this, since there are probably a million other blog posts doing that (and probably twice as many arguing the different names).</p>
+        
+        <p><img src="/images/2010/05/finish.jpg" alt="finish line" />
+        Rather, I'll show you the hands-down best way to do it with what's out there right now. Follow this setup and you too can be a winner. I've written <a href="/2009/06/celerity.html">a bit</a> about this earlier, but things have gotten better since then.</p>
+        
+        <p>Currently, while Rails 3 is close, it's not out yet, so I'm ignoring it for this post. Latest is 2.3.5. Here we go.</p>
+        
+        <h2>Cucumber</h2>
+        
+        <p>Cucumber drives everything. It's awesome, and you should have already heard of it. Everyone uses it. It's surpassed the vegetable on google for the top result.</p>
+        
+        <p>It ships with webrat, but <em>don't use webrat</em>. It's neat and probably helped a lot to get cucumber popular. But it can't do javascript. And what site doesn't have JS these days. You need to be testing that too, you know.</p>
+        
+        <p><a href="http://cukes.info/">Cucumber &mdash; cukes.info</a></p>
+        
+        <h2>Capybara</h2>
+        
+        <p>This is what you use instead of webrat. It lets you use a bunch of web drivers behind it. Out out of the box it supports selenium (ugh) and Celerity/Culerity (awesome). Before getting cucumber to work with Capybara was a little hacky, but they're best friends now. Use this.</p>
+        
+        <p>You tag the stories that need javascript with @javascript, and it'll fire up culerity when it needs to. That's all you have to do. It's fantastic.</p>
+        
+        <p><a href="http://github.com/jnicklas/capybara">Capybara &mdash; github</a></p>
+        
+        <h2>Culerity</h2>
+        
+        <p>This provides a nice bridge between your MRI Ruby rails app, and the jruby-only gem Celerity. It'll fire off a separate server running in the test environment, then start up a jruby process for celerity.</p>
+        
+        <p>Now this one can be a bit of a pain to set up, since you need to install jruby and then celerity and make sure that's all working and wired up. A nice alternative is <a href="http://github.com/fletcherm/culerity/">Matt Fletcher's fork</a>, which bundles all that into the gem itself so you don't have to worry about it.</p>
+        
+        <p>There can be some problems with gem bundler, though. The gist of it is that you have to use JRuby v1.3.1 or earlier. I wrote more details about the bug on the  <a href="http://groups.google.com/group/culerity-dev/browse_thread/thread/3c1ed5f38d540ad1">mailing list</a>. It looks like <em>just yesterday</em> Matt updated his fork to fix this, so hurray!</p>
+        
+        <p><a href="http://github.com/langalex/culerity">Culerity &mdash; github</a></p>
+        
+        <h2>Celerity</h2>
+        
+        <p>This is what's actually doing the work. It's a JRuby-only gem, since it uses the Java <a href="http://httpunit.sourceforge.net/">HttpUnit</a> headless web browser. This is a complete web browser, with its own javascript engine, except it is just controlled though some API, and doesn't have a display.</p>
+        
+        <p>Selenium was cool for it's time. Watir too, I guess, though I never used it. But relying on a real browser sucks. It's really slow. You have to worry about browser upgrades breaking the tenuous control. And it makes your CI server a hundred times more complicated than it has to be. Fuck that, when you can use Celerity which is awesome.</p>
+        
+        <p>For some reason I can't quite remember, I had to stay on version 0.7.6. If you're having weird problems try that version. Of course, if you're using Matt's culerity fork like I suggested, you don't have to worry about it.</p>
+        
+        <p><a href="http://celerity.rubyforge.org/">Celerity</a></p>
+        
+        <p><em>picture credit: <a href="http://www.flickr.com/photos/philon/2477878611/">philo nordlund</a></em></p>
+        
+                </div>
+            </div>
+            <div class='otherposts'><ul><li>&nbsp;&nbsp;&nbsp;&nbsp;Next Post: <a href="/blog/2010/07/auto-merge-gemfile-lock.html">Auto Merge Gemfile.lock</a></li><li>Previous Post: <a href="/blog/2010/04/speaking_at_rdrc.html">Red Dirt Ruby Conference</a></li></ul></div>
+            <div id="disqus_thread"></div>    
+            <script type="text/javascript" src="http://disqus.com/forums/bitfission/embed.js">
+              var disqus_title = "Rails Integration Testing Stack for Winners";
+            </script>
+            <noscript><a href="http://bitfission.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+        </div>
+      </div>
+      <div class='column span-2 sidebar'>
+        <a href='http://feeds.feedburner.com/bitfission'>
+          <img src='/images/rss.png' />
+        </a>
+      </div>
+      <div class='column span-3 append-2 last sidebar'>
+        <ul>
+          <li><a href="http://mailhide.recaptcha.net/d?k=01zfKie6B3RqCTDaRzr6rj9Q==&amp;c=sues3PgmCHchVBA3-99bUL5e9iUd2Vx9nRlM84OYOMw=" onclick="window.open('http://mailhide.recaptcha.net/d?k=01zfKie6B3RqCTDaRzr6rj9Q==&amp;c=sues3PgmCHchVBA3-99bUL5e9iUd2Vx9nRlM84OYOMw=', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;">email</a></li>
+          <li><a href="http://github.com/will">github</a></li>
+          <li><a href="http://leinweber.us">tumble</a></li>
+          <li><a href="http://twitter.com/leinweber">twitter</a></li>
+          <li><a href="http://www.linkedin.com/in/leinweber">linkedin</a></li>
+        </ul>
+      </div>
+      <div class='column span-5 append-2 last sidebar'>
+        <h3>Recent Posts</h3>
+        <div class='box'>
+          <ul>
+            <li><a href="/blog/2010/10/some-talks.html">Some Talks</a></li>
+            <li><a href="/blog/2010/07/auto-merge-gemfile-lock.html">Auto Merge Gemfile.lock</a></li>
+            <li><a href="/blog/2010/05/rails_integration_stack_for_winners.html">Rails Integration Testing Stack for Winners</a></li>
+            <li><a href="/blog/2010/04/speaking_at_rdrc.html">Red Dirt Ruby Conference</a></li>
+            <li><a href="/blog/2010/03/ci_radiator.html">CI Radiator in Javascript</a></li>
+            <li><a href="/blog/2009/09/ruby19.html">Why we're not on Ruby1.9</a></li>
+            <li><a href="/blog/2009/06/celerity.html">Quick Guide to Celerity</a></li>
+            <li><a href="/blog/2009/02/aac-talk.html">Acts as Conference Talk</a></li>
+            <li><a href="/blog/2009/02/profiling-rspec.html">Profiling RSpec</a></li>
+            <li><a href="/blog/2008/12/speaking-at-aac.html">Speaking at Acts as Conference</a></li>
+            <li><a href="/blog/2008/11/why-you-should-use-couchdb.html">Why You Should Use CouchDB</a></li>
+            <li><a href="/blog/2008/11/switching-to-webby.html">Switching to Webby</a></li>
+            <li><a href="/blog/2008/09/closures-in-ruby.html">Closures in Ruby</a></li>
+            <li><a href="/blog/2008/09/faking-or-shift-left.html">Faking "or shift left"</a></li>
+            <li><a href="/blog/2008/04/test-driving-file-parsers.html">Test Driving a File Parser</a></li>
+            <li><a href="/blog/2008/04/reopening-nil.html">Reopening NilClass</a></li>
+            <li><a href="/blog/2008/01/merb-and-datamapper.html">Merb and Datamapper</a></li>
+            <li><a href="/blog/2008/01/more-on-setting-up-leopard.html">More on setting up Leopard</a></li>
+            <li><a href="/blog/2008/01/rubygems-and-leopard.html">RubyGems and Leopard</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class='column span-20 prepend-2 first last'>
+        <hr />
+      </div>
+      <div class='column span-15 prepend-2 first' id='footer'>
+        <p><a href="/">Will Leinweber - bitfission</a></p>
+      </div>
+      <div class='column span-5 append-2 last' id='footer'>
+        <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/us/' rel='license'>
+          <img alt='Creative Commons License' src='http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png' style='border-width:0' />
+        </a>
+      </div>
+    </div>
+    
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+    var pageTracker = _gat._getTracker("UA-3204018-1");
+    pageTracker._trackPageview();
+    } catch(err) {}</script>
+  </body>
+</html>
