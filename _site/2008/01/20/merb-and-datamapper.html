@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Merb and Datamapper</title>
+   <meta name="author" content="Tom Preston-Werner" />
+   <link href="http://feeds.feedburner.com/tom-preston-werner" rel="alternate" title="Tom Preston-Werner" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
+
+   <!-- Typekit -->
+   <script type="text/javascript" src="http://use.typekit.com/jpd0pfm.js"></script>
+   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
+
+<div class="site">
+  <div class="title">
+    <a href="/">Tom Preston-Werner</a>
+    <a class="extra" href="/">home</a>
+  </div>
+  
+  <div id="post">
+<p>With the recent release of <a href="http://merbivore.com">Merb 0.5</a>, I've decided to use it along with <a href="http://datamapper.org">datamapper</a> for one of my new projects. It isn't different enough to be completely foreign, but enough to be a refreshing change. I haven't done a whole lot with either yet, but I have had a patch accepted, ran into a huge, annoying problem with autotest, and found out how to watch the SQL datamaper is generating.</p>
+
+<h2>stats patch</h2>
+
+<p>While I was in #merb earlier today, <a href="http://hassox.blogspot.com/">hassox</a> posted some <a href="http://pastie.caboo.se/136989">current benchmarks</a>. Being somewhat a stickler for statistics, I had to point out that means alone were meaningless. Not to get into all of the boring details, two distributions can have the same mean, but be completely different. Here is an image I made in Mathematica and sktich to show why:
+<a href="http://skitch.com/leinweber/fydc/normal-distribution"><img src="http://img.skitch.com/20080120-tscppcbjptm64suuupkr63bsqe.preview.jpg" alt="normal distribution" /></a></p>
+
+<p>They all have the same mean, but a random pick from the distribution with the smaller variance of 0.5 is more likely to be actually be near the mean than with either of the ones with higher variances. If you apply this to load times, two severs could serve pages just as quickly on average. However, the one with the higher variance is going to seem a lot slower, since there are more slow points in the set.</p>
+
+<p>I submitted a <a href="http://merb.devjavu.com/ticket/460">patch</a> to add the standard deviations to each of the tests and <a href="http://pastie.caboo.se/139496">clean up the output a bit</a>.</p>
+
+<h2>AutoTest problem</h2>
+
+<p>I was trying to get autotest up and running but kept running into this problem:</p>
+
+<p>  /Library/Ruby/Site/1.8/rubygems/custom_require.rb:27:in <code>gem_original_require':
+  no such file to load -- rspec_autotest (LoadError)
+  from /Library/Ruby/Site/1.8/rubygems/custom_require.rb:27:in</code>require'
+  from /Library/Ruby/Gems/1.8/gems/zentest-3.5.0/bin/autotest:35
+  from /usr/bin/autotest:19:in `load'
+  from /usr/bin/autotest:19</p>
+
+<p>After futilely searching for the problem for a long time, and asking in #merb where someone else was having the same problem, I was about to give up and just run my tests by hand (oh no!). I decided to check the versions of all my gems, and it turned out that zentest was only 3.5.0 when the latest was 3.7.2. I thought that was odd, because I just installed the gem that night. Odder still, updating the gem did nothing to increase the version. It turns out there is zentest and there is ZenTest</p>
+
+<p>  $ gem list -r | grep -i zentest
+  zentest (3.5.0)
+  ZenTest (3.7.2, 3.7.1, 3.7.0, 3.6.1, 3.6.0, 3.5.2, 3.5.1, 3.4.3, 3.4.2, 3.4.1, 3.4.0, 3.3.0, 3.2.0, 3.1.0, 3.0.0)</p>
+
+<p><em><strong>edit</strong>: As of Jan 20, 2008 this seems to be fixed, and there is only ZenTest</em></p>
+
+<p>Uninstalling zentest and installing ZenTest fixed the problem.</p>
+
+<h2>Watching Datamapper's SQL</h2>
+
+<p>This is very easy to do. Just edit your config/database.yml file to include</p>
+
+<div class="highlight"><pre><code class="ruby">  <span class="ss">:log_stream</span><span class="p">:</span> <span class="no">STDOUT</span>
+  <span class="ss">:log_level</span><span class="p">:</span> <span class="mi">0</span>
+</code></pre>
+</div>
+
+
+<p>and you can see the SQL in your merb process.</p>
+
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul class="posts">
+    
+      <li><span>10 Oct 2010</span> &raquo; <a href="/2010/10/10/some-talks.html">Some Talks</a></li>
+    
+      <li><span>16 Jul 2010</span> &raquo; <a href="/2010/07/16/auto-mege-gemfile-lock.html">Auto Merge Gemfile.lock</a></li>
+    
+      <li><span>01 May 2010</span> &raquo; <a href="/2010/05/01/rails_integration_stack_for_winners.html">Rails Integration Testing Stack for Winners</a></li>
+    
+  </ul>
+</div>
+  
+  <div class="footer">
+    <div class="contact">
+      <p>
+        Tom Preston-Werner<br />
+        Cofounder of <a href="http://github.com/">GitHub</a><br />
+        tom@mojombo.com
+      </p>
+    </div>
+    <div class="contact">
+      <p>
+        <a href="http://github.com/mojombo/">github.com/mojombo</a><br />
+        <a href="http://twitter.com/mojombo/">twitter.com/mojombo</a><br />
+        <a href="http://flickr.com/photos/mojombo/">flickr.com/photos/mojombo</a>
+      </p>
+    </div>
+    <div class="rss">
+      <a href="http://feeds.feedburner.com/tom-preston-werner">
+        <img src="/images/rss.png" alt="Subscribe to RSS Feed" />
+      </a>
+    </div>
+  </div>
+</div>
+
+<a href="http://github.com/mojombo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
+
+<!-- ClickTale Bottom part -->
+<div id="ClickTaleDiv" style="display: none;"></div>
+<script type="text/javascript">
+if(document.location.protocol!='https:')
+  document.write(unescape("%3Cscript%20src='http://s.clicktale.net/WRb.js'%20type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+if(typeof ClickTale=='function') ClickTale(206,0.3,"www03");
+</script>
+<!-- ClickTale end of Bottom part -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-6016902-1");
+pageTracker._trackPageview();
+</script>
+<!-- Google Analytics end -->
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Profiling RSpec</title>
+   <meta name="author" content="Tom Preston-Werner" />
+   <link href="http://feeds.feedburner.com/tom-preston-werner" rel="alternate" title="Tom Preston-Werner" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
+
+   <!-- Typekit -->
+   <script type="text/javascript" src="http://use.typekit.com/jpd0pfm.js"></script>
+   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
+
+<div class="site">
+  <div class="title">
+    <a href="/">Tom Preston-Werner</a>
+    <a class="extra" href="/">home</a>
+  </div>
+  
+  <div id="post">
+<p>If you have anything approaching a large test suite, the time spent running them becomes an important factor. The longer they take, the less often I tend to run them, which is bad. And I&#8217;m probably not alone in that. Ideally you&#8217;d be refactoring all your tests, removing duplication and such. If you&#8217;re just interested in speeding things up, though it&#8217;d be nice to know where the slow specs are.</p>
+<p>RSpec ships with a profile formatter that, but it leaves a lot to be desired. It only reports the top 10 slowest examples, and with several thousand specs, the top ten just isn&#8217;t enough. It also doesn&#8217;t provide any sort of statistics which are nice to track over time, say on the CI box. So let&#8217;s improve this.</p>
+<p><img src="/images/stopwatch.jpg" alt="" /></p>
+<h3>RSpec Formatters</h3>
+<p>Just run <code>spec</code> by itself, and you&#8217;ll see there are about a half dozen formatters. Let&#8217;s take a closer look at the <a href="http://github.com/dchelimsky/rspec/blob/738d9245c3ff68add2218294e3eb46951a18f245/lib/spec/runner/formatter/profile_formatter.rb">existing profile formatter</a>. It records the time taken for each example and then prints the top ten in <code>#start_dump</code>. The recording part is fine, we just need to do a little more work in that dump method there.</p>
+<div class="highlight"><pre><code class="ruby">  <span class="k">def</span> <span class="nf">start_dump</span>
+   <span class="k">super</span>
+
+   <span class="vi">@example_times</span> <span class="o">=</span> <span class="vi">@example_times</span><span class="o">.</span><span class="n">sort_by</span> <span class="k">do</span> <span class="o">|</span><span class="n">description</span><span class="p">,</span> <span class="n">example</span><span class="p">,</span> <span class="n">time</span><span class="o">|</span>
+     <span class="n">time</span>
+   <span class="k">end</span><span class="o">.</span><span class="n">reverse</span>
+
+   <span class="n">times</span> <span class="o">=</span> <span class="vi">@example_times</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span><span class="o">|</span><span class="n">d</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">t</span><span class="o">|</span> <span class="n">t</span><span class="p">}</span>
+   <span class="n">mean</span> <span class="o">=</span> <span class="n">times</span><span class="o">.</span><span class="n">mean</span>
+   <span class="n">stddev</span> <span class="o">=</span> <span class="n">times</span><span class="o">.</span><span class="n">standard_deviation</span>
+   <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span>
+   <span class="vi">@example_times</span><span class="o">.</span><span class="n">reject!</span> <span class="p">{</span> <span class="o">|</span><span class="n">d</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">t</span><span class="o">|</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">mean</span> <span class="o">+</span> <span class="n">k</span> <span class="o">*</span> <span class="n">stddev</span> <span class="p">}</span>
+
+   <span class="vi">@output</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Top </span><span class="si">#{</span><span class="vi">@example_times</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> slowest examples:</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+   <span class="vi">@example_times</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">description</span><span class="p">,</span> <span class="n">example</span><span class="p">,</span> <span class="n">time</span><span class="o">|</span>
+     <span class="vi">@output</span><span class="o">.</span><span class="n">print</span> <span class="n">red</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s2">&quot;%.7f&quot;</span><span class="p">,</span> <span class="n">time</span><span class="p">))</span>
+     <span class="vi">@output</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="si">#{</span><span class="n">description</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">example</span><span class="si">}</span><span class="s2">&quot;</span>
+   <span class="k">end</span>
+
+   <span class="vi">@output</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Stats&quot;</span>
+
+   <span class="vi">@output</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;Mean:</span><span class="se">\t</span><span class="si">#{</span><span class="s2">&quot;%.5f&quot;</span> <span class="o">%</span> <span class="n">mean</span><span class="si">}</span><span class="s2">&quot;</span>
+   <span class="vi">@output</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;StdDev:</span><span class="se">\t</span><span class="si">#{</span><span class="s2">&quot;%.5f&quot;</span> <span class="o">%</span> <span class="n">stddev</span><span class="si">}</span><span class="s2">&quot;</span>
+   <span class="vi">@output</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;Total:</span><span class="se">\t</span><span class="si">#{</span><span class="n">times</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">&quot;</span>
+   <span class="vi">@output</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;Slow:</span><span class="se">\t</span><span class="si">#{</span><span class="vi">@example_times</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">&quot;</span>
+
+   <span class="vi">@output</span><span class="o">.</span><span class="n">flush</span>
+ <span class="k">end</span>
+</code></pre>
+</div><p>So what&#8217;s going on here? It&#8217;s not too much different than the built in one, except we compute the standard deviation and mean of the set of times and use them grab all of the slow specs. This of course assumes that you already have <code>#standard_deviation</code> and <code>#mean</code> on <code>Array</code>. If you don&#8217;t or don&#8217;t feel comfortable adding those to the class, they can just as easily be methods in this module.</p>
+<p>Once we have those, we keep the ones that are 2 deviations from the mean. The choice of two is arbitrary, but I found this gave just enough to get a good look at the slow specs. Finally we print some of the stats we collected. This is great to run on the your CI box. It still checks the whole suite like <code>rake spec</code>, but now there&#8217;s the chance to record the stats and see how the tests are evolving over time.</p>
+<h3>Using the new Formatter</h3>
+<p>To get this going, we have to make a class that inherits from <code>Spec::Runner::Formatter::ProgressBarFormatter</code>, and that file will also need to <code>require "spec/runner/formatter/progress_bar_formatter"</code>. The rest is exactly the same as the built in <code>ProfileFormatter</code>. For example, name this new formatter <code>RobustProfileFormatter</code>, and put it in <code>spec/config</code>. To run it once off the command looks like this: <code>spec -c -r spec/config/robust_profile_formatter.rb -f RobustProfileFormatter</code>. The <code>-c</code> option turns on color output, <code>-r</code> requires the new code, and <code>-f</code> chooses it as the formatter.</p>
+<p>That&#8217;s a lot to type out, and a rake task would be much nicer. In <code>lib/tasks/rspec.rake</code> there are a bunch of tasks. Inside the <code>spec</code> namespace is a good place to put our new task:</p>
+<div class="highlight"><pre><code class="ruby"><span class="n">desc</span> <span class="s2">&quot;Profile specs&quot;</span>
+<span class="no">Spec</span><span class="o">::</span><span class="no">Rake</span><span class="o">::</span><span class="no">SpecTask</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:profile</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+  <span class="n">t</span><span class="o">.</span><span class="n">spec_opts</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;-c&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;-r spec/config/robust_profile_formatter.rb&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;-f RobustProfileFormatter&quot;</span><span class="o">]</span>
+  <span class="n">t</span><span class="o">.</span><span class="n">spec_files</span> <span class="o">=</span> <span class="no">FileList</span><span class="o">[</span><span class="s2">&quot;spec/**/*/*_spec.rb&quot;</span><span class="o">]</span>
+<span class="k">end</span>
+</code></pre>
+</div><p>That&#8217;s all there is to it, go and speed up your specs!</p>
+<p><em><a href="http://flickr.com/photos/teamperks/2110119064/">Stopwatch image</a> from flickr</em></p>
+
+
+
+
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul class="posts">
+    
+      <li><span>10 Oct 2010</span> &raquo; <a href="/2010/10/10/some-talks.html">Some Talks</a></li>
+    
+      <li><span>16 Jul 2010</span> &raquo; <a href="/2010/07/16/auto-mege-gemfile-lock.html">Auto Merge Gemfile.lock</a></li>
+    
+      <li><span>01 May 2010</span> &raquo; <a href="/2010/05/01/rails_integration_stack_for_winners.html">Rails Integration Testing Stack for Winners</a></li>
+    
+  </ul>
+</div>
+  
+  <div class="footer">
+    <div class="contact">
+      <p>
+        Tom Preston-Werner<br />
+        Cofounder of <a href="http://github.com/">GitHub</a><br />
+        tom@mojombo.com
+      </p>
+    </div>
+    <div class="contact">
+      <p>
+        <a href="http://github.com/mojombo/">github.com/mojombo</a><br />
+        <a href="http://twitter.com/mojombo/">twitter.com/mojombo</a><br />
+        <a href="http://flickr.com/photos/mojombo/">flickr.com/photos/mojombo</a>
+      </p>
+    </div>
+    <div class="rss">
+      <a href="http://feeds.feedburner.com/tom-preston-werner">
+        <img src="/images/rss.png" alt="Subscribe to RSS Feed" />
+      </a>
+    </div>
+  </div>
+</div>
+
+<a href="http://github.com/mojombo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
+
+<!-- ClickTale Bottom part -->
+<div id="ClickTaleDiv" style="display: none;"></div>
+<script type="text/javascript">
+if(document.location.protocol!='https:')
+  document.write(unescape("%3Cscript%20src='http://s.clicktale.net/WRb.js'%20type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+if(typeof ClickTale=='function') ClickTale(206,0.3,"www03");
+</script>
+<!-- ClickTale end of Bottom part -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-6016902-1");
+pageTracker._trackPageview();
+</script>
+<!-- Google Analytics end -->
+
+</body>
+</html>

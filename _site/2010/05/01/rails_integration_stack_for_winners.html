@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Rails Integration Testing Stack for Winners</title>
+   <meta name="author" content="Tom Preston-Werner" />
+   <link href="http://feeds.feedburner.com/tom-preston-werner" rel="alternate" title="Tom Preston-Werner" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
+
+   <!-- Typekit -->
+   <script type="text/javascript" src="http://use.typekit.com/jpd0pfm.js"></script>
+   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
+
+<div class="site">
+  <div class="title">
+    <a href="/">Tom Preston-Werner</a>
+    <a class="extra" href="/">home</a>
+  </div>
+  
+  <div id="post">
+<p>Full-stack, acceptance, integration, or whatever-you-want-to-call-it testing should be a large part of your test suite. I'm not going to waste time trying to convince anyone of this, since there are probably a million other blog posts doing that (and probably twice as many arguing the different names).</p>
+
+<p><img src="/images/finish.jpg" alt="finish line" />
+Rather, I'll show you the hands-down best way to do it with what's out there right now. Follow this setup and you too can be a winner. I've written <a href="/2009/06/celerity.html">a bit</a> about this earlier, but things have gotten better since then.</p>
+
+<p>Currently, while Rails 3 is close, it's not out yet, so I'm ignoring it for this post. Latest is 2.3.5. Here we go.</p>
+
+<h2>Cucumber</h2>
+
+<p>Cucumber drives everything. It's awesome, and you should have already heard of it. Everyone uses it. It's surpassed the vegetable on google for the top result.</p>
+
+<p>It ships with webrat, but <em>don't use webrat</em>. It's neat and probably helped a lot to get cucumber popular. But it can't do javascript. And what site doesn't have JS these days. You need to be testing that too, you know.</p>
+
+<p><a href="http://cukes.info/">Cucumber &mdash; cukes.info</a></p>
+
+<h2>Capybara</h2>
+
+<p>This is what you use instead of webrat. It lets you use a bunch of web drivers behind it. Out out of the box it supports selenium (ugh) and Celerity/Culerity (awesome). Before getting cucumber to work with Capybara was a little hacky, but they're best friends now. Use this.</p>
+
+<p>You tag the stories that need javascript with @javascript, and it'll fire up culerity when it needs to. That's all you have to do. It's fantastic.</p>
+
+<p><a href="http://github.com/jnicklas/capybara">Capybara &mdash; github</a></p>
+
+<h2>Culerity</h2>
+
+<p>This provides a nice bridge between your MRI Ruby rails app, and the jruby-only gem Celerity. It'll fire off a separate server running in the test environment, then start up a jruby process for celerity.</p>
+
+<p>Now this one can be a bit of a pain to set up, since you need to install jruby and then celerity and make sure that's all working and wired up. A nice alternative is <a href="http://github.com/fletcherm/culerity/">Matt Fletcher's fork</a>, which bundles all that into the gem itself so you don't have to worry about it.</p>
+
+<p>There can be some problems with gem bundler, though. The gist of it is that you have to use JRuby v1.3.1 or earlier. I wrote more details about the bug on the  <a href="http://groups.google.com/group/culerity-dev/browse_thread/thread/3c1ed5f38d540ad1">mailing list</a>. It looks like <em>just yesterday</em> Matt updated his fork to fix this, so hurray!</p>
+
+<p><a href="http://github.com/langalex/culerity">Culerity &mdash; github</a></p>
+
+<h2>Celerity</h2>
+
+<p>This is what's actually doing the work. It's a JRuby-only gem, since it uses the Java <a href="http://httpunit.sourceforge.net/">HttpUnit</a> headless web browser. This is a complete web browser, with its own javascript engine, except it is just controlled though some API, and doesn't have a display.</p>
+
+<p>Selenium was cool for it's time. Watir too, I guess, though I never used it. But relying on a real browser sucks. It's really slow. You have to worry about browser upgrades breaking the tenuous control. And it makes your CI server a hundred times more complicated than it has to be. Fuck that, when you can use Celerity which is awesome.</p>
+
+<p>For some reason I can't quite remember, I had to stay on version 0.7.6. If you're having weird problems try that version. Of course, if you're using Matt's culerity fork like I suggested, you don't have to worry about it.</p>
+
+<p><a href="http://celerity.rubyforge.org/">Celerity</a></p>
+
+<p><em>picture credit: <a href="http://www.flickr.com/photos/philon/2477878611/">philo nordlund</a></em></p>
+
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul class="posts">
+    
+      <li><span>10 Oct 2010</span> &raquo; <a href="/2010/10/10/some-talks.html">Some Talks</a></li>
+    
+      <li><span>16 Jul 2010</span> &raquo; <a href="/2010/07/16/auto-mege-gemfile-lock.html">Auto Merge Gemfile.lock</a></li>
+    
+      <li><span>22 Apr 2010</span> &raquo; <a href="/2010/04/22/speaking_at_rdrc.html">Red Dirt Ruby Conference</a></li>
+    
+  </ul>
+</div>
+  
+  <div class="footer">
+    <div class="contact">
+      <p>
+        Tom Preston-Werner<br />
+        Cofounder of <a href="http://github.com/">GitHub</a><br />
+        tom@mojombo.com
+      </p>
+    </div>
+    <div class="contact">
+      <p>
+        <a href="http://github.com/mojombo/">github.com/mojombo</a><br />
+        <a href="http://twitter.com/mojombo/">twitter.com/mojombo</a><br />
+        <a href="http://flickr.com/photos/mojombo/">flickr.com/photos/mojombo</a>
+      </p>
+    </div>
+    <div class="rss">
+      <a href="http://feeds.feedburner.com/tom-preston-werner">
+        <img src="/images/rss.png" alt="Subscribe to RSS Feed" />
+      </a>
+    </div>
+  </div>
+</div>
+
+<a href="http://github.com/mojombo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
+
+<!-- ClickTale Bottom part -->
+<div id="ClickTaleDiv" style="display: none;"></div>
+<script type="text/javascript">
+if(document.location.protocol!='https:')
+  document.write(unescape("%3Cscript%20src='http://s.clicktale.net/WRb.js'%20type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+if(typeof ClickTale=='function') ClickTale(206,0.3,"www03");
+</script>
+<!-- ClickTale end of Bottom part -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-6016902-1");
+pageTracker._trackPageview();
+</script>
+<!-- Google Analytics end -->
+
+</body>
+</html>

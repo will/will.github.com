@@ -1,0 +1,16 @@
+---
+title:      Acts as Conference Talk
+layout: post
+---
+
+I just got back from "acts_as_conference":http://actsasconference.com and it was great! I promised a few people that I'd put up my slides so here they are:
+
+<div style="width:425px;text-align:left" id="__ss_1009857"><object style="margin:0px" width="425" height="355"><param name="movie" value="http://static.slideshare.net/swf/ssplayer2.swf?doc=relaxing-with-couchdb-acts-as-conference-final-1234224419527061-2&rel=0&stripped_title=relaxing-with-couchdb" /><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed src="http://static.slideshare.net/swf/ssplayer2.swf?doc=relaxing-with-couchdb-acts-as-conference-final-1234224419527061-2&rel=0&stripped_title=relaxing-with-couchdb" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object></div>
+
+Thanks again to everyone who made this a fantastic conference.
+
+h3. Video
+
+*Update (2/13):* Confreaks just posted "all the videos":http://aac2009.confreaks.com/ for acts_as_conference. There were a lot of great talks so be sure to check them out. The "full page for my talk":http://aac2009.confreaks.com/07-feb-2009-16-00-relaxing-with-couchdb-will-leinweber.html has links for ridiculously high quality versions.
+
+<embed src='http://aac2009.confreaks.com/player.swf' height='380' width='640' allowscriptaccess='always' allowfullscreen='true' flashvars='file=http%3A%2F%2Faac2009.confreaks.com%2Fvideos%2F07-feb-2009-16-00-relaxing-with-couchdb-will-leinweber-small.mp4&image=images%2F07-feb-2009-16-00-relaxing-with-couchdb-will-leinweber-preview.jpg&plugins=viral-1'/>

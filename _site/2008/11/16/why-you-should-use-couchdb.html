@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Why You Should Use CouchDB</title>
+   <meta name="author" content="Tom Preston-Werner" />
+   <link href="http://feeds.feedburner.com/tom-preston-werner" rel="alternate" title="Tom Preston-Werner" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
+
+   <!-- Typekit -->
+   <script type="text/javascript" src="http://use.typekit.com/jpd0pfm.js"></script>
+   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
+
+<div class="site">
+  <div class="title">
+    <a href="/">Tom Preston-Werner</a>
+    <a class="extra" href="/">home</a>
+  </div>
+  
+  <div id="post">
+<h3>New Approach to an Old Problem</h3>
+<p>Your applications need to store and retrieve data. That&#8217;s nothing new.  <a href="http://incubator.apache.org/couchdb/">CouchDB</a>, and other document databases like Amazon SimpleDB, are new to the game however. Okay, I&#8217;ll admit the general concept is some <a href="http://en.wikipedia.org/wiki/IBM_Lotus_Notes">20 years old</a>, but it&#8217;s safe to say that they&#8217;ve recently started to gain popularity over the last year or so.</p>
+<div class="image left"><img src="/images/couchdb.png" /></div>
+<p>Learning a document database is worthwhile, even if you don&#8217;t end up using it for anything serious in the near future. You&#8217;ll gain new insights on how to solve your current problems. Don&#8217;t take my word for it, there&#8217;s that line everyone quotes from The Pragmatic Programmer: <em>Learn at least one new database paradigm a year</em>, or something like that.</p>
+<p>What exactly makes CouchDB so great? Read on.</p>
+<h3>Stable and Scalable</h3>
+<p>When you update a document in CouchDB, it doesn&#8217;t go in and change the existing document. Instead, it just adds a new version. The upshot is that your data is never in a bad state, so even in the case of a power failure, you&#8217;re not going to lose data or spend time verifying against corruption when you start up again. All these extra versions are deleted when you compact the database, so there isn&#8217;t much of a storage penalty because of it.</p>
+<div class="image right">
+<a href="http://leinweber.us/post/58513962/we-need-more-erlangs">
+<img src="/images/erlangs.png" /><br />
+<span class="alt">Other databases have low erlangs</span>
+</a>
+</div>
+<p>It&#8217;s written in Erlang, and benefits from the stability and concurrency of the language its design idioms. Also, unlike current relational databases that try and make a single query as fast as possible, CouchDB tries to maintain consistent performance as the number of queries grows.</p>
+<p>Another big plus is that it doesn&#8217;t have a custom binary protocol. It uses regular <span class="caps">HTTP</span>. This means you can use existing http infrastructure tools such as load balancers and clustering proxies. Better still, it&#8217;s RESTful, so you interact with it using the <span class="caps">CRUD</span> operations we&#8217;ve come to know and love.</p>
+<p>The way you query data from CouchDB is through views which are written using the map/reduce approach. These views themselves are indexed, so they&#8217;re very fast as long as you keep the indices fresh. While it&#8217;s not an option now, it&#8217;s possible that in the future the mapping step could be distributed amongst several nodes which could make it ridiculously fast.</p>
+<h3>Deep Structures, No Schemas</h3>
+<p>Data has it&#8217;s own natural shape, and I know I&#8217;m not the only one who is sick and tired of fighting that fact. It is often an uphill battle cramming models into relational records. Your data is more complex than a few simple strings, numbers, and boolean values. You have lists, you have hashes, and even small variations between instances of the same object. This is unacceptable in the relational world.</p>
+<p>ORMs like ActiveRecord and DataMapper have done a lot to to ease the pain and abstract away the nastiness of <span class="caps">SQL</span>. It&#8217;s not enough though. It&#8217;s like treating the symptoms and not the underlying condition. You still have to worry about joins, normalization, and other artifacts from relational databases. These issues leak their way up into your models where they don&#8217;t belong, and obscure more important logic.</p>
+<p>All of this isn&#8217;t an issue with CouchDB, and that&#8217;s the biggest selling point for me. The fields in your documents can be hashes, they can be arrays, they can be arrays of hashes. Anything that can be serialized to <span class="caps">JSON</span>. It&#8217;s about documents &mdash; not records.</p>
+<p>As a quick example, rather than having to create an assets table for uploads, you can store all the metadata in a single field. That field can live right on the object that is responsible for it, where it belongs. Or you could store all the comments for a blog post inline with the post itself. There&#8217;s a good article comparing <a href="http://www.cmlenz.net/archives/2007/10/couchdb-joins">inline vs. separate storage</a> that is worth a read.</p>
+<h3>Downsides</h3>
+<p>Nothing is without drawbacks, and CouchDB is no exception. For one, it&#8217;s still alpha. That&#8217;s not to say it&#8217;s buggy and unusable &mdash; far from it &mdash; but there are likely to be changes before they hit 1.0. I can&#8217;t say to what extent this will be an issue, but you should be aware of that.</p>
+<p>There is no security model. This turns out to not be <em>that</em> big of a deal, but it&#8217;s far from ideal. You can lock down the port it runs on to only talk to localhost, which I think happens by default.</p>
+<p>The first time you run a view it will be slow. It has to go through every document and build the index. After that though, it only has to go through the new or changed documents and is significantly faster. You can make sure your views are fresh by running them after every couple hundred updates or every 10 minutes or so. But if you&#8217;re always running unique views, CouchDB probably isn&#8217;t a good choice.</p>
+<h3>Getting Started</h3>
+<p>Go ahead and compile CouchDB from the svn head rather than going for the last release. You can find instructions over on <a href="http://wiki.apache.org/couchdb/Installation">their wiki</a>. You&#8217;ll also want a persistence layer. So far, I&#8217;ve been most impressed with <a href="http://github.com/langalex/couch_potato/tree/master">Couch Potato</a>. I&#8217;ve been using it with Merb, which has been great. You just need to add it to your <code>config/dependencies.rb</code> like this</p>
+<div class="highlight"><pre><code class="ruby"><span class="n">dependency</span> <span class="s2">&quot;langalex-couch_potato&quot;</span><span class="p">,</span> <span class="s2">&quot;0.1&quot;</span><span class="p">,</span> <span class="ss">:require_as</span> <span class="o">=&gt;</span> <span class="s2">&quot;couch_potato&quot;</span>
+</code></pre>
+</div><p>then add this to your <code>config/init.rb</code></p>
+<div class="highlight"><pre><code class="ruby"><span class="no">Merb</span><span class="o">::</span><span class="no">BootLoader</span><span class="o">.</span><span class="n">before_app_loads</span> <span class="k">do</span>
+  <span class="no">CouchPotato</span><span class="o">::</span><span class="no">Config</span><span class="o">.</span><span class="n">database_name</span> <span class="o">=</span> <span class="s2">&quot;appname_</span><span class="si">#{</span><span class="no">Merb</span><span class="o">.</span><span class="n">environment</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="nb">require</span> <span class="s1">&#39;json/pure&#39;</span>
+<span class="k">end</span>
+</code></pre>
+</div><p>You might not need that <code>json/pure</code> fix. I was having some problem where <code>#to_json</code> was declared multiple times. It&#8217;d be nice if there was a merb_couchpotato gem so you could just say <code>use_orm :couchpotato</code>, and maybe use database.yml instead, but it&#8217;s not really necessary yet.</p>
+<p>That&#8217;s really all it takes. Go checkout the readme for Couch Potato and its <a href="http://upstream-berlin.com/2008/10/27/couch-potato-unleashed-a-couchdb-persistence-layer-in-ruby/">introduction post</a>.</p>
+<p>Time to relax.</p>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul class="posts">
+    
+      <li><span>10 Oct 2010</span> &raquo; <a href="/2010/10/10/some-talks.html">Some Talks</a></li>
+    
+      <li><span>16 Jul 2010</span> &raquo; <a href="/2010/07/16/auto-mege-gemfile-lock.html">Auto Merge Gemfile.lock</a></li>
+    
+      <li><span>01 May 2010</span> &raquo; <a href="/2010/05/01/rails_integration_stack_for_winners.html">Rails Integration Testing Stack for Winners</a></li>
+    
+  </ul>
+</div>
+  
+  <div class="footer">
+    <div class="contact">
+      <p>
+        Tom Preston-Werner<br />
+        Cofounder of <a href="http://github.com/">GitHub</a><br />
+        tom@mojombo.com
+      </p>
+    </div>
+    <div class="contact">
+      <p>
+        <a href="http://github.com/mojombo/">github.com/mojombo</a><br />
+        <a href="http://twitter.com/mojombo/">twitter.com/mojombo</a><br />
+        <a href="http://flickr.com/photos/mojombo/">flickr.com/photos/mojombo</a>
+      </p>
+    </div>
+    <div class="rss">
+      <a href="http://feeds.feedburner.com/tom-preston-werner">
+        <img src="/images/rss.png" alt="Subscribe to RSS Feed" />
+      </a>
+    </div>
+  </div>
+</div>
+
+<a href="http://github.com/mojombo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
+
+<!-- ClickTale Bottom part -->
+<div id="ClickTaleDiv" style="display: none;"></div>
+<script type="text/javascript">
+if(document.location.protocol!='https:')
+  document.write(unescape("%3Cscript%20src='http://s.clicktale.net/WRb.js'%20type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+if(typeof ClickTale=='function') ClickTale(206,0.3,"www03");
+</script>
+<!-- ClickTale end of Bottom part -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-6016902-1");
+pageTracker._trackPageview();
+</script>
+<!-- Google Analytics end -->
+
+</body>
+</html>
