@@ -1,8 +1,4 @@
-/*****************************************************************************/
-/*
-/* Common
-/*
-/*****************************************************************************/
+@font-face { font-family: "Chunk"; src: local("☺"), url('/fonts/Chunk.otf') format('opentype'), url('/fonts/Chunk.ttf') format('truetype'); }
 
 /* Global Reset */
 
@@ -17,7 +13,7 @@ html, body {
 
 body {
   background-color: white;
-  font: 13.34px helvetica, arial, clean, sans-serif;
+  font: 14px helvetica, arial, clean, sans-serif;
   *font-size: small;
   text-align: center;
 }
@@ -28,6 +24,7 @@ body {
 
 h1 {
   margin-bottom: 1em;
+  font-family: Chunk, helvetica, ariel, sans-serif;
 }
 
 p {
@@ -36,14 +33,15 @@ p {
 
 a {
   color: #00a;
+  text-decoration: none;
 }
 
 a:hover {
-  color: black;
+  color: #F74;
 }
 
 a:visited {
-  color: #a0a;
+  color: #00a;
 }
 
 table {
@@ -87,13 +85,16 @@ ul.posts {
 }
 
 .title {
-  color: #a00;
+  color: #F70;
   font-weight: bold;
   margin-bottom: 2em;
+  font-size: 1.5em;
+  font-weight: bold;
+  font-family: Chunk, helvetica, ariel, sans-serif;
 }
 
   .site .title a {
-    color: #a00;
+    color: #f70;
     text-decoration: none;
   }
 
