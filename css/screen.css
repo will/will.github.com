@@ -50,6 +50,7 @@ a:visited {
   -webkit-font-smoothing: antialiased;
   content: attr(data-icon) ;
   font-size: 1.4em;
+  vertical-align: top;
 }
 
 table {
@@ -229,10 +230,16 @@ ul.posts {
   list-style: none;
 }
 
+.content.talks ul li, .content.talks ul li a {
+  vertical-align: top;
+}
+
 .content.talks ul li strong {
   font-family: 'Pictos Custom';
   -webkit-font-smoothing: antialiased;
   text-shadow: 0px 1px 0px white;
   font-style: normal;
   font-size: 2em;
+  display: inline-block;
+  width: 1.1em;
 }
