@@ -1,6 +1,7 @@
 ---
 title:      Reopening NilClass
 layout: post
+category: blog
 ---
 I just read a post advocating <a href="http://blog.rubyenrails.nl/articles/2008/02/29/our-daily-method-18-nilclass-method_missing">changing NilClass#method_missing to always return nil</a>. Their argument is that you no longer have to check if you actually have something before calling methods on it like:
 

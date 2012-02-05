@@ -1,6 +1,7 @@
 ---
 title:      Acts as Conference Talk
 layout: post
+category: blog
 ---
 
 I just got back from "acts_as_conference":http://actsasconference.com and it was great! I promised a few people that I'd put up my slides so here they are:

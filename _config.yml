@@ -1,5 +1,5 @@
 markdown: rdiscount
-permalink: /blog/:year/:month/:title.html
+permalink: /:categories/:year/:month/:title.html
 pygments: true
 auto: true
 server: true

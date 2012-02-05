@@ -1,6 +1,7 @@
 ---
 title:      Why we're not on Ruby1.9
 layout: post
+category: blog
 ---
 
 It's been out for a while now, but as a community we just aren't using it. Why?

@@ -1,6 +1,7 @@
 ---
 title:      Red Dirt Ruby Conference
 layout: post
+category: blog
 ---
 
 ![logo](/images/rdrc.png)

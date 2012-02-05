@@ -1,6 +1,7 @@
 ---
 title:      Quick Guide to Celerity
 layout: post
+category: blog
 ---
 
 I'll assume you already know and love "Cucumber":cucumber and are using it. I'll go even farther and assume you're writing your steps in "Webrat":webrat since that's what cucumber ships with. Now, I really like webrat. It's a wonderful DSL and fun to work with, but it does have one problem: no javascript, no ajax.

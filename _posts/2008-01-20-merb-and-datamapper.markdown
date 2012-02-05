@@ -2,6 +2,7 @@
 title:      Merb and Datamapper
 created_at: 2008-01-20 01:30:11.614269 -05:00
 layout: post
+category: blog
 ---
 With the recent release of [Merb 0.5](http://merbivore.com), I've decided to use it along with [datamapper](http://datamapper.org) for one of my new projects. It isn't different enough to be completely foreign, but enough to be a refreshing change. I haven't done a whole lot with either yet, but I have had a patch accepted, ran into a huge, annoying problem with autotest, and found out how to watch the SQL datamaper is generating.
 

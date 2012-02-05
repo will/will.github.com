@@ -1,6 +1,7 @@
 ---
 title:      Test Driving a File Parser
 layout: post
+category: blog
 ---
 <p>
 My current project involves pulling gene names and group data from a tab separated file, then coloring those genes on a pathway diagram. Just like any other part of an application, the parser should be well tested. But how exactly should you go about testing all the different edge cases that the parser will see?

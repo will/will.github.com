@@ -1,6 +1,7 @@
 ---
 title: Some Talks
 layout: post
+category: blog
 ---
 
 I gave a few talks and just realized I never put them up anywhere.

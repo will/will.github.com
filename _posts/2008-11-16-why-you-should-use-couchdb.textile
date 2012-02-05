@@ -1,6 +1,7 @@
 ---
 title:      Why You Should Use CouchDB
 layout: post
+category: blog
 ---
 
 h3. New Approach to an Old Problem

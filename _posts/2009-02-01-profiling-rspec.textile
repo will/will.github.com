@@ -1,6 +1,7 @@
 ---
 title:      Profiling RSpec
 layout: post
+category: blog
 ---
 
 If you have anything approaching a large test suite, the time spent running them becomes an important factor. The longer they take, the less often I tend to run them, which is bad. And I'm probably not alone in that. Ideally you'd be refactoring all your tests, removing duplication and such. If you're just interested in speeding things up, though it'd be nice to know where the slow specs are.

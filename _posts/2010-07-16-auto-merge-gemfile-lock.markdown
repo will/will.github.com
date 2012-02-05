@@ -1,6 +1,7 @@
 ---
 title:      Auto Merge Gemfile.lock
 layout: post
+category: blog
 ---
 
 <div class="right image">

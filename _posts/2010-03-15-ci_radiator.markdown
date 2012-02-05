@@ -1,6 +1,7 @@
 ---
 title:      CI Radiator in Javascript
 layout: post
+category: blog
 ---
 
 Continuous integration is a must. But if your team can't easily see the current build status, you loose a major benefit of CI: short feedback loops. The longer it takes to notice that the build is broken, the worse off you'll be.

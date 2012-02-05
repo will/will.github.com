@@ -1,6 +1,7 @@
 ---
 title:      Faking "or shift left"
 layout: post
+category: blog
 ---
 I've often been annoyed at the lack of <code>||<<</code> after being spoiled with <code>||=</code> for so long. The workaround I've typically used is to go ahead and use <code>||= [ ]</code> to make sure I have an empty array. That's ugly though. You're dropping down a level and writing the "how" instead of the "why".
 

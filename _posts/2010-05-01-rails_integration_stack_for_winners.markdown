@@ -1,6 +1,7 @@
 ---
 title:      Rails Integration Testing Stack for Winners
 layout: post
+category: blog
 ---
 
 Full-stack, acceptance, integration, or whatever-you-want-to-call-it testing should be a large part of your test suite. I'm not going to waste time trying to convince anyone of this, since there are probably a million other blog posts doing that (and probably twice as many arguing the different names).
