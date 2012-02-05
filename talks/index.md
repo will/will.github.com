@@ -22,14 +22,14 @@ Introducing the power of using JavaScript inside of Postgres
 - **s** <http://pgeu-plv8.herokuapp.com>
 
 ## Exposing the Power of Postgres to Ruby
-Overview of Postgres (even more) fantastic but underappreciated features
+Overview of (even more) fantastic but underappreciated Postgres features
 
 - **l** PGconf.EU, Amsterdam
 - **d** October 19, 2011
 - **s** <http://pgeu-ruby.herokuapp.com>
 
 ## Exposing the Power of Postgres to Ruby
-Overview of Postgres fantastic but underappreciated features
+Overview of fantastic but underappreciated Postgres features
 
 - **l** PgWest, San Jose, CA
 - **d** September 28, 2011
