@@ -54,7 +54,7 @@ Introduction of CouchDB for Rubyists
 
 - **l** Red Dirt Ruby Conference, Oklahoma City, OK
 - **d** May 6th, 2010
-- **s** <http://www.share.net/mobile/leinweber/couchdb-red-dirt-ruby-conference>
+- **s** <http://www.slideshare.net/leinweber/couchdb-red-dirt-ruby-conference>
 
 ## Intro to Behavior Driven Design
 Everyone has to give a talk on BDD at least once, right?
@@ -69,4 +69,5 @@ My first talk! Introduction of CouchDB for Rubyists
 - **l** acts_as_conference, Orlando FL
 - **d** February 7, 2009
 - **v** [aac2009.confreaks.com](http://aac2009.confreaks.com/07-feb-2009-16-00-relaxing-with-couchdb-will-leinweber.html)
+- **s** <http://www.slideshare.net/leinweber/relaxing-with-couchdb>
 
