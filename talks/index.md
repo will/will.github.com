@@ -1,70 +1,72 @@
 ---
 layout: default
 title: Talks
+category: talks
 ---
 
 # Upcoming Talks
 
 ## Schemaless SQL
-Introducing the dual relational and document database using new features in Postgres.
+Introducing the dual relational and document database using new features in Postgres
 
-- **where** Mountain West Ruby Conference
-- **when** march something
-
+- **l** Mountain West Ruby Conference, Salt Lake City, UT
+- **d** March 15, 2012
 
 # Past Talks
 
-## Harolding the Death of NoSQL
+## Heralding the Death of NoSQL
 Introducing the power of using JavaScript inside of Postgres
 
-- **where** PGcon EU, Amsterdam
-- **when** October something
+- **l** PGconf.EU, Amsterdam
+- **d** October 19, 2011
+- **s** <http://pgeu-plv8.herokuapp.com>
 
-## exposing the power of Postgres to Ruby
-Postgres has several fantastic features that go unnoticed becuase they're hard to use in Ruby
+## Exposing the Power of Postgres to Ruby
+Overview of Postgres (even more) fantastic but underappreciated features
 
-- **where** PGcon EU, Amsterdam
-- **when** October something
+- **l** PGconf.EU, Amsterdam
+- **d** October 19, 2011
+- **s** <http://pgeu-ruby.herokuapp.com>
 
-## exposing the power of Postgres to Ruby
-Postgres has several fantastic features that go unnoticed becuase they're hard to use in Ruby
+## Exposing the Power of Postgres to Ruby
+Overview of Postgres fantastic but underappreciated features
 
-- **where** PGwest
-- **when**  something
+- **l** PgWest, San Jose, CA
+- **d** September 28, 2011
+- **s** <http://pgwest-ruby.herokuapp.com>
 
 ## CouchDB
 General introduction to CouchDB
 
-- **where** Code PaLOUsa, Louisville KY
-- **when** March 4, 2011
-- **video** <http://www.infoq.com/presentations/couchdb-Will-Leinweber>
+- **l** Code PaLOUsa, Louisville, KY
+- **d** March 4, 2011
+- **v** <http://www.infoq.com/presentations/couchdb-Will-Leinweber>
 
 ## Pecha Kucha
 20 slides that auto advance very 20 seconds
 
-- **where** Krannert Center, Urbana, IL
-- **when** July 30, 2010
-- **video** <http://vimeo.com/13806419>
-
-## Intro to Behavior Driven Design
-Everyone has to give a talk on BDD at least once
-
-- **where** University of Illinois at Urbana-Champaign
-- **when** April 28th, 2010
-- **video** <http://vimeo.com/11444008>
+- **l** Krannert Center, Urbana, IL
+- **d** July 30, 2010
+- **v** <http://vimeo.com/13806419>
 
 ## CouchDB, Ruby, and You
 Introduction of CouchDB for Rubyists
 
-- **where** Red Dirt Ruby Conference, Oklahoma City, OK
-- **when** May 6th, 2010
-- **slides** <http://www.slideshare.net/mobile/leinweber/couchdb-red-dirt-ruby-conference>
+- **l** Red Dirt Ruby Conference, Oklahoma City, OK
+- **d** May 6th, 2010
+- **s** <http://www.share.net/mobile/leinweber/couchdb-red-dirt-ruby-conference>
 
+## Intro to Behavior Driven Design
+Everyone has to give a talk on BDD at least once, right?
+
+- **l** University of Illinois at Urbana-Champaign
+- **d** April 28th, 2010
+- **v** <http://vimeo.com/11444008>
 
 ## Relaxing with CouchDB
 My first talk! Introduction of CouchDB for Rubyists
 
-- **where** acts_as_conference, Orlando FL
-- **when** February 7, 2009
-- **video** <http://aac2009.confreaks.com/07-feb-2009-16-00-relaxing-with-couchdb-will-leinweber.html>
+- **l** acts_as_conference, Orlando FL
+- **d** February 7, 2009
+- **v** [aac2009.confreaks.com](http://aac2009.confreaks.com/07-feb-2009-16-00-relaxing-with-couchdb-will-leinweber.html)
 

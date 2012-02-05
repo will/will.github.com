@@ -40,6 +40,12 @@ a:visited {
   color: #00a;
 }
 
+[data-icon]:before {
+  font-family: 'Pictos Custom';
+  content: attr(data-icon) ;
+  font-size: 1.4em;
+}
+
 table {
   font-size: inherit;
   font: 100%;
@@ -88,7 +94,7 @@ ul.posts {
   font-size: 1.5em;
   font-weight: bold;
   font-family: Chunk, helvetica, ariel, sans-serif;
-  text-shadow: gray 0px 1px 0px;
+  text-shadow: lightgray 0px 1px 0px;
 }
 
   .site .title a {
@@ -140,11 +146,11 @@ ul.posts {
         border: 0;
       }
 
-/*****************************************************************************/
+/*****************************************************************/
 /*
 /* Posts
 /*
-/*****************************************************************************/
+/*****************************************************************/
 
 #post {
 
@@ -193,3 +199,31 @@ ul.posts {
   #related h2 {
     margin-bottom: 1em;
   }
+
+/*****************************************************************/
+/*
+/* Talks
+/*
+/*****************************************************************/
+
+
+.content.talks h1, .content.talks h2 {
+  margin-top: 1em;
+}
+
+.content.talks h1:before {
+  content: 'm ';
+  font-family: 'Pictos Custom';
+  font-style: normal;
+  color: #555;
+}
+
+.content.talks ul {
+  list-style: none;
+}
+
+.content.talks ul li strong {
+  font-family: 'Pictos Custom';
+  font-style: normal;
+  font-size: 2em;
+}
