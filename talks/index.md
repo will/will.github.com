@@ -12,6 +12,11 @@ Introducing the dual relational and document database using new features in Post
 - **l** Mountain West Ruby Conference, Salt Lake City, UT
 - **d** March 15, 2012
 
+and
+
+- **l** PGCon, Ottawa, Canada
+- **d** May 17, 2012
+
 # Past Talks
 
 ## Heralding the Death of NoSQL
