@@ -14,6 +14,11 @@ Introducing the dual relational and document database using new features in Post
 
 and
 
+- **l** Bacon, London, UK
+- **d** April 20, 2012
+
+and
+
 - **l** PGCon, Ottawa, Canada
 - **d** May 17, 2012
 
