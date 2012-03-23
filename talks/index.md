@@ -6,11 +6,11 @@ category: talks
 
 # Upcoming Talks
 
-## Schemaless SQL
+## Schemaless SQL—The Best of Both Worlds
 Introducing the dual relational and document database using new features in Postgres
 
-- **l** Mountain West Ruby Conference, Salt Lake City, UT
-- **d** March 15, 2012
+- **l** PG Day Austin, TX
+- **d** March 28, 2012
 
 and
 
@@ -23,6 +23,14 @@ and
 - **d** May 17, 2012
 
 # Past Talks
+
+## Schemaless SQL—The Best of Both Worlds
+Introducing the dual relational and document database using new features in Postgres
+
+- **l** Mountain West Ruby Conference, Salt Lake City, UT
+- **d** March 15, 2012
+- **s** <http://ssql-mwrc.herokuapp.com>
+
 
 ## Heralding the Death of NoSQL
 Introducing the power of using JavaScript inside of Postgres
