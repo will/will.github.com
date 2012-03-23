@@ -61,7 +61,7 @@ General introduction to CouchDB
 - **v** <http://www.infoq.com/presentations/couchdb-Will-Leinweber>
 
 ## Pecha Kucha
-20 slides that auto advance very 20 seconds
+20 slides that auto advance every 20 seconds
 
 - **l** Krannert Center, Urbana, IL
 - **d** July 30, 2010
