@@ -9,13 +9,13 @@ category: talks
 ## Schemaless SQL—The Best of Both Worlds
 Introducing the dual relational and document database using new features in Postgres
 
-- **l** PG Day Austin, TX
-- **d** March 28, 2012
+- **l** Bacon, London, UK
+- **d** April 20, 2012
 
 and
 
-- **l** Bacon, London, UK
-- **d** April 20, 2012
+- **l** Railsconf, Austin, TX
+- **d** April 23, 2012
 
 and
 
@@ -26,6 +26,12 @@ and
 
 ## Schemaless SQL—The Best of Both Worlds
 Introducing the dual relational and document database using new features in Postgres
+
+- **l** PG Day Austin, TX
+- **d** March 28, 2012
+- **s** <http://ssql-pgaustin.herokuapp.com>
+
+and
 
 - **l** Mountain West Ruby Conference, Salt Lake City, UT
 - **d** March 15, 2012
