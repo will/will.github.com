@@ -6,26 +6,32 @@ category: talks
 
 # Upcoming Talks
 
-## Schemaless SQL—The Best of Both Worlds
-Introducing the dual relational and document database using new features in Postgres
-
-- **l** Bacon, London, UK
-- **d** April 20, 2012
-
-and
-
-- **l** Railsconf, Austin, TX
-- **d** April 23, 2012
-
-and
-
-- **l** PGCon, Ottawa, Canada
-- **d** May 17, 2012
+none yet :(
 
 # Past Talks
 
 ## Schemaless SQL—The Best of Both Worlds
 Introducing the dual relational and document database using new features in Postgres
+
+- **l** PGCon, Ottawa, Canada
+- **d** May 17, 2012
+- **s** <http://ssql-pgcon.herokuapp.com>
+
+and
+
+- **l** Railsconf, Austin, TX
+- **d** April 23, 2012
+- **v** <http://confreaks.com/videos/891-railsconf2012-schemaless-sql-the-best-of-both-worlds>
+- **s** <http://ssql-railsconf.herokuapp.com>
+
+and
+
+- **l** Bacon, London, UK
+- **d** April 20, 2012
+- **s** <http://ssql-bacon.herokuapp.com>
+- **v** <http://devslovebacon.com/speakers/will-leinweber>
+
+and
 
 - **l** PG Day Austin, TX
 - **d** March 28, 2012
