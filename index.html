@@ -3,7 +3,12 @@ layout: default
 title: bitfission.com
 ---
 
-<div id="home">
-  <h1><a data-icon="L" href='/talks'> Talks</a></h1>
-  <h1><a data-icon="L" href='/blog'> Blog</a></h1>
-</div>
+
+<FRAMESET ROWS="80px,*">
+  <FRAME SRC="title.html" NAME=TITLE SCROLLING=NO>
+
+  <FRAMESET COLS="15%,*">
+    <FRAME SRC="side.html" NAME=SIDEBAR>
+    <FRAME SRC="about.html" NAME=main>
+  </FRAMESET>
+</FRAMESET>
