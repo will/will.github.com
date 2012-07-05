@@ -4,6 +4,13 @@ title: bitfission.com
 ---
 
 
+<script type="text/javascript">
+var title = document.title + ' - '
+setInterval(function(){
+  title = title.slice(1) + title[0];
+  document.title = title;
+}, 1000)
+</script>
 <FRAMESET ROWS="80px,*">
   <FRAME SRC="title.html" NAME=TITLE SCROLLING=NO>
 
