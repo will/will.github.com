@@ -17,14 +17,32 @@
   </td></tr>
 
   <tr><td align=center>
-    <img src="http://www.hit-counts.com/counter.php?t=1&digits=6&ic=0&cid=1113110" border='0' alt='Hit Counter'>
+    <!--<img src="http://www.hit-counts.com/counter.php?t=1&digits=6&ic=0&cid=1113110" border='0' alt='Hit Counter'>-->
   </td></tr>
 
   <tr><td>
-    music player controls coming soon!
+    music player controls coming soon! reload for new random song
   </td></tr>
   <tr><td>
-    <marquee>subterranean homesick alien - radiohead</marquee>
-    <embed src='/mid/subterranean_homesick_alien.mid' autoplay=true loop=true width=160>
+    <script type='text/javascript'>
+      var tracks = [
+        {artist: 'radiohead', file: 'subterranean_homesick_alien' }
+      , {artist: 'radiohead', file: 'street_spirit' }
+      , {artist: 'radiohead', file: 'no_surprises' }
+      , {artist: 'natalie imbruglia', file: 'torn' }
+      , {artist: 'marcy playground', file: 'sex_and_candy' }
+      , {artist: 'weezer', file: 'buddy_holly' }
+      , {artist: 'eagle eye cherry', file: 'save_tonight' }
+      , {artist: 'ben folds five', file: 'brick' }
+      , {artist: 'lit', file: 'my_own_worst_enemy' }
+      , {artist: 'sublime', file: 'what_i_got' }
+      , {artist: 'sublime', file: 'santeria' }
+      , {artist: 'reel big fish', file: 'sell_out' }
+      , {artist: 'cherry poppin daddies', file: 'zoot_suit_riot' }
+      ]
+      var track = tracks[Math.floor(Math.random()*tracks.length)]
+      document.write('<marquee>' + track.file.replace(/_/g,' ') + ' - ' + track.artist + '</marquee>')
+      document.write('<embed src="mid/' + track.file + '.mid" autoplay=true loop=true width=160></embed>')
+    </script>
   </td></tr>
 </table>
