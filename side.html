@@ -49,5 +49,5 @@
 </table>
 
 <script>
-  document.oncontextmenu = function(){alert('please dont right click!!'); return false;}
+  document.body.addEventListener("contextmenu",function(){alert('please dont right click!!'); return false;})
 </script>
