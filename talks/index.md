@@ -6,12 +6,23 @@ category: talks
 
 # Upcoming Talks
 
-none yet :(
+## Embracing the web with JSON and PLV8
+The JSON datatype combined with PLV8 javascript together in Postgres
+
+- **l** PGconf.EU, Prague
+- **d** October 25, 2012
 
 # Past Talks
 
+## Embracing the web with JSON and PLV8
+The JSON datatype combined with PLV8 javascript together in Postgres
+
+- **l** Postgres Open, Chicago, IL
+- **d** Sepember 18, 2012
+- **s** <http://plv8-pgopen.herokuapp.com>
+
 ## Schemaless SQL—The Best of Both Worlds
-Introducing the dual relational and document database using new features in Postgres
+Introducing the concept of a dual relational and document database using new features in Postgres
 
 - **l** PGCon, Ottawa, Canada
 - **d** May 17, 2012
