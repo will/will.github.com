@@ -9,13 +9,17 @@ category: talks
 ## Embracing the web with JSON and PLV8
 The JSON datatype combined with PLV8 javascript together in Postgres
 
-- **l** PGconf.EU, Prague
-- **d** October 25, 2012
+- **l** PG Day, New York City
+- **d** March 21, 2013
 
 # Past Talks
 
 ## Embracing the web with JSON and PLV8
 The JSON datatype combined with PLV8 javascript together in Postgres
+
+- **l** PGconf.EU, Prague
+- **d** October 25, 2012
+- **s** <http://plv8-pgconfeu.herokuapp.com>
 
 - **l** Postgres Open, Chicago, IL
 - **d** Sepember 18, 2012
