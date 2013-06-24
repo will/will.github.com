@@ -6,12 +6,15 @@ category: talks
 
 # Upcoming Talks
 
+none yet :(
+
+# Past Talks
+
 ## Visualizating Postgres
 
 - **l** PGCon, Ottawa, Canada
 - **d** May 24, 2012
-
-# Past Talks
+- **s** <https://speakerdeck.com/leinweber/visualizing-postgres>
 
 ## Embracing the web with JSON and PLV8
 The JSON datatype combined with PLV8 javascript together in Postgres
