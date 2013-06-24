@@ -23,9 +23,13 @@ The JSON datatype combined with PLV8 javascript together in Postgres
 - **d** March 21, 2013
 - **s** <http://plv8-talk.herokuapp.com>
 
+and
+
 - **l** PGconf.EU, Prague
 - **d** October 25, 2012
 - **s** <http://plv8-pgconfeu.herokuapp.com>
+
+and
 
 - **l** Postgres Open, Chicago, IL
 - **d** Sepember 18, 2012
