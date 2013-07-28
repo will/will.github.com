@@ -1,4 +1,4 @@
-document.body.oncontextmenu = function(){alert('please dont right click!!'); return false;}
+document.body.oncontextmenu = function(){alert('please dont right click!!');  console.log(window.event); return window.event.shiftKey;}
 
 if (window.self === window.top && !window.isIndex) { // uh oh! unframed!!
   var title = document.title + ' - '
