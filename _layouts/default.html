@@ -33,6 +33,18 @@
 
   {{ content }}
 
+<script>
+  var links = document.getElementsByTagName('a');
+  for (var i=0; i < links.length; i++) {
+    var link = links[i]
+    link.onclick = (function(link) {
+      return function() {
+        console.log(link.pathname)
+        window.parent.history.pushState(null, 'whatever', link.pathname)
+      }
+    })(link)
+  }
+</script>
 
 <!-- Google Analytics -->
 <script type="text/javascript">
