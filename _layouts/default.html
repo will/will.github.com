@@ -12,39 +12,10 @@
   <link rel="openid2.local_id" href="http://wl.myopenid.com" />
   <link rel="openid2.provider" href="http://www.myopenid.com/server" />
 </head>
-<script>
-  if (window.self === window.top) { // uh oh! unframed!!
-    var title = document.title + ' - '
-    setInterval(function(){
-      title = title.slice(1) + title[0];
-      document.title = title;
-    }, 1000)
-    var template = '<FRAMESET ROWS="80px,*">'
-    template +=    '  <FRAME SRC="/title.html" NAME=TITLE SCROLLING=NO>'
-    template +=    '  <FRAMESET COLS="222px,*">'
-    template +=    '    <FRAME SRC="/side.html" NAME=side>'
-    template +=    '    <FRAME SRC="'+ window.location.href  +'" NAME=main>'
-    template +=    '  </FRAMESET>'
-    template +=    '</FRAMESET>'
-    console.log(template)
-    document.getElementsByTagName('html')[0].innerHTML = template
-  }
-</script>
 
   {{ content }}
 
-<script>
-  var links = document.getElementsByTagName('a');
-  for (var i=0; i < links.length; i++) {
-    var link = links[i]
-    link.onclick = (function(link) {
-      return function() {
-        console.log(link.pathname)
-        window.parent.history.pushState(null, 'whatever', link.pathname)
-      }
-    })(link)
-  }
-</script>
+<script src='/site.js'> </script>
 
 <!-- Google Analytics -->
 <script type="text/javascript">
