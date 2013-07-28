@@ -6,6 +6,14 @@ title: bitfission.com
 <table border=4><tr>
 <td><img src=/img/madewmac.gif></td>
 <td>
-  <h1>Welcome to <font color=red>Will Leinweber</font>'s homepage, http://bitfission.com !
+  <h1>Welcome to <font color=red>Will Leinweber</font>'s homepage<span id='visitorName'></span>: http://bitfission.com !
 </td>
 <td> <img src=/img/madewmac.gif> </td> </tr> </table>
+
+<script>
+if (! window.localStorage['name']) {
+  console.log('in here')
+  window.localStorage['name'] = prompt('what is your name?')
+}
+document.getElementById('visitorName').innerText = ', ' + window.localStorage['name']
+</script>
