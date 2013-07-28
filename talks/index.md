@@ -10,7 +10,7 @@ none yet :(
 
 # Past Talks
 
-## Visualizating Postgres
+## Visualizing Postgres
 
 - **l** PGCon, Ottawa, Canada
 - **d** May 24, 2012
