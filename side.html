@@ -21,32 +21,53 @@
     <img src="http://www.hit-counts.com/counter.php?t=1&digits=6&ic=0&cid=1113110" border='0' alt='Hit Counter'>
   </td></tr>
 
-  <tr><td>
-    music player controls coming soon! reload for new random song
+  <tr><td align="center">
+    <button onclick="randomSong()" value='new song'>new random song!</button>
+    <br />
+    <input type='radio' name='ext' value='mid' id='extmid' onchange="setExt('mid')"><label for='mid'>midi</label>
+    <input type='radio' name='ext' value='mp3' id='extmp3' onchange="setExt('mp3')"><label for='mp3'>mp3</label>
   </td></tr>
-  <tr><td>
+  <tr><td align="center">
+    <div id='player'></div>
     <script type='text/javascript'>
-      var tracks = [
-        {artist: 'radiohead', file: 'subterranean_homesick_alien' }
-      , {artist: 'radiohead', file: 'street_spirit' }
-      , {artist: 'radiohead', file: 'no_surprises' }
-      , {artist: 'natalie imbruglia', file: 'torn' }
-      , {artist: 'marcy playground', file: 'sex_and_candy' }
-      , {artist: 'weezer', file: 'buddy_holly' }
-      , {artist: 'eagle eye cherry', file: 'save_tonight' }
-      , {artist: 'ben folds five', file: 'brick' }
-      , {artist: 'lit', file: 'my_own_worst_enemy' }
-      , {artist: 'sublime', file: 'what_i_got' }
-      , {artist: 'sublime', file: 'santeria' }
-      , {artist: 'reel big fish', file: 'sell_out' }
-      , {artist: 'cherry poppin daddies', file: 'zoot_suit_riot' }
-      , {artist: 'id software', file: 'doom' }
-      , {artist: 'nirvana', file: 'smells_like_teen_spirit' }
-      , {artist: 'foo fighters', file: 'everlong' }
-      ]
-      var track = tracks[Math.floor(Math.random()*tracks.length)]
-      document.write('<marquee>' + track.file.replace(/_/g,' ') + ' - ' + track.artist + '</marquee>')
-      document.write('<embed src="mid/' + track.file + '.mid" autoplay=true loop=true width=160></embed>')
+      function randomSong() {
+        var tracks = [
+          {artist: 'radiohead', file: 'subterranean_homesick_alien' }
+        , {artist: 'radiohead', file: 'street_spirit' }
+        , {artist: 'radiohead', file: 'no_surprises' }
+        , {artist: 'natalie imbruglia', file: 'torn' }
+        , {artist: 'marcy playground', file: 'sex_and_candy' }
+        , {artist: 'weezer', file: 'buddy_holly' }
+        , {artist: 'eagle eye cherry', file: 'save_tonight' }
+        , {artist: 'ben folds five', file: 'brick' }
+        , {artist: 'lit', file: 'my_own_worst_enemy' }
+        , {artist: 'sublime', file: 'what_i_got' }
+        , {artist: 'sublime', file: 'santeria' }
+        , {artist: 'reel big fish', file: 'sell_out' }
+        , {artist: 'cherry poppin daddies', file: 'zoot_suit_riot' }
+        , {artist: 'id software', file: 'doom' }
+        , {artist: 'nirvana', file: 'smells_like_teen_spirit' }
+        , {artist: 'foo fighters', file: 'everlong' }
+        ]
+        var track = tracks[Math.floor(Math.random()*tracks.length)]
+        var playerHTML = '<marquee>' + track.file.replace(/_/g,' ') + ' - ' + track.artist + '</marquee>'
+        playerHTML += '<embed src="mid/' + track.file + '.' + getExt() + '" autoplay=true loop=true width=160></embed>'
+        document.getElementById('player').innerHTML = playerHTML
+      }
+      function setExt(ext) {
+        window.localStorage['ext'] = ext
+      }
+      function getExt() {
+        return window.localStorage['ext']
+      }
+
+
+      if (! getExt() ) {
+        setExt('mp3')
+      }
+      document.getElementById('ext' + getExt()).checked = true
+      randomSong()
+
     </script>
   </td></tr>
 </table>
