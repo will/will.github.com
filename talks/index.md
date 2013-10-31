@@ -12,6 +12,12 @@ none yet :(
 
 ## Visualizing Postgres
 
+- **l** PGConf.EU, Dublin
+- **d** October 31, 2012
+- **s** <https://speakerdeck.com/leinweber/visualizing-postgres>
+
+and
+
 - **l** PGCon, Ottawa, Canada
 - **d** May 24, 2012
 - **s** <https://speakerdeck.com/leinweber/visualizing-postgres>
