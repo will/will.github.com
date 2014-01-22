@@ -6,20 +6,28 @@ category: talks
 
 # Upcoming Talks
 
-none yet :(
+## Visualizing Postgres
+
+- **l** FOSDEM PGDay, Brussels, Belgium
+- **d** January 31, 2014
+
+## Migrating from CouchDB to Postgres
+
+- **l** PGConf NYC, New York
+- **d** April 3, 2014
 
 # Past Talks
 
 ## Visualizing Postgres
 
 - **l** PGConf.EU, Dublin
-- **d** October 31, 2012
+- **d** October 31, 2013
 - **s** <https://speakerdeck.com/leinweber/visualizing-postgres>
 
 and
 
 - **l** PGCon, Ottawa, Canada
-- **d** May 24, 2012
+- **d** May 24, 2013
 - **s** <https://speakerdeck.com/leinweber/visualizing-postgres>
 
 ## Embracing the web with JSON and PLV8
