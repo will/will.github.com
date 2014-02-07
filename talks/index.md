@@ -6,17 +6,18 @@ category: talks
 
 # Upcoming Talks
 
-## Visualizing Postgres
-
-- **l** FOSDEM PGDay, Brussels, Belgium
-- **d** January 31, 2014
-
 ## Migrating from CouchDB to Postgres
 
 - **l** PGConf NYC, New York
 - **d** April 3, 2014
 
 # Past Talks
+
+## Postgres for Application Developers
+
+- **l** FOSDEM, Brussels, Belgium
+- **d** February 1, 2014
+- **s** <https://pg4ad.herokuapp.com>
 
 ## Visualizing Postgres
 
