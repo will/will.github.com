@@ -8,7 +8,7 @@ This is the story of my battle with the raccoon.
 
 ## the setup
 
-In the back of my parents' house there is a screened in porch and a cat. The cat has a door to get in and out and do <a href='javascript:alert("slaughter evertything")'>whatever it is cats do</a> during the day and hang out at night by the house.
+In the back of my parents' house there is a screened in porch and a cat. The cat has a door to get in and out and do <a href='javascript:alert("slaughter evertything")' target="_new">whatever it is cats do</a> during the day and hang out at night by the house.
 
 Lately a raccoon has been sneaking every night, washing its hands in the cat's water, and eating all the cat's food. The cat kinda tries to avoid the raccoon, so there haven't been any cat-raccoon fights. Even still, the raccoon had to go. I was back home for a while, and decided to try and help my mom out.
 
