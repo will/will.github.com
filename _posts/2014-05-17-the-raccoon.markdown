@@ -88,3 +88,5 @@ However that leaves the problem of an unwieldy half dog crate half livetrap cont
 So instead I just placed more marshmallows in areas that are perhaps harder to get to in the cage, so maybe it'll have to get all the way in the trap to get them. I knew this probably wouldn't work, and it didn't.
 
 I left the next morning never having caught—nor even seen for myself—the raccoon.
+
+![rolling](/images/raccoon/roll.gif)
