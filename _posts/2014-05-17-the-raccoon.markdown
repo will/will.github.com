@@ -82,7 +82,7 @@ But the food was gone, and there was no raccoon. How could this be? My only gues
 
 ![empty shut trap](/images/raccoon/photo 10.JPG)
 
-I had some thoughts as how to address this for the final night I'd be around. At the hose was a large dog cage. Since the back of the livetrap opens up, it could be attached to the dog cage somehow so to make the trap a funnel.
+I had some thoughts as how to address this for the final night I'd be around. At the house was a large dog cage. Since the back of the livetrap opens up, it could be attached to the dog cage somehow so to make the trap a funnel.
 However that leaves the problem of an unwieldy half dog crate half livetrap contraption and transporting an angry raccoon in one of those seems problematic at best. And since I'd be leaving early the next morning, I decided against this course of action. But I think this would have worked.
 
 So instead I just placed more marshmallows in areas that are perhaps harder to get to in the cage, so maybe it'll have to get all the way in the trap to get them. I knew this probably wouldn't work, and it didn't.
