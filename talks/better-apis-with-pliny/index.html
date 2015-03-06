@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Better APIs with Piny</title>
+
+    <meta name="description" content="better apis with pliny">
+    <meta name="author" content="Will Leinweber">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/night.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <style>
+      .slides h2 { text-shadow: 1px 1px 5px black; }
+      .slides .bar { background: rgba(0,0,0,0.75); }
+    </style>
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+<div class="reveal"><div class="slides">
+
+<section>
+  <h1>Better APIs</h1>
+  <h1><span style='font-family:zapfino; font-size:75%'>with</span> Pliny</h1>
+  <p> <small>
+    <a href="http://bitfission.com">Will Leinweber</a> /
+    <a href="http://bitfission.com">bitfission.com</a> <br>
+    <a href="http://twitter.com/leinweber">@leinweber</a> /
+    <a href="http://heroku.com">heroku</a>
+  </small> </p>
+</section>
+
+<section data-background="#b5533c">
+  <section>
+    <h2>1) Open Pliny</h2>
+    <p><img alt='pliny' src='img/pliny1.jpg' style='max-width:80%'></p>
+    <p><small><a href='https://www.flickr.com/photos/adambarhan/8012641814'>cc adambarhan</a></small></p>
+ </section>
+
+  <section>
+    <h2>2) Write API</h2>
+  </section>
+
+  <section>
+    <h2>3) It's better</h2>
+  </section>
+
+  <section data-background='#000'>
+    <h1>Thank you</h1>
+    <p> <small>
+      <a href="http://bitfission.com">Will Leinweber</a> /
+      <a href="http://bitfission.com">bitfission.com</a> <br>
+      <a href="http://twitter.com/leinweber">@leinweber</a> /
+      <a href="http://heroku.com">heroku</a>
+    </small> </p>
+  </section>
+</section>
+
+
+
+<section>
+  <h1>“</h1>
+    <aside class='notes'>
+      <ul>
+        <li>Services</li>
+        <li>API needs</li>
+        <li>Pliny</li>
+      </ul>
+    </aside>
+</section>
+
+
+
+<section data-background="#4d7e65">
+  <section>
+    <h2>Why Services</h2>
+  </section>
+
+  <section>
+    <h2>software.gif</h2>
+    <img src='img/software.gif' alt='software'>
+  </section>
+
+  <section>
+    <h2>Teams grow</h2>
+    <aside class='notes'>Conway's Law 1968</aside>
+  </section>
+
+  <section>
+    <h2>Coordination</h2>
+  </section>
+
+  <section>
+    <h2>Independent iteration</h2>
+  </section>
+</section>
+
+
+
+<section data-background="#782A22">
+  <section>
+    <h2>Beware Services</h2>
+    <aside class="notes">
+      Comes at a HIGH cost
+    </aside>
+  </section>
+
+  <section data-background='img/elephant.png'>
+    <h2>Not one DB</h2>
+    <p style='text-shadow: 1px 1px 5px black;'>
+      no transactions, joins, harder reporting
+    </p>
+    <aside class="notes">
+      Shogun is an addon: internal/external herokumanager
+    </aside>
+  </section>
+
+  <section>
+    <h2>Deployment, Monitoring, etc</h2>
+    <aside class="notes">
+      Paperwork in "mature" orgs
+    </aside>
+  </section>
+</section>
+
+<section>
+  <h2>…</h2>
+</section>
+
+
+
+<section data-background='#653869'>
+  <section>
+    <h2>HTTP API Design Guide</h2>
+    <p><a href="https://github.com/interagent/http-api-design">github.com/interagent/http-api-design</a></p>
+  </section>
+
+  <section>
+    <ul style='list-style-type: none'>
+      <li>ETags, Accepts header, Status codes</li>
+      <li>ISO8601</li>
+      <li>Request-Id</li>
+      <li>Minimize path nesting</li>
+      <li>Range headers</li>
+    </ul>
+  </section>
+</section>
+
+
+<section data-background='#b5533c'>
+  <section>
+    <h2>Pliny</h2>
+    <p><a href="https://github.com/interagent/pliny">github.com/interagent/pliny</a></p>
+  </section>
+
+  <section data-background='img/dino.png'>
+    <h2>Extracted from Heroku API</h2>
+    <aside class="notes">
+      * Originally rails 2 app that had views <br>
+      * killed views, moved to sinatra and AR
+    </aside>
+  </section>
+
+  <section>
+    <h2>Remove Small Decisions</h2>
+    <aside class="notes">
+      Rails for APIs. Take away small decisions
+    <ul>
+      <li>versioning</li>
+      <li>logging</li>
+      <li>debugging systems</li>
+      <li>configuration</li>
+      <li>serialization</li>
+    </ul>
+    </aside>
+  </section>
+</section>
+
+<section>
+  <h2>Pliny Parts</h2>
+  <ul>
+    <li>management and ops</li>
+    <li>interactions</li>
+    <li>growth</li>
+  </ul>
+  <aside class="notes"> </aside>
+</section>
+
+<section data-background='img/telex-cc-by-sa-jens-ohlig.jpg'>
+  <h2 class='bar'>Examples <span style='font-size: 50%'>(mostly)</span> from 𝕋𝔼𝕃𝔼𝕏</h2>
+  <p class='bar'><a href="https://github.com/heroku/telex">github.com/heroku/telex</a></p>
+  <aside class="notes"> </aside>
+</section>
+
+<section data-background='img/shadow.jpg'>
+  <h2 class='bar'>Transferatu</h2>
+  <p class='bar'><a href="https://github.com/heroku/transferatu">github.com/heroku/transferatu</a></p>
+  <aside class="notes"> </aside>
+</section>
+
+<section section data-background="#782A22">
+  <section>
+    <h2>Ruby</h2>
+    <aside class="notes">
+      Take for granted at a ruby conf, but<br>
+      The Console!
+    </aside>
+  </section>
+
+  <section>
+    <h2 style='font-family: "Lucida Console", Monaco, monospace'>>> irb</h2>
+    <img src='img/errors.jpg' alt='errors'>
+  </section>
+</section>
+
+<section>
+  <h2>Postgres</h2>
+  <aside class="notes"> </aside>
+</section>
+
+<section section data-background="#4d7e65">
+  <section>
+    <h2>Sequel</h2>
+    <aside class="notes">Who uses Sequel?</aside>
+  </section>
+
+  <section>
+    <pre><code class='ruby'>
+      Notification.eager_graph(:message=>:followup)
+        .where(user: @user)
+        .where("notifications.created_at > now() - '1 month'::interval")
+        .order(Sequel.desc(:created_at), Sequel.asc(:followup__created_at))
+        .all
+    </code></pre>
+  </section>
+
+  <section>
+    <pre><code class='sql'>
+       SELECT ...
+       FROM notifications
+       LEFT OUTER JOIN messages AS message ON (message.id = notifications.message_id)
+       LEFT OUTER JOIN followups AS followup ON (followup.message_id = message.id)
+       WHERE ((notifications.user_id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa')
+         AND (notifications.created_at > now() - '1 month'::interval))
+       ORDER BY created_at DESC, followup.created_at ASC
+    </code></pre>
+  </section>
+</section>
+
+<section section data-background='#653869'>
+  <section>
+    <h2>JSON schema</h2>
+    <p><a href="http://json-schema.org/">json-schema.org</a></p>
+    <aside class="notes"> </aside>
+  </section>
+
+  <section>
+    <code>$ curl https://api.heroku.com/schema -H "Accept: application/vnd.heroku+json; version=3"</code>
+    <pre><code class='json'>
+"app": {
+  "description": "An app represents the program that you would like to deploy and run on Heroku.",
+  ...
+  "definitions": {
+    "name": {
+      "description": "unique name of app",
+      "example": "example",
+      "pattern": "^[a-z][a-z0-9-]{3,30}$",
+      "type": [
+        "string"
+      ]
+    }
+  },
+  "links": [
+    {
+      "description": "Create a new app.",
+      "href": "/apps",
+      "method": "POST",
+      "rel": "create",
+      "schema": {
+        "properties": {
+          "name": {
+            "$ref": "#/definitions/app/definitions/name"
+          }
+        }
+      },
+      "title": "Create"
+    }
+  ],
+  "properties": {
+    "name": {
+      "$ref": "#/definitions/app/definitions/name"
+    }
+  }
+}
+    </code></pre>
+  </section>
+
+  <section>
+    <h2>Generate clients</h2>
+  </section>
+
+  <section>
+    <h2>Tests and Validations</h2>
+  </section>
+</section>
+
+
+<section section data-background='#653869'>
+  <section>
+    <h2>Serializers and Versioning</h2>
+    <aside class="notes">
+      Probably going to be supporting at least 2 versions at a given time
+    </aside>
+  </section>
+
+  <section>
+    <pre><code class='ruby' data-trim>
+structure(:default) do |n|
+  m = n.message
+  {
+    id:         n.id,
+    created_at: time_format(n.created_at),
+    title:      m.title,
+    read:       !!n.read_at,
+    body:       m.body,
+    target: {
+      type: m.target_type,
+      id:   m.target_id
+    },
+    followup:   m.followup.map { |f| {
+      created_at: time_format(f.created_at),
+      body:       f.body
+    } }
+  }
+end
+    </code></pre>
+  </section>
+</section>
+
+<section>
+  <section>
+    <h2>Mediators</h2>
+    <p>interactors, managers, etc</p>
+    <p><a href="https://brandur.org/mediator">brandur.org/mediator</a></p>
+
+    <aside class="notes">
+      similar concepts over the last few years
+    </aside>
+  </section>
+
+  <section>
+    <h2>Encapsulate interaction</h2>
+    <ul>
+      <li>models just validation</li>
+      <li>controller just auth and lookup</li>
+      <li>ease testing, understanding</li>
+    </ul>
+    <aside class="notes">
+    </aside>
+  </section>
+
+  <section>
+    <pre><code class='ruby' data-trim>
+class Plexer < Mediators::Base
+  attr_accessor :user_finder, :message, :users_with_role
+  private :users_with_role=, :message=
+
+  def initialize(message:)
+    self.message = message
+    self.users_with_role = []
+    self.user_finder = Mediators::Messages::UserFinder.from_message(message)
+  end
+
+  def call
+    get_users
+    create_notifications
+  end
+
+  private
+
+  def get_users
+    self.users_with_role = user_finder.call
+  end
+
+  def create_notifications
+    users_with_role.map(&:user).uniq { |u| u.id }.each do |user|
+      Mediators::Notifications::Creator.run(message: message, user: user)
+    end
+  end
+end
+    </code></pre>
+  </section>
+
+  <section data-background='img/skeltastic.jpg' data-background-size='628px'>
+    <h2>Skeleton</h2>
+  </section>
+</section>
+
+<section>
+  <h3>CORS</h3>
+  <h3>RequestStore</h3>
+  <h3>Config Management</h3>
+  <h3>Puma</h3>
+  <h3>Rollbar</h3>
+  <h3>and more</h3>
+</section>
+
+<section>
+  <h1>”</h1>
+</section>
+
+<section data-background='img/beer.gif'>
+  <h1 class='bar'>Thank you</h1>
+  <p class='bar'> <small>
+    <a href="http://bitfission.com">Will Leinweber</a> /
+    <a href="http://bitfission.com">bitfission.com</a> <br>
+    <a href="http://twitter.com/leinweber">@leinweber</a> /
+    <a href="http://heroku.com">heroku</a>
+  </small> </p>
+</section>
+
+
+</div></div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true },
+          { src: 'plugin/notes/notes.js', async: true }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
