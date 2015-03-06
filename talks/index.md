@@ -17,7 +17,7 @@ category: talks
 
 - **l** Ruby on Ales, Bend, OR
 - **d** March 6, 2015
-- **s** <bitfission.com/talks/better-apis-with-pliny>
+- **s** <http://bitfission.com/talks/better-apis-with-pliny>
 
 ## Postgres for Application Developers
 
