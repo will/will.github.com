@@ -8,10 +8,16 @@ category: talks
 
 ## Migrating from CouchDB to Postgres
 
-- **l** PGConf NYC, New York
-- **d** April 3, 2014
+- **l** PGConf US, New York
+- **d** March 25, 2015
 
 # Past Talks
+
+## Better APIs with Pliny
+
+- **l** Ruby on Ales, Bend, OR
+- **d** March 6, 2015
+- **s** <bitfission.com/talks/better-apis-with-pliny>
 
 ## Postgres for Application Developers
 
