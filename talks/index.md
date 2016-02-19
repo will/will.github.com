@@ -6,12 +6,39 @@ category: talks
 
 # Upcoming Talks
 
-## Migrating from CouchDB to Postgres
+## Introducing the Crystal Programming Language
 
-- **l** PGConf US, New York
-- **d** March 25, 2015
+- **l** Ruby on Ales, Bend, OR
+- **d** March 31, 2016
 
 # Past Talks
+
+## Introducing the Crystal Programming Language
+
+- **l** RubyKaigi, Tokyo, Japan
+- **d** December 11, 2015
+
+## Writing a Postgres Driver
+
+- **l** PGConf.eu, Vienna, Austria
+- **d** October 28, 2015
+
+## A Collection of Fun with Ruby and Friends
+
+- **l** Keep Ruby Weird, Austin, TX
+- **d** October 23, 2015
+- **v** <https://www.youtube.com/watch?v=Jcto0Bs1hIA>
+
+## The Dark Secrets of Postgres
+
+- **l** So Coded, Hamburg, Germany
+- **d** July 23, 2015
+- **v** <https://www.youtube.com/watch?v=GHUAA9moe6g>
+
+## Fighting for Small Data
+
+- **l** PGConf US, New York
+- **d** March 27, 2015
 
 ## Better APIs with Pliny
 
@@ -27,7 +54,7 @@ category: talks
 
 ## Visualizing Postgres
 
-- **l** PGConf.EU, Dublin
+- **l** PGConf.EU, Dublin, Ireland
 - **d** October 31, 2013
 - **s** <https://speakerdeck.com/leinweber/visualizing-postgres>
 
