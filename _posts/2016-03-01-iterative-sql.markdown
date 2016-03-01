@@ -37,7 +37,7 @@ create table guests (
   visiting_range   daterange     not null
 );
 
-create index visitnig_range_gist on guests using gist(visiting_range);
+create index visiting_range_gist on guests using gist(visiting_range);
 ```
 
 There isn't anything particularly advanced going on there, except perhaps the
