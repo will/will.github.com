@@ -22,7 +22,7 @@ just 4-5 SQL queries wrapped up in Sinatra.
 In the beginning, [the schema][schema] was pretty simple. There was only a
 single table, `guests`:
 
-``` sql
+```sql
 create table guests (
   id               uuid          primary key default uuid_generate_v4(),
   guest_name       text          not null        ,
@@ -37,7 +37,7 @@ create table guests (
   visiting_range   daterange     not null
 );
 
-create index visitng_range_gist on guests using gist(visiting_range);
+create index visitnig_range_gist on guests using gist(visiting_range);
 ```
 
 There isn't anything particularly advanced going on there, except perhaps the
@@ -68,7 +68,7 @@ to deal with the varying amount of days in months and apply that statement
 correctly, so it will always be the last day of whichever month is three months
 from now.
 
-``` sql
+```sql
 select *
 from generate_series(
   '2013-09-01',
@@ -90,7 +90,7 @@ join because otherwise a normal join would exclude days with zero guests. The
 `<@` operator means 'contained by', so for each day, we're joining in all the
 guests whose visiting range contains that day.
 
-``` sql
+```sql
 select *
 from generate_series(
   '2013-09-01',
@@ -109,7 +109,7 @@ This works well for the total number of guests, because the outer join gives us
 lunch column, since `false` values still get counted. Fortunately Postgres
 gives us `nullif` which, well, does what it says.
 
-``` sql
+```sql
 select
   v::date as visiting_on,
   count(visiting_range) as total,
@@ -144,7 +144,7 @@ We wrap the previous query inside the CTE, and then group by
 month are the same. Also, it's nice that the `Month` format to `to_char` pads
 shorter month names with spaces so all the years line up.
 
-``` sql
+```sql
 with counts_by_day as (
   select
   v::date as visiting_on,
@@ -198,7 +198,7 @@ the two things we need to exclude are next to each other.
 
 And with that, we can [add a single line][commit2] to the `counts_by_day` CTE:
 
-``` diff
+```diff
     left outer join guests on v::date <@ visiting_range
 +   where extract(isodow from v) < 6 -- only Monday-Friday
     group by 1
@@ -212,7 +212,7 @@ And with that, we can [add a single line][commit2] to the `counts_by_day` CTE:
 Some time later the system grew the ability to track which guests actually
 check in and when. That table looks like this:
 
-``` sql
+```sql
 create table checkins (
   id         uuid        primary key default uuid_generate_v4(),
   guest_id   uuid        not null,
@@ -243,7 +243,7 @@ join matched. All other cases will either be `false` or `null`, and we use
 The change to the outer query is pretty simple, just two new sums in the select
 list.
 
-``` diff
+```diff
 with counts_by_day as (
     select
     v::date as visiting_on,
