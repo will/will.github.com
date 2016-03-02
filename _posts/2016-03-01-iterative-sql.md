@@ -22,7 +22,7 @@ just 4-5 SQL queries wrapped up in Sinatra.
 In the beginning, [the schema][schema] was pretty simple. There was only a
 single table, `guests`:
 
-```sql
+``` sql
 create table guests (
   id               uuid          primary key default uuid_generate_v4(),
   guest_name       text          not null        ,
