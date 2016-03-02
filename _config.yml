@@ -1,2 +1,1 @@
-markdown: kramdown
 permalink: /:categories/:year/:month/:title.html
