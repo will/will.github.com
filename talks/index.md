@@ -13,6 +13,11 @@ category: talks
 
 # Past Talks
 
+## Heroku Postgres - architecture of a cloud database
+
+- **l** PgConf.Russia, Moscow, Russia
+- **d** February 5, 2016
+
 ## Introducing the Crystal Programming Language
 
 - **l** RubyKaigi, Tokyo, Japan
