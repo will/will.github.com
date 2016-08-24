@@ -17,9 +17,21 @@
     </ul>
   </td></tr>
 
-  <tr><td align=center>
-    <img src="http://www.hit-counts.com/counter.php?t=1&digits=6&ic=0&cid=1113110" border='0' alt='Hit Counter'>
+  <tr><td align=center bgcolor="#000000">
+      <marquee behavior="alternate"><font color="#00FF00" size="+1"><span id="hitcounter">hits</span></font></marquee>
   </td></tr>
+
+  <script>
+    var request = new XMLHttpRequest();
+    request.open("GET", "https://bitfissionhitcounter.herokuapp.com/", true);
+    request.onload = function() {
+      var data = JSON.parse(request.responseText);
+      el = document.querySelectorAll("#hitcounter")[0];
+      console.log(el, data.count)
+      el.textContent = data.count + " hits!";
+    };
+    request.send();
+  </script>
 
   <tr><td align="center">
     <button onclick="randomSong()" value='new song'>new random song!</button>
