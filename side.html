@@ -40,7 +40,7 @@
     <input type='radio' name='ext' value='mp3' id='extmp3' onchange="setExt('mp3')"><label for='mp3'>mp3</label>
   </td></tr>
   <tr><td align="center">
-    <div id='player'></div>
+    <div id='player'><button onClick='randomSong()'>PLAY MUSIC!</button></div>
     <script type='text/javascript'>
       function randomSong() {
         var tracks = [
@@ -63,8 +63,7 @@
         ]
         var track = tracks[Math.floor(Math.random()*tracks.length)]
         var playerHTML = '<marquee>' + track.file.replace(/_/g,' ') + ' - ' + track.artist + '</marquee>'
-        var autoplay = (window.parent.location.search == "?music=nofun") ? 'autostart="0"' : 'autostart="1"'
-        playerHTML += '<embed src="mid/' + track.file + '.' + getExt() + '" ' +  autoplay + ' loop=true width=160></embed>'
+        playerHTML += '<embed src="mid/' + track.file + '.' + getExt() + '" loop=true width=160></embed>'
         document.getElementById('player').innerHTML = playerHTML
       }
       function setExt(ext) {
@@ -79,7 +78,10 @@
         setExt('mp3')
       }
       document.getElementById('ext' + getExt()).checked = true
-      randomSong()
+
+      if (window.parent.location.search !== "?music=nofun") {
+        randomSong()
+      }
 
     </script>
   </td></tr>
