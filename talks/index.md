@@ -6,22 +6,41 @@ category: talks
 
 # Upcoming Talks
 
+# Past Talks
+
+## How to Launch a Cloud Database in 3 Months
+
+- **l** Surge
+- **d** September 22, 2016
+
 ## Introducing the Crystal Programming Language
+
+- **l** Doximity Tech Meetup
+- **d** September 13, 2016
+- **v** <https://www.youtube.com/watch?v=GHPBMwrOV1w>
+
+and
+
+- **l** GoRuCo (10 minute version)
+- **d** June 25, 2016
+- **v** <https://www.youtube.com/watch?v=oC9IknG40po>
+
+and
 
 - **l** Ruby on Ales, Bend, OR
 - **d** March 31, 2016
+- **v** <https://www.youtube.com/watch?v=5QjvGuL4Opo>
 
-# Past Talks
+and
+
+- **l** RubyKaigi, Tokyo, Japan
+- **d** December 11, 2015
+- **v** <https://www.youtube.com/watch?v=7dwDzlVI7OU>
 
 ## Heroku Postgres - architecture of a cloud database
 
 - **l** PgConf.Russia, Moscow, Russia
 - **d** February 5, 2016
-
-## Introducing the Crystal Programming Language
-
-- **l** RubyKaigi, Tokyo, Japan
-- **d** December 11, 2015
 
 ## Writing a Postgres Driver
 
