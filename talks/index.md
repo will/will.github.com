@@ -8,6 +8,11 @@ category: talks
 
 # Past Talks
 
+## Constraints: A developer's secret weapon
+
+- **l** PG Day Paris
+- **d** March 15, 2018
+
 ## How to Launch a Cloud Database in 3 Months
 
 - **l** Surge
